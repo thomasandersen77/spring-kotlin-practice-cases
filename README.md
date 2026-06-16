@@ -1,6 +1,9 @@
-# Sopra Steria Kotlin/Spring Boot interview cases
+# Sopra Kotlin interview cases
 
 Dette er en samling små, uavhengige case-prosjekter for å øve til teknisk intervju/parprogrammering.
+
+> TODO 1: Presenter og begrunn designvalgene dine som i et seniorintervju: hvor domeneregler hører hjemme, hvilke abstraksjoner som er valgt, og hvilke trade-offs som er akseptable.
+> TODO 2: Gjennomfør hvert case under realistisk tidspress (45/60/90 min), lever en tydelig minimumsløsning innen tidsrammen, og oppsummer konkrete forbedringspunkter etter økten.
 
 ## Prosjekter
 
@@ -43,6 +46,101 @@ Dette er en samling små, uavhengige case-prosjekter for å øve til teknisk int
    - off-by-one-feil
    - test først
    - refaktorering
+
+7. `case-07-business-rules-kata`
+   - forretningsregler
+   - prioritering av regler
+   - tester for edge cases
+   - refaktorering av regellogikk
+
+8. `case-08-shipping-slot-aggregate`
+   - logistikk / levering
+   - aggregate root + value objects
+   - invariants og sortering av bookinger
+
+9. `case-09-hospital-triage-policy`
+   - helse / triage
+   - domain service og lesbare regler
+   - guard clauses og edge cases
+
+10. `case-10-payment-settlement-strategy`
+    - betaling / oppgjør
+    - strategy pattern + OCP
+    - gebyrberegning med money value object
+
+11. `case-11-library-loan-domain`
+    - bibliotekdomene
+    - entity + value objects
+    - utlånsregler, forlengelse og overdue-beregning
+
+12. `case-12-parking-pricing-rules`
+    - parkering
+    - business rules og avrunding
+    - rabatter, makspris og grenseverdier
+
+13. `case-13-warehouse-pick-list`
+    - lager / ordreplukk
+    - aggregate root med state transitions
+    - invariants for SKU, quantity og fullføring
+
+14. `case-14-insurance-claim-acl`
+    - forsikring
+    - anti-corruption layer
+    - robust DTO-mapping og inputvalidering
+
+15. `case-15-flight-seat-booking`
+    - flybooking
+    - aggregate + use case
+    - setereservasjon, kansellering og domain event
+
+16. `case-16-energy-tariff-billing`
+    - strømavregning
+    - presis beregning med BigDecimal
+    - tariff, moms og avrundingsregler
+
+17. `case-17-incident-escalation-state-machine`
+    - incident management
+    - state machine med gyldige overganger
+    - overgangshistorikk med actor og timestamp
+
+18. `case-18-feature-flag-rbac`
+    - feature flags / policy
+    - RBAC og miljøregler
+    - testbar tilgangskontroll uten tung security-stack
+
+19. `case-19-restaurant-reservation-api`
+    - restaurantbooking API
+    - tynn controller + application service
+    - DTO-validering og MockMvc-tester
+
+20. `case-20-ecommerce-cart-checkout`
+    - e-handel
+    - aggregate root + persistence boundary
+    - JPA/H2, mapping og transaksjonsgrenser
+
+21. `case-21-subscription-proration`
+    - SaaS-abonnement
+    - proration-beregning og dato/tid
+    - refaktorering av med vilje rotete servicekode
+
+22. `case-22-iot-sensor-alerting`
+    - IoT / sensordata
+    - ports/adapters + strategy pattern
+    - alert-regler og testbare use cases
+
+## Kjør alle casene samlet
+
+Fra repo-roten kan du kjøre alle moduler via topp-POM:
+
+```bash
+mvn clean verify
+```
+
+Hvis du vil verifisere bygg uten å kjøre tester:
+
+```bash
+mvn clean verify -DskipTests
+```
 
 ## Anbefalt øvingsform
 
