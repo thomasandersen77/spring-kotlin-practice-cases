@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.interview</groupId>
+    <artifactId>sopra-kotlin-interview-cases</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Sopra Kotlin Interview Cases (Aggregator)</name>
+
+    <properties>
+        <java.version>21</java.version>
+        <kotlin.version>1.9.25</kotlin.version>
+        <spring.boot.version>3.3.6</spring.boot.version>
+        <junit.jupiter.version>5.10.2</junit.jupiter.version>
+        <assertj.version>3.25.3</assertj.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>case-01-order-api-core-db</module>
+        <module>case-02-refactor-fat-controller</module>
+        <module>case-03-anti-corruption-layer</module>
+        <module>case-04-current-user-rbac</module>
+        <module>case-05-pure-kotlin-domain</module>
+        <module>case-06-debug-and-test</module>
+        <module>case-07-business-rules-kata</module>
+        <module>case-08-shipping-slot-aggregate</module>
+        <module>case-09-hospital-triage-policy</module>
+        <module>case-10-payment-settlement-strategy</module>
+        <module>case-11-library-loan-domain</module>
+        <module>case-12-parking-pricing-rules</module>
+        <module>case-13-warehouse-pick-list</module>
+        <module>case-14-insurance-claim-acl</module>
+        <module>case-15-flight-seat-booking</module>
+        <module>case-16-energy-tariff-billing</module>
+        <module>case-17-incident-escalation-state-machine</module>
+        <module>case-18-feature-flag-rbac</module>
+        <module>case-19-restaurant-reservation-api</module>
+        <module>case-20-ecommerce-cart-checkout</module>
+        <module>case-21-subscription-proration</module>
+        <module>case-22-iot-sensor-alerting</module>
+    </modules>
+</project>

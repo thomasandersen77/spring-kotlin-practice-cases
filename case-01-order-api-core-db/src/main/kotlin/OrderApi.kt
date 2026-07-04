@@ -10,14 +10,8 @@ import java.util.UUID
 /**
  * REST CONTROLLER
  *
- * Målet er supertynn controller.
- *
- * TODO:
- *  - Ikke legg forretningslogikk her
- *  - Map request DTO -> command/domain
- *  - Returner response DTO, ikke JPA-entity
- *  - Legg til GET /orders/{id}
- *  - Legg til POST /orders/{id}/confirm
+ * Supertynn controller: mapper request DTO -> domain, delegerer til service,
+ * returnerer response DTO.
  */
 @RestController
 @RequestMapping("/orders")
@@ -26,10 +20,20 @@ class OrderController(
 ) {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createOrder(@Valid @RequestBody request: CreateOrderRequest): OrderResponse {
-        val order = orderService.createOrder(request.toDomain())
-        return order.toResponse()
-    }
+    fun createOrder(@Valid @RequestBody request: CreateOrderRequest): OrderResponse =
+        orderService.createOrder(request.toDomain()).toResponse()
+
+    @GetMapping("/{id}")
+    fun getOrder(@PathVariable id: UUID): OrderResponse =
+        orderService.getOrder(id).toResponse()
+
+    @PostMapping("/{id}/confirm")
+    fun confirmOrder(@PathVariable id: UUID): OrderResponse =
+        orderService.confirmOrder(id).toResponse()
+
+    @PostMapping("/{id}/cancel")
+    fun cancelOrder(@PathVariable id: UUID): OrderResponse =
+        orderService.cancelOrder(id).toResponse()
 }
 
 data class CreateOrderRequest(
@@ -68,6 +72,7 @@ data class CreateOrderLineRequest(
 data class OrderResponse(
     val id: UUID,
     val customerId: UUID,
+    val status: OrderStatus,
     val totalAmount: BigDecimal
 )
 
@@ -75,5 +80,6 @@ fun Order.toResponse(): OrderResponse =
     OrderResponse(
         id = id,
         customerId = customerId,
+        status = status,
         totalAmount = totalAmount()
     )

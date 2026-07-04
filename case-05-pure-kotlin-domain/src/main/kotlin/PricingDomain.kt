@@ -18,7 +18,9 @@ value class ProductId(val value: String)
 
 data class Money(val amount: BigDecimal) {
     operator fun plus(other: Money): Money = Money(amount + other.amount)
+    operator fun minus(other: Money): Money = Money(amount - other.amount)
     operator fun times(quantity: Int): Money = Money(amount.multiply(BigDecimal(quantity)))
+    operator fun times(factor: BigDecimal): Money = Money(amount.multiply(factor))
 
     companion object {
         val ZERO = Money(BigDecimal.ZERO)
@@ -49,6 +51,20 @@ sealed class Discount {
 
 class PricingService {
     fun calculateTotal(basket: Basket, discount: Discount): Money {
-        TODO("Implementer rabattregler")
+        // TODO("Implementer rabattregler")
+        if (discount is Discount.NoDiscount) {
+            return basket.subtotal()
+        }
+
+        if (discount is Discount.Percentage) {
+            val factor = BigDecimal.ONE - BigDecimal(discount.percent).divide(BigDecimal(100))
+            val subtotal = basket.subtotal()
+            return subtotal * factor
+        }
+        if (discount is Discount.FixedAmount) {
+            val reduced = basket.subtotal() - discount.amount
+            return if (reduced.amount < BigDecimal.ZERO) Money.ZERO else reduced
+        }
+        return basket.subtotal()
     }
 }

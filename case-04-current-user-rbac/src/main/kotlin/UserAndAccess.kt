@@ -1,3 +1,4 @@
+import org.springframework.stereotype.Component
 import java.util.UUID
 
 /**
@@ -10,7 +11,10 @@ import java.util.UUID
  *  - Diskuter CurrentUser-annotation i controller
  *  - Hold domenet testbart uten SecurityContextHolder
  */
-data class CurrentUser(
+
+annotation class CurrentUser
+
+data class User(
     val id: UUID,
     val roles: Set<Role>,
     val organizationId: UUID
@@ -21,8 +25,8 @@ enum class Role {
     CASE_WORKER,
     READ_ONLY
 }
-
-data class CaseId(val value: UUID)
+@JvmInline
+value class CaseId(val value: UUID)
 
 data class CustomerCase(
     val id: CaseId,
@@ -35,9 +39,11 @@ enum class CaseStatus {
     CLOSED
 }
 
+@Component
 class AccessPolicy {
-    fun canCloseCase(user: CurrentUser, customerCase: CustomerCase): Boolean {
+    fun canCloseCase(user: User, customerCase: CustomerCase): Boolean {
         if (Role.ADMIN in user.roles) return true
+        if (Role.READ_ONLY in user.roles) return false
 
         return Role.CASE_WORKER in user.roles &&
             user.organizationId == customerCase.organizationId &&

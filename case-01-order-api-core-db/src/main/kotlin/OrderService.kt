@@ -6,12 +6,7 @@ import java.util.UUID
  * APPLICATION SERVICE / USE CASE
  *
  * Dette laget orkestrerer use case-et.
- *
- * TODO:
- *  - Legg inn transaksjonsgrenser bevisst
- *  - Ikke lek JPA-entities ut fra service
- *  - Vurder om service skal ta command-objekter i stedet for domain direkte
- *  - Legg til feilhåndtering ved manglende ordre
+ * Transaksjonsgrenser settes her slik at LAZY-relasjoner er tilgjengelige under mapping.
  */
 @Service
 class OrderService(
@@ -19,20 +14,31 @@ class OrderService(
 ) {
     @Transactional
     fun createOrder(order: Order): Order {
-        // TODO: Legg til domeneregler før lagring.
+        require(order.lines.isNotEmpty()) { "Order must have at least one order line" }
         return orderRepository.save(order)
     }
 
     @Transactional(readOnly = true)
-    fun getOrder(id: UUID): Order {
-        TODO("Implementer henting av ordre")
+    fun getOrder(id: UUID): Order =
+        orderRepository.findById(id) ?: throw NoSuchElementException("Order $id not found")
+
+    @Transactional
+    fun cancelOrder(id: UUID): Order {
+        val order = getOrder(id)
+        return orderRepository.save(order.cancel())
+    }
+
+    @Transactional
+    fun confirmOrder(id: UUID): Order {
+        val order = getOrder(id)
+        return orderRepository.save(order.confirm())
     }
 }
 
 /**
  * Repository-port.
  *
- * Core/service bør avhenge av dette grensesnittet, ikke Spring Data direkte.
+ * Core/service avhenger av dette grensesnittet, ikke Spring Data direkte.
  */
 interface OrderRepository {
     fun save(order: Order): Order

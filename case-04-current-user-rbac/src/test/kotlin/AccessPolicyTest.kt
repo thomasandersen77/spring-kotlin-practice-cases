@@ -8,7 +8,7 @@ class AccessPolicyTest {
 
     @Test
     fun `admin can close any case`() {
-        val user = CurrentUser(
+        val user = User(
             id = UUID.randomUUID(),
             roles = setOf(Role.ADMIN),
             organizationId = UUID.randomUUID()
@@ -25,6 +25,19 @@ class AccessPolicyTest {
 
     @Test
     fun `TODO read only user cannot close case`() {
-        // TODO: Implementer test.
+
+        val readOnlyUser = User(
+            id = UUID.randomUUID(),
+            roles = setOf(Role.READ_ONLY),
+            organizationId = UUID.randomUUID()
+        )
+
+        val customerCase = CustomerCase(
+            id = CaseId(UUID.randomUUID()),
+            organizationId = readOnlyUser.organizationId,
+            status = CaseStatus.OPEN
+        )
+
+        assertThat(policy.canCloseCase(readOnlyUser, customerCase)).isFalse()
     }
 }

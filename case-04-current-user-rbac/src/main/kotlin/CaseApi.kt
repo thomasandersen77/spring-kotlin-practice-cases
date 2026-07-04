@@ -1,3 +1,4 @@
+import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
 
@@ -14,34 +15,28 @@ class CaseController(
      */
     @PostMapping("/{caseId}/close")
     fun closeCase(
-        @PathVariable caseId: UUID,
-        @RequestBody request: CloseCaseRequest
+        @RequestBody request: CloseCaseRequest,
+        @CurrentUser user: User
     ): CloseCaseResponse {
-        val user = CurrentUser(
-            id = request.userId,
-            roles = request.roles,
-            organizationId = request.organizationId
-        )
-
-        service.closeCase(user, CaseId(caseId))
-        return CloseCaseResponse(caseId, "CLOSED")
+        val caseId = CaseId(request.caseId)
+        service.closeCase(user, caseId)
+        return CloseCaseResponse(caseId,CaseStatus.CLOSED)
     }
 }
 
 data class CloseCaseRequest(
-    val userId: UUID,
-    val organizationId: UUID,
-    val roles: Set<Role>
+    val caseId: UUID,
 )
 
 data class CloseCaseResponse(
-    val caseId: UUID,
-    val status: String
+    val caseId: CaseId,
+    val status: CaseStatus
 )
 
-class CaseService {
-    private val accessPolicy = AccessPolicy()
-
+@Service
+class CaseService(
+    val accessPolicy: AccessPolicy
+) {
     /**
      * TODO:
      *  - Legg til @Service
@@ -50,7 +45,10 @@ class CaseService {
      *  - Kast ForbiddenException ved manglende tilgang
      *  - Skriv test for access policy
      */
-    fun closeCase(user: CurrentUser, caseId: CaseId) {
-        TODO("Implementer lukking av sak")
+    fun closeCase(user: User, caseId: CaseId) {
+
+
+        // TODO("Implementer lukking av sak")
+
     }
 }
