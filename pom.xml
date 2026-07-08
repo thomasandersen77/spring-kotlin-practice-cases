@@ -33,28 +33,28 @@
     </dependencyManagement>
 
     <modules>
-        <module>case-01-order-api-core-db</module>
-        <module>case-02-refactor-fat-controller</module>
-        <module>case-03-anti-corruption-layer</module>
-        <module>case-04-current-user-rbac</module>
-        <module>case-05-pure-kotlin-domain</module>
-        <module>case-06-debug-and-test</module>
-        <module>case-07-business-rules-kata</module>
-        <module>case-08-shipping-slot-aggregate</module>
-        <module>case-09-hospital-triage-policy</module>
-        <module>case-10-payment-settlement-strategy</module>
-        <module>case-11-library-loan-domain</module>
-        <module>case-12-parking-pricing-rules</module>
+        <module>case-01-pure-kotlin-domain</module>
+        <module>case-02-debug-and-test</module>
+        <module>case-03-business-rules-kata</module>
+        <module>case-04-library-loan-domain</module>
+        <module>case-05-parking-pricing-rules</module>
+        <module>case-06-restaurant-reservation-api</module>
+        <module>case-07-order-api-core-db</module>
+        <module>case-08-refactor-fat-controller</module>
+        <module>case-09-current-user-rbac</module>
+        <module>case-10-shipping-slot-aggregate</module>
+        <module>case-11-hospital-triage-policy</module>
+        <module>case-12-payment-settlement-strategy</module>
         <module>case-13-warehouse-pick-list</module>
-        <module>case-14-insurance-claim-acl</module>
-        <module>case-15-flight-seat-booking</module>
-        <module>case-16-energy-tariff-billing</module>
-        <module>case-17-incident-escalation-state-machine</module>
-        <module>case-18-feature-flag-rbac</module>
-        <module>case-19-restaurant-reservation-api</module>
-        <module>case-20-ecommerce-cart-checkout</module>
-        <module>case-21-subscription-proration</module>
-        <module>case-22-iot-sensor-alerting</module>
+        <module>case-14-flight-seat-booking</module>
+        <module>case-15-energy-tariff-billing</module>
+        <module>case-16-incident-escalation-state-machine</module>
+        <module>case-17-feature-flag-rbac</module>
+        <module>case-18-ecommerce-cart-checkout</module>
+        <module>case-19-subscription-proration</module>
+        <module>case-20-iot-sensor-alerting</module>
+        <module>case-21-anti-corruption-layer</module>
+        <module>case-22-insurance-claim-acl</module>
         <module>case-23-optimistic-locking-concurrency</module>
         <module>case-24-domain-events-outbox</module>
         <module>case-25-idempotent-command-processing</module>
