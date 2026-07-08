@@ -13,10 +13,10 @@ data class PackageBooking(val packageId: String, val slotId: String, val bookedA
 
 class DeliveryRoute {
     fun book(slot: DeliverySlot, packageId: String, existing: List<PackageBooking>): PackageBooking {
-        TODO("Implement capacity and duplicate package rules")
+        TODO("Implement booking invariants: slot capacity, duplicate package handling, and invalid input protection")
     }
 
     fun sortedByTime(bookings: List<PackageBooking>): List<PackageBooking> {
-        TODO("Implement sorting by slot start time")
+        TODO("Implement deterministic sorting that uses slot window start time instead of booking insertion order")
     }
 }

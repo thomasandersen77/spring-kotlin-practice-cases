@@ -39,9 +39,10 @@ class InvoiceScoringTest {
     }
 
     @Test
-    fun `todo clarify stacking rules for future discount codes`() {
-        // TODO:
-        // Avklar om rabatter skal kunne stables eller ikke.
-        // Skriv testene først, deretter implementasjon.
+    fun `exercise clarify stacking rules for future discount codes`() {
+        // Dokumenter ønsket regelrekkefølge med tester før implementasjon:
+        // - skal VIP kombineres med kode?
+        // - hvis ja: i hvilken rekkefølge?
+        // - hvis nei: hvilken regel vinner?
     }
 }

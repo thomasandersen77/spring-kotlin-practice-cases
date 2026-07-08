@@ -11,10 +11,10 @@ data class SeatReserved(val seatNumber: SeatNumber, val passengerId: PassengerId
 
 class Flight {
     fun reserveSeat(seatNumber: SeatNumber, passengerId: PassengerId): SeatReserved {
-        TODO("Implement seat reservation invariants")
+        TODO("Implement aggregate state and reservation invariants such as duplicate seat prevention and consistent event emission")
     }
 
     fun cancelReservation(seatNumber: SeatNumber) {
-        TODO("Implement cancellation")
+        TODO("Implement cancellation rules with explicit behavior for unknown seat and subsequent rebooking")
     }
 }

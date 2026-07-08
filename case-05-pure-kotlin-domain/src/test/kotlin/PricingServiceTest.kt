@@ -19,7 +19,7 @@ class PricingServiceTest {
     }
 
     @Test
-    fun `TODO percentage discount should reduce total`() {
+    fun `exercise percentage discount should reduce total`() {
 
         val basket = Basket(
             customerId = CustomerId("C1"),
@@ -37,7 +37,7 @@ class PricingServiceTest {
     }
 
     @Test
-    fun `TODO fixed discount should never make total negative`() {
+    fun `exercise fixed discount should never make total negative`() {
 
         val basket = Basket(
             customerId = CustomerId("C1"),

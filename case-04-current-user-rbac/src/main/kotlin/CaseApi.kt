@@ -8,10 +8,10 @@ class CaseController(
     private val service: CaseService
 ) {
     /**
-     * TODO:
-     *  - I ekte app: @CurrentUser user: CurrentUser
-     *  - For øving: send userId/role i request eller header
-     *  - Hold controller tynn
+     * Neste steg i caset:
+     *  - I ekte app: map autentisert principal til User i adapterlaget.
+     *  - I øving: simuler CurrentUser uten å dra policylogikk inn i controller.
+     *  - Hold controller tynn og delegér til service/use case.
      */
     @PostMapping("/{caseId}/close")
     fun closeCase(
@@ -38,17 +38,16 @@ class CaseService(
     val accessPolicy: AccessPolicy
 ) {
     /**
-     * TODO:
-     *  - Legg til @Service
-     *  - Hent sak fra repository
-     *  - Bruk AccessPolicy
-     *  - Kast ForbiddenException ved manglende tilgang
-     *  - Skriv test for access policy
+     * Neste steg i caset:
+     *  - Les sak fra repository-port eller testbar in-memory adapter.
+     *  - Bruk AccessPolicy før statusendring.
+     *  - Modellér manglende tilgang eksplisitt (exception eller resultat-type).
+     *  - Skriv tester som dekker både autorisert og uautorisert flyt.
      */
     fun closeCase(user: User, caseId: CaseId) {
 
 
-        // TODO("Implementer lukking av sak")
+        // Implementer use case-flyt: hent sak -> valider tilgang -> utfør lukking -> persistér.
 
     }
 }

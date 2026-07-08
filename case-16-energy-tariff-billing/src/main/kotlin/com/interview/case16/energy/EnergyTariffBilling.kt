@@ -8,6 +8,6 @@ data class EnergyBill(val total: BigDecimal)
 
 class EnergyBillCalculator {
     fun calculate(start: MeterReading, end: MeterReading, tariff: EnergyTariff, vatRate: BigDecimal): EnergyBill {
-        TODO("Implement kWh calculation, VAT, and rounding")
+        TODO("Implement kWh difference calculation, tariff composition, VAT application, and deterministic rounding")
     }
 }

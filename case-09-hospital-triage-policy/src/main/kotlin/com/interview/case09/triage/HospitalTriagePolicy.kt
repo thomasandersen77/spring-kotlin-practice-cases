@@ -14,6 +14,6 @@ data class PatientTriageRequest(
 
 class TriagePolicy {
     fun prioritize(request: PatientTriageRequest): TriagePriority {
-        TODO("Implement triage rule ordering and edge cases")
+        TODO("Implement deterministic rule ordering with guard clauses for invalid input and explicit priority escalation rules")
     }
 }

@@ -55,5 +55,8 @@
         <module>case-20-ecommerce-cart-checkout</module>
         <module>case-21-subscription-proration</module>
         <module>case-22-iot-sensor-alerting</module>
+        <module>case-23-optimistic-locking-concurrency</module>
+        <module>case-24-domain-events-outbox</module>
+        <module>case-25-idempotent-command-processing</module>
     </modules>
 </project>

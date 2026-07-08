@@ -18,7 +18,7 @@ class CreditRiskTranslatorTest {
     }
 
     @Test
-    fun `TODO low score should become high risk`() {
-        // TODO: Implementer test.
+    fun `exercise low score should become high risk`() {
+        // Legg inn test for score under valgt terskel og dokumenter terskelen tydelig i testnavn eller testdata.
     }
 }

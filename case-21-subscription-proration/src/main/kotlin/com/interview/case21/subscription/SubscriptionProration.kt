@@ -8,6 +8,6 @@ data class BillingPeriod(val start: LocalDate, val endInclusive: LocalDate)
 
 class ProrationCalculator {
     fun calculateUpgradeCharge(currentPlan: Plan, targetPlan: Plan, period: BillingPeriod, changeDate: LocalDate): BigDecimal {
-        TODO("Implement proration and rounding")
+        TODO("Implement proration with explicit inclusive date semantics, upgrade/downgrade handling, and rounding strategy")
     }
 }

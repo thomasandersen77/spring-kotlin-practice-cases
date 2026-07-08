@@ -24,6 +24,6 @@ data class ParkingTariff(
 
 class ParkingPriceCalculator {
     fun calculate(session: ParkingSession, tariff: ParkingTariff): Money {
-        TODO("Implement pricing, discounts, and rounding rules")
+        TODO("Implement pricing flow with duration rules, vehicle modifiers, max-price behavior, and rounding contract")
     }
 }

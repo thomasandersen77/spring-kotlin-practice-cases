@@ -9,16 +9,16 @@ data class CartLine(val productId: ProductId, val quantity: Int)
 
 class Cart {
     fun addLine(productId: ProductId, quantity: Int) {
-        TODO("Implement merge quantity and positive quantity rules")
+        TODO("Implement aggregate invariant rules: positive quantity, duplicate product merge strategy, and immutable/readable state transitions")
     }
 
     fun checkout(at: Instant) {
-        TODO("Implement checkout transition")
+        TODO("Implement checkout transition with protection against empty cart and repeated checkout")
     }
 }
 
 class CheckoutCartUseCase {
     fun checkout(cart: Cart, at: Instant) {
-        TODO("Implement transaction/application boundary")
+        TODO("Implement application boundary orchestration and make transaction intent explicit")
     }
 }

@@ -24,7 +24,7 @@ class AccessPolicyTest {
     }
 
     @Test
-    fun `TODO read only user cannot close case`() {
+    fun `exercise read only user cannot close case`() {
 
         val readOnlyUser = User(
             id = UUID.randomUUID(),

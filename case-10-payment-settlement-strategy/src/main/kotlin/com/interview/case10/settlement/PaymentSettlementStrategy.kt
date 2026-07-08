@@ -18,6 +18,6 @@ interface SettlementFeeStrategy {
 
 class SettlementCalculator(private val strategies: List<SettlementFeeStrategy>) {
     fun calculateFee(method: PaymentMethod, amount: Money): Money {
-        TODO("Implement strategy lookup and calculation")
+        TODO("Implement strategy lookup with explicit behavior for missing strategy and predictable fee calculation")
     }
 }

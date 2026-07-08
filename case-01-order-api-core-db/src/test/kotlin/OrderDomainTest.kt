@@ -20,7 +20,7 @@ class OrderDomainTest {
     }
 
     @Test
-    fun `TODO should reject empty order`() {
-        // TODO: Implementer domeneregel og test.
+    fun `exercise should reject empty order`() {
+        // Legg til en eksplisitt domeneinvariant for tom ordre og dokumenter ønsket feilkontrakt i testen.
     }
 }

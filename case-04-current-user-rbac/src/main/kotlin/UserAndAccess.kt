@@ -6,10 +6,10 @@ import java.util.UUID
  *
  * Dette er bevisst forenklet og uten ekte Spring Security.
  *
- * TODO:
- *  - Diskuter hvordan dette kunne vært koblet til JWT
- *  - Diskuter CurrentUser-annotation i controller
- *  - Hold domenet testbart uten SecurityContextHolder
+ * Neste steg i caset:
+ *  - Skisser hvordan User kan mappes fra JWT claims i adapterlaget.
+ *  - Behold CurrentUser/rammeverksdetaljer utenfor domene- og policylogikk.
+ *  - Hold tilgangsregler testbare uten SecurityContextHolder.
  */
 
 annotation class CurrentUser

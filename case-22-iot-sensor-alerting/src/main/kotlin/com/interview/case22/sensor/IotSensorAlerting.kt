@@ -15,6 +15,6 @@ interface AlertPublisher {
 
 class ProcessSensorReadingUseCase(private val publisher: AlertPublisher) {
     fun process(reading: SensorReading) {
-        TODO("Implement threshold strategy and alert publishing")
+        TODO("Implement threshold strategy selection per sensor type and publish alerts only for rule violations")
     }
 }

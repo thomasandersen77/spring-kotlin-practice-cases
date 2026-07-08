@@ -11,22 +11,23 @@ class SubscriptionRefactoringTest {
     @Autowired
     lateinit var subscriptionService: SubscriptionService
     @Test
-    fun `TODO refactor pricing rules into domain`() {
+    fun `exercise extract pricing rules into domain model`() {
 
         val subscription1 = subscriptionService.create(mapOf("plan" to "BASIC"))
 
         assertNotNull(subscription1)
         assertEquals(Plan.BASIC, subscription1["plan"])
         assertEquals(99, subscription1["monthlyPrice"])
-        // TODO:
-        //  1. Lag enum SubscriptionPlan
-        //  2. Flytt prisregel ut av controller
-        //  3. Test BASIC, PRO og ENTERPRISE
+        // Neste steg i caset:
+        //  1. Innfør SubscriptionPlan som uttrykksfullt domenebegrep.
+        //  2. Flytt prisregler til en testbar policy/tjeneste uten HTTP-detaljer.
+        //  3. Utvid testene med BASIC, PRO og ENTERPRISE, inkludert ett feiltilfelle.
     }
 
     @Test
-    fun `TODO cancelling inactive subscription should be idempotent or fail explicitly`() {
-        // TODO:
-        //  Diskuter hva riktig domeneoppførsel skal være.
+    fun `exercise decide cancellation behavior for inactive subscription`() {
+        // Beskriv forventet domenekontrakt i test først:
+        // - enten idempotent (samme resultat ved gjentatt kall)
+        // - eller eksplisitt avvisning med tydelig feilmelding/resultat
     }
 }

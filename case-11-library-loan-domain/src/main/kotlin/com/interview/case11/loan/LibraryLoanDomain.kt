@@ -26,10 +26,10 @@ class Loan(
     val status: LoanStatus
 ) {
     fun extend(days: Long): Loan {
-        TODO("Implement one-time extension rules")
+        TODO("Implement one-time extension with explicit state for whether extension is already used and validate positive day count")
     }
 
     fun overdueDays(onDate: LocalDate): Long {
-        TODO("Implement overdue day calculation")
+        TODO("Implement overdue calculation with zero floor and clear behavior for returned loans")
     }
 }

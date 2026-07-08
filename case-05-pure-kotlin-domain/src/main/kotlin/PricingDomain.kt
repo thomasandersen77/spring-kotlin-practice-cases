@@ -3,11 +3,11 @@ import java.math.BigDecimal
 /**
  * REN KOTLIN / DOMENEMODELLERING
  *
- * TODO:
- *  - Bruk value objects
- *  - Unngå primitive obsession
- *  - Bruk sealed class for rabatter
- *  - Skriv tester først
+ * CASE-FOKUS:
+ *  - Bruk value objects for å redusere primitive obsession.
+ *  - Hold rabattregler eksplisitte og lesbare.
+ *  - Valider input nær konstruktørene der det gir mening.
+ *  - La testene beskrive kontrakten før videre refaktorering.
  */
 
 @JvmInline
@@ -51,7 +51,7 @@ sealed class Discount {
 
 class PricingService {
     fun calculateTotal(basket: Basket, discount: Discount): Money {
-        // TODO("Implementer rabattregler")
+        // Neste steg: utvid regler og validering uten å ofre lesbarhet.
         if (discount is Discount.NoDiscount) {
             return basket.subtotal()
         }

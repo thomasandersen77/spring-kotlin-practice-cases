@@ -7,10 +7,10 @@ class CapacityPlannerTest {
     private val planner = CapacityPlanner()
 
     @Test
-    fun `TODO same day should be clarified`() {
-        // TODO:
-        //  Skal from == to gi 0 eller 1?
-        //  Avklar i testen.
+    fun `exercise clarify same-day semantics`() {
+        // Beskriv kontrakten eksplisitt:
+        // - Skal from == to gi 0 eller 1 tilgjengelig arbeidsdag?
+        // - Hvordan henger valget sammen med inclusive/exclusive-regelen i resten av perioden?
     }
 
     @Test

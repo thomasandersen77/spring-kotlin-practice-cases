@@ -23,11 +23,11 @@ class LoanApplicationService(
     private val creditRiskTranslator: CreditRiskTranslator
 ) {
     /**
-     * TODO:
-     *  - Denne klassen mangler @Service. Legg det til.
-     *  - Bruk CreditPolicy
-     *  - Lag bedre command/DTO-struktur
-     *  - Skriv tester for mapping og policy
+     * Neste steg i caset:
+     *  - Marker klassen som application service i Spring-laget.
+     *  - Injektér og bruk CreditPolicy i stedet for å opprette den inline.
+     *  - Hold API-request adskilt fra intern command-modell ved behov.
+     *  - Skriv separate tester for ACL-mapping, policy og orkestrering.
      */
     fun apply(applicantId: UUID, amount: BigDecimal): CreditDecision {
         val externalScore = externalCreditProviderClient.fetchCreditScore(applicantId)

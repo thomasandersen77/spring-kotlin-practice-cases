@@ -10,16 +10,35 @@ Lager / ordreplukk
 - Aggregate Root
 - State transitions
 - Invariants
+- Modellering av intern state
+
+## Scenario
+En plukkliste skal bygges opp av SKU-linjer, markeres plukket og fullføres når alle linjer er håndtert. Skeleton-koden har metoder, men ingen state eller regler ennå.
 
 ## Oppgave
-Implementer skeleton-koden i `src/main/kotlin` og få testene grønne uten å overdesigne.
+Design `PickList` som et lite aggregate med interne linjer og status. Vis hvordan du beskytter invariants når linjer legges til, plukkes og fullføres.
+
+## TODO / fokusområder
+- TODO: Valider `Quantity` og avklar om samme SKU skal merges eller avvises.
+- TODO: Hindre endringer etter at plukklisten er fullført.
+- TODO: Implementer `markPicked` for eksisterende SKU og bestem hva som skjer for ukjent SKU.
+- TODO: Tillat `complete` bare når listen har linjer og alle er plukket.
+- TODO: Legg til tester for ugyldig quantity, ukjent SKU og fullføring for tidlig.
 
 ## Akseptansekriterier
-- Domenereglene er implementert i riktige klasser.
-- Testene beskriver atferd og edge cases.
-- Koden er lett å forklare høyt i intervju.
+- `PickList` har nok state til å håndheve egne regler.
+- Statusoverganger er eksplisitte og testet.
+- Feiltilfeller er bevisst modellert.
+- Koden kan forklares som et aggregate, ikke bare som en datastruktur.
+
+## Formål i intervjuet
+Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+## Ikke gjør det for lett
+Ikke la metodene være tomme “commands” uten observerbar state. Kandidaten må kunne vise hvordan invariants faktisk holdes.
 
 ## Kommandoer
+
 ```bash
 mvn -pl case-13-warehouse-pick-list test
 ```

@@ -17,6 +17,6 @@ data class FeatureFlag(val name: String, val productArea: String, val experiment
 
 class FeatureFlagAccessPolicy {
     fun canActivate(user: CurrentUser, flag: FeatureFlag, environment: Environment, approvedForProd: Boolean): Boolean {
-        TODO("Implement RBAC and approval rules")
+        TODO("Implement explicit RBAC matrix by role/environment/productArea and production approval constraints")
     }
 }

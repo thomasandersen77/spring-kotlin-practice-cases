@@ -30,10 +30,10 @@ class ExternalCreditProviderClient {
 /**
  * ANTI-CORRUPTION LAYER
  *
- * TODO:
- *  - Flytt mapping hit
- *  - Oversett ekstern score til domenebegrepet CreditRisk
- *  - Skjul source_system, red_flag osv. fra domenet
+ * Neste steg i caset:
+ *  - Utvid mappingen med eksplisitt håndtering av grensetilfeller (ukjent/skjev score).
+ *  - Beskriv med tester hvorfor leverandørfelter ikke skal lekke inn i domenet.
+ *  - Hold leverandørspesifikke beslutninger samlet i ACL-laget.
  */
 @Component
 class CreditRiskTranslator {

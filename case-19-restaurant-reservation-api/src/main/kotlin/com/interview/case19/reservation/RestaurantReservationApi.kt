@@ -8,6 +8,6 @@ data class CreateReservationResponse(val reservationId: UUID, val status: String
 
 class CreateReservationUseCase {
     fun execute(request: CreateReservationRequest): CreateReservationResponse {
-        TODO("Implement reservation validation and creation")
+        TODO("Implement request validation and domain-aware reservation creation with explicit failure semantics")
     }
 }

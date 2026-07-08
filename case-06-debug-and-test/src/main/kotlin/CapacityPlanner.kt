@@ -30,10 +30,11 @@ class CapacityPlanner {
      *  - Denne har minst én off-by-one-feil.
      *  - Den håndterer helg litt naivt.
      *
-     * TODO:
-     *  - Skriv tester før du fikser
-     *  - Avklar om 'to' er inclusive eller exclusive
-     *  - Refaktorer til lesbar kode
+     * CASE-FOKUS:
+     *  - Skriv kontrakt-tester før du endrer implementasjonen.
+     *  - Avklar om `to` er inclusive eller exclusive, og la testnavn dokumentere valget.
+     *  - Del gjerne opp i navngitte hjelpefunksjoner som uttrykker domenespråk (arbeidsdag, fravær, periode).
+     *  - Forklar trade-off mellom enkelhet og tydelighet i dato-semantikken.
      */
     fun availableWorkingDays(
         from: LocalDate,

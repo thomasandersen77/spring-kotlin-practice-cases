@@ -26,14 +26,15 @@ data class CreditDecision(
 )
 
 /**
- * TODO:
- *  - Legg til domene-regel:
- *      HIGH risk over 100 000 skal avslås
- *      MEDIUM risk over 500 000 skal manuellbehandles
- *      LOW risk kan godkjennes
+ * Neste steg i caset:
+ *  - Modellér beslutningsregler eksplisitt i domenespråk:
+ *      HIGH risk over 100 000 -> avslag
+ *      MEDIUM risk over 500 000 -> manuell behandling
+ *      LOW risk -> godkjenning
+ *  - Forklar i kode/test hvorfor dette er domeneregel og ikke integrasjonsregel.
  */
 class CreditPolicy {
     fun decide(application: LoanApplication): CreditDecision {
-        TODO("Implementer domenereglene")
+        TODO("Implement domain policy with explicit thresholds and readable decision reasons")
     }
 }

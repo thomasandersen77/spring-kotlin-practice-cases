@@ -29,6 +29,6 @@ sealed class MappingResult {
 
 class ClaimTranslator {
     fun translate(dto: ExternalClaimDto): MappingResult {
-        TODO("Implement ACL translation and validation")
+        TODO("Implement anti-corruption translation with robust validation and explicit failure messages")
     }
 }
