@@ -58,5 +58,10 @@
         <module>case-23-optimistic-locking-concurrency</module>
         <module>case-24-domain-events-outbox</module>
         <module>case-25-idempotent-command-processing</module>
+        <module>case-26-kotlin-idioms-drill</module>
+        <module>case-27-coroutines-structured-concurrency</module>
+        <module>case-28-oauth2-jwt-resource-server</module>
+        <module>case-29-llm-port-adapter-fallback</module>
+        <module>case-30-bank-account-crud-jpa</module>
     </modules>
 </project>

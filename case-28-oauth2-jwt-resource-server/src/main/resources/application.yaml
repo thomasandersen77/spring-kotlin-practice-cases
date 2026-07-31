@@ -1,0 +1,11 @@
+# I produksjon ville denne pekt på identity provider (f.eks. Maskinporten / Entra ID):
+# spring:
+#   security:
+#     oauth2:
+#       resourceserver:
+#         jwt:
+#           issuer-uri: https://maskinporten.no/
+#
+# I testene mockes JwtDecoder, så ingen ekte IdP trengs.
+server:
+  port: 8082

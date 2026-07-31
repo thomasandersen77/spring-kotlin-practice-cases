@@ -29,6 +29,11 @@ Dette er en samling små, uavhengige case-prosjekter for å øve til teknisk int
 23. `case-23-optimistic-locking-concurrency` - versjonskontroll og konflikthåndtering ved samtidige reservasjoner.
 24. `case-24-domain-events-outbox` - domain events outbox: transactional outbox for konsistente domene-events ved ordreplassering.
 25. `case-25-idempotent-command-processing` - idempotency keys for retry-sikker betalingshåndtering.
+26. `case-26-kotlin-idioms-drill` - kotlin idioms drill: refaktorer Java-aktig Kotlin til idiomatisk Kotlin (collections, null-safety, when, extension functions).
+27. `case-27-coroutines-structured-concurrency` - coroutines: parallelliser I/O-kall med async/coroutineScope, timeout og kansellering, testet med virtuell tid.
+28. `case-28-oauth2-jwt-resource-server` - OAuth2/JWT resource server: SecurityFilterChain, scopes og rollemapping fra custom claim, testet med MockMvc jwt().
+29. `case-29-llm-port-adapter-fallback` - LLM bak port/adapter: modell-fallback ved 503, feilsemantikk og testbarhet uten nettverkskall.
+30. `case-30-bank-account-crud-jpa` - bank-API med CRUD, JPA-relasjoner, transaksjoner, domeneoperasjoner for innskudd/uttak og H2-tester.
 
 Hvert case har sin egen README.md med scenario, TODO-er og akseptansekriterier.
 
