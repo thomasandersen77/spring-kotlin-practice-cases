@@ -24,7 +24,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | Case | Tema | Status | Beste score | Siste forsøk | Branch |
 |---|---|---|---|---|---|
 | 01 pure-kotlin-domain | Kotlin / DDD | Løst | 7.5 | 2026-07-27 | main |
-| 02 debug-and-test | Kotlin / TDD | Påbegynt | – | 2026-08-01 | (ucommittet lokalt) |
+| 02 debug-and-test | Kotlin / TDD | Løst | 8.9 | 2026-08-01 | case-02-forsoek-1 |
 | 03 business-rules-kata | DDD | Ikke startet | – | – | – |
 | 04 library-loan-domain | DDD | Ikke startet | – | – | – |
 | 05 parking-pricing-rules | DDD | Ikke startet | – | – | – |
@@ -54,14 +54,14 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 29 llm-port-adapter-fallback | Integrasjon | Ikke startet | – | – | – |
 | 30 bank-account-crud-jpa | Full stack / JPA | Ikke startet | – | – | – |
 
-**Oppsummert:** 1 løst · 1 påbegynt · 28 ikke startet · 0 mestret
+**Oppsummert:** 2 løst · 0 påbegynt · 28 ikke startet · 0 mestret
 
 ## Forsøkshistorikk
 
 | Dato | Case | Forsøk | Branch | Score | Notater |
 |---|---|---|---|---|---|
 | 2026-07-27 | 01 | 1 | main | 7.5 | Invariants (Money, Quantity, Percentage), fast-rabatt-guard og NoDiscount-test løst. Gjenstående forbedringer: eksplisitte kanttester for 0 % og 100 %, tydelig avrundings-/skalakontrakt, og begrunnelse for trade-off mellom sealed class og Strategy Pattern. |
-| 2026-08-01 | 02 | 1 | (ucommittet) | – | Påbegynt: `to` avklart som eksklusiv, helg refaktorert til `isInWeekend()`. Gjenstår: edge-tester (helg i start/slutt, fravær på helg, fravær utenfor, from > to) og lesbarhetsrefaktorering av løkken. |
+| 2026-08-01 | 02 | 1 | case-02-forsoek-1 | 8.9 | Løst med eksplisitt `[from, to)`-kontrakt, avvisning av `from > to`, lesbar `datesUntil`-implementasjon og ni grønne tester som dekker helgegrenser, fravær og HTTP/JSON. Trekk: generelle testnavn, overflødig Java 9-konfigurasjon i Maven og mindre kodehygiene rundt `isInWeekend()`/whitespace. |
 
 ## Slik registrerer du et nytt forsøk
 
