@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.time.LocalDate
 
 @WebMvcTest(CapacityController::class)
-@ContextConfiguration(classes = [CapacityController::class, JacksonConfig::class])
+@ContextConfiguration(classes = [CapacityController::class])
 class CapacityControllerTest {
 
     @Autowired
