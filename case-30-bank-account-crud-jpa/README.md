@@ -23,7 +23,8 @@ En liten bank trenger et internt API for administrasjon av kunder og bankkontoer
 ## Oppgave
 Fullfør banksystemet slik at CRUD fungerer for kunder og kontoer, mens alle saldoendringer går gjennom domeneoperasjoner som beskytter invariantene. Testene beskriver kontrakten — flere er røde til du har implementert TODO-ene.
 
-## TODO / fokusområder (prioritert)
+## TODO / fokusområder
+Løs i prioritert rekkefølge:
 1. Implementer `Money`-normalisering med skala = 2 og konsistent avrunding (`HALF_EVEN`).
 2. Fullfør domeneregler i `BankAccount.deposit`, `withdraw` og `close`.
 3. Sørg for at utilstrekkelig saldo gir tydelig domeneexception.

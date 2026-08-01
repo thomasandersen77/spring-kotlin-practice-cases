@@ -65,7 +65,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 
 ## Slik registrerer du et nytt forsøk
 
-1. Lag branch: `git checkout -b case-NN-forsoek-M main` (M = forsøksnummer).
+1. Lag branch: `git switch -c case-NN-forsoek-M main` (M = forsøksnummer).
 2. Løs caset innen tidsboksen i casets README.
 3. Kjør debrief-spørsmålene høyt — score reflekterer hvor godt du begrunner, ikke bare at testene er grønne.
 4. Oppdater oversikten over (status, beste score, siste forsøk, branch) og legg til rad i historikken.

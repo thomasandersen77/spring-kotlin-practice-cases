@@ -5,7 +5,7 @@ Hvordan få mest mulig ut av dette repoet før teknisk intervju.
 ## Treningsprotokoll per økt
 
 1. **Velg case** fra root-README sin progresjon, eller et svakt case fra STATUS.md.
-2. **Lag branch:** `git checkout -b case-NN-forsoek-M main`.
+2. **Lag branch:** `git switch -c case-NN-forsoek-M main`.
 3. **Sett tidsboks** etter casets `## Tid`. Stopp når tiden er ute — intervjuer har også tidsboks.
 4. **Les README-en grundig** før du åpner koden. Formuler oppgaven med egne ord, høyt.
 5. **Kjør testene** (`mvn test -pl <modul>`) og les hva som er rødt. Røde tester er kontrakten, ikke fienden.
