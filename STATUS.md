@@ -61,7 +61,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | Dato | Case | Forsøk | Branch | Score | Notater |
 |---|---|---|---|---|---|
 | 2026-07-27 | 01 | 1 | main | 7.5 | Invariants (Money, Quantity, Percentage), fast-rabatt-guard og NoDiscount-test løst. Gjenstående forbedringer: eksplisitte kanttester for 0 % og 100 %, tydelig avrundings-/skalakontrakt, og begrunnelse for trade-off mellom sealed class og Strategy Pattern. |
-| 2026-08-01 | 02 | 1 | case-02-forsoek-1 | 8.9 | Løst med eksplisitt `[from, to)`-kontrakt, avvisning av `from > to`, lesbar `datesUntil`-implementasjon og ni grønne tester som dekker helgegrenser, fravær og HTTP/JSON. Trekk: generelle testnavn, overflødig Java 9-konfigurasjon i Maven og mindre kodehygiene rundt `isInWeekend()`/whitespace. |
+| 2026-08-01 | 02 | 1 | case-02-forsoek-1 | 8.9 | Løst med eksplisitt [from, to)-kontrakt, avvisning av from > to, lesbar datesUntil-implementasjon og ni grønne tester. Trekk for generelle testnavn, overflødig Java 9-konfigurasjon og mindre kodehygiene rundt isInWeekend()/whitespace. |
 
 ## Slik registrerer du et nytt forsøk
 
