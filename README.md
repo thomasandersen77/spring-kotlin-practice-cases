@@ -9,24 +9,28 @@ Dette er et treningsrepositorium for teknisk intervju og parprogrammering i Kotl
 
 ## Slik jobber du iterativt med casene
 
-Originaloppgavene ligger alltid på `main`. Du løser dem på egne branches, slik at du kan sammenligne med utgangspunktet og øve på nytt med friske øyne:
+Originaloppgavene ligger alltid på `main`, og `main` skal alltid være den opprinnelige, uløste oppgaven. Løsningene dine lever på egne `case-NN-forsoek-M`-branches og merges **aldri** tilbake til `main`:
 
 ```bash
 # Første forsøk på et case:
-git checkout main
-git checkout -b case-05-forsoek-1
+git switch main
+git switch -c case-05-forsoek-1
 # ... løs caset, kjør tester, tenk høyt ...
 git add -A && git commit -m "case-05: første forsøk"
 
-# Sammenlign med originaloppgaven:
-git diff main...HEAD
+# Sammenlign forsøket med originaloppgaven:
+git diff main...case-05-forsoek-1
 
-# Oppdater STATUS.md med score og notater, og merge hvis du vil:
-git checkout main && git merge case-05-forsoek-1
+# Tilbake til main og registrer KUN statusen (ingen merge av løsningen!):
+git switch main
+# ... rediger STATUS.md ...
+git add STATUS.md && git commit -m "status: case-05 forsøk 1"
 
-# Ny runde senere (andre/tredje gjennomkjøring — ny score):
-git checkout -b case-05-forsoek-2 main
+# Ny runde senere (andre/tredje gjennomkjøring — ny score, alltid fra ren main):
+git switch -c case-05-forsoek-2 main
 ```
+
+**Løsningsbranchen merges ikke til `main`.** Det er det som gjør at originaloppgaven alltid er intakt, og at du kan øve på nytt med friske øyne.
 
 **Fremgang og score føres i [STATUS.md](STATUS.md).** Hvert forsøk scores 0.0–10.0 — poenget er å slå din egen forrige score når du husker og lærer mer.
 
@@ -106,7 +110,7 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 | 2 | 03, 04, 05, 11, 12 | Domeneregler, value objects og enkle services |
 | 3 | 13, 14, 16, 18, 10, 19, 15 | Aggregater, statusoverganger og presisjon |
 | 4 | 06, 08, 09, 17, 07 | API, lagdeling og SOLID — avslutt med 07 som full Spring-flyt |
-| 5 | 20, 21, 22, 29, 12 | Porter, adaptere og integrasjoner |
+| 5 | 20, 21, 22, 29, 12 (repetisjon i integrasjonskontekst) | Porter, adaptere og integrasjoner |
 | 6 | 23, 24, 25, 27, 28 | Samtidighet, coroutines og sikkerhet |
 | 7 | 30 | Full stack (JPA, transaksjoner, REST, domene) — "mesterprøven" |
 | 8+ | Gjenta svake caser fra STATUS.md på nye branches | Slå din egen score |

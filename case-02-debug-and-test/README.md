@@ -39,10 +39,10 @@ I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som 
 Ikke endre forventede tall tilfeldig til testene passer. Start med å formulere kontrakten, og gjør deretter koden konsistent med den.
 
 ## Intervjuspørsmål / debrief
-1. Hvorfor valgte du exclusive `to`? Hva er alternativet, og hvorfor er ditt valg tryggere?
-2. Hva er forskjellen på en dato-kontrakt og en implementasjonsdetalje?
-3. Hva bør skje når `from > to` — exception, 0 eller noe annet? Begrunn.
-4. Hvorfor er `LocalDate.isInWeekend()` bedre enn å sammenligne `dayOfWeek.value` med 6 og 7?
+1. Hvilken semantikk valgte du for `to` – inklusiv eller eksklusiv – og hvorfor?
+2. Hva er forskjellen mellom datokontrakten og implementasjonsdetaljene som realiserer den?
+3. Hva skal skje når `from > to` – exception, `0` eller et eksplisitt resultat – og hvorfor?
+4. Hvordan modellerte du begrepene arbeidsdag og helg, og hvilke alternativer vurderte du?
 
 ## Kommandoer
 

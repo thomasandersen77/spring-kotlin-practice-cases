@@ -60,7 +60,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 
 | Dato | Case | Forsøk | Branch | Score | Notater |
 |---|---|---|---|---|---|
-| 2026-07-27 | 01 | 1 | main | 7.5 | Invariants (Money, Quantity, Percentage) og fast-rabatt-guard løst. Trekk: mangler NoDiscount-test, avrundingstest og eksplisitt tradeoff-notat. |
+| 2026-07-27 | 01 | 1 | main | 7.5 | Invariants (Money, Quantity, Percentage), fast-rabatt-guard og NoDiscount-test løst. Gjenstående forbedringer: eksplisitte kanttester for 0 % og 100 %, tydelig avrundings-/skalakontrakt, og begrunnelse for trade-off mellom sealed class og Strategy Pattern. |
 | 2026-08-01 | 02 | 1 | (ucommittet) | – | Påbegynt: `to` avklart som eksklusiv, helg refaktorert til `isInWeekend()`. Gjenstår: edge-tester (helg i start/slutt, fravær på helg, fravær utenfor, from > to) og lesbarhetsrefaktorering av løkken. |
 
 ## Slik registrerer du et nytt forsøk
