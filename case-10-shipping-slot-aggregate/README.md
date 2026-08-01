@@ -33,11 +33,17 @@ Implementer bookinglogikk som beskytter invariants rundt kapasitet, duplikate pa
 ## Formål i intervjuet
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
 I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+
 ## Ikke gjør det for lett
 Ikke bare returner en booking fra `book`. Modellen må vise hvordan kapasitet og duplikater håndheves.
+
+## Intervjuspørsmål / debrief
+1. Hvor går aggregatgrensen: route, slot eller booking? Begrunn.
+2. Hvordan håndhever du kapasitet uten database?
+3. Hvorfor er sortering på bookingtidspunkt feil i dette domenet?
 
 ## Kommandoer
 
 ```bash
-mvn -pl case-10-shipping-slot-aggregate test
+mvn test -pl case-10-shipping-slot-aggregate
 ```

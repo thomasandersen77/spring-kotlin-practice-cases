@@ -34,11 +34,17 @@ Modeller handlekurven som et aggregate som beskytter egne regler, og la `Checkou
 ## Formål i intervjuet
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
 I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+
 ## Ikke gjør det for lett
 Ikke implementer checkout som en tom metode. Caset handler om at aggregate og use case har ulike ansvar.
+
+## Intervjuspørsmål / debrief
+1. Hvilke regler eier `Cart`, og hvilke eier `CheckoutCartUseCase`?
+2. Hvor går transaksjonsgrensen i en ekte Spring/JPA-løsning?
+3. Hvorfor må checkout være tilstandsendrende og ikke idempotent uten videre?
 
 ## Kommandoer
 
 ```bash
-mvn -pl case-18-ecommerce-cart-checkout test
+mvn test -pl case-18-ecommerce-cart-checkout
 ```

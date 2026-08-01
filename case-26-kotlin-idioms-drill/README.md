@@ -1,20 +1,22 @@
 # Case 26 - Kotlin idioms drill
 
-Ren syntaks- og idiomtrening: skriv om Java-aktig Kotlin til idiomatisk Kotlin uten å endre oppførsel.
+## Domene
+Konsulentdata / rapportering
 
-## Hvorfor dette caset er viktig for deg
-Du profilerer deg som Kotlin-utvikler med lang Java-bakgrunn, og i live-koding er det nettopp
-overgangen Java → Kotlin intervjueren ser etter. En vanlig felle for erfarne Java-utviklere er å
-skrive "Java med Kotlin-syntaks": `for`-løkker med mutable lister, `if (x != null)`-pyramider og
-manuelle `HashMap`-oppbygginger. Sopra Steria kommer til å vurdere hvor naturlig du bruker
-collections-API-et, null-safety og uttrykksbasert kode — det er dette som skiller "kan Kotlin"
-fra "tenker i Kotlin". Dette caset finnes ikke blant case 1–25, som fokuserer på domenedesign;
-her trener du ren fingerferdighet og syntaks under tidspress.
+## Tid
+30-45 minutter
+
+## Hva dette trener
+- Kotlin-idiomer (collections, null-safety, `when`)
+- Extension functions
+- Refaktorering med tester som sikkerhetsnett
+- Scope functions (`let`, `apply`, `also`, `run`)
 
 ## Scenario
-`ConsultantReports.kt` inneholder fungerende, men bevisst klønete kode som lager rapporter over
-konsulenter, timepriser og ferdigheter. Testene er grønne. Din jobb er å refaktorere til
-idiomatisk Kotlin og holde testene grønne hele veien.
+`ConsultantReports.kt` inneholder fungerende, men bevisst klønete kode som lager rapporter over konsulenter, timepriser og ferdigheter — skrevet som "Java med Kotlin-syntaks". Testene er grønne. Din jobb er å refaktorere til idiomatisk Kotlin og holde testene grønne hele veien.
+
+## Oppgave
+Skriv om Java-aktig Kotlin til idiomatisk Kotlin uten å endre oppførsel. Bruk collections-API-et, null-safety og uttrykksbasert kode der det gjør koden kortere OG mer lesbar.
 
 ## TODO / fokusområder
 - TODO: Erstatt `for`-løkker + mutable lister med `filter`, `map`, `sortedBy`, `groupBy`, `associateBy`, `sumOf` og `fold`.
@@ -22,7 +24,6 @@ idiomatisk Kotlin og holde testene grønne hele veien.
 - TODO: Skriv om `buildSkillIndex` til én expression-body-funksjon.
 - TODO: Innfør en extension function (f.eks. `List<Consultant>.availableIn(city: String)`) der det gir bedre lesbarhet.
 - TODO: Bruk `when` som uttrykk i `seniorityLabel` i stedet for if/else-kjeden.
-- TODO: Vurder scope functions (`let`, `apply`, `also`, `run`) — og like viktig: hvor de IKKE bør brukes.
 - TODO: Erstatt string-konkatinering med string templates og `joinToString`.
 
 ## Akseptansekriterier
@@ -31,13 +32,20 @@ idiomatisk Kotlin og holde testene grønne hele veien.
 - Ingen `!!`.
 - Koden er kortere og mer lesbar — ikke bare "smartere".
 
-## Debrief-spørsmål du bør kunne svare på
-- Når velger du en `for`-løkke fremfor en kjede av collection-operasjoner (ytelse/lesbarhet)?
-- Hva er forskjellen på `let` og `run`, og når skaper scope functions mer forvirring enn verdi?
-- Hvorfor er `List` i Kotlin read-only, men ikke immutable — og når betyr forskjellen noe?
-- Når bruker du `sequence` i stedet for vanlige collection-operasjoner?
+## Formål i intervjuet
+I live-koding er overgangen Java → Kotlin det intervjueren ser etter. En vanlig felle for erfarne Java-utviklere er å skrive "Java med Kotlin-syntaks": `for`-løkker med mutable lister, null-sjekk-pyramider og manuelle map-oppbygginger. Det som skiller "kan Kotlin" fra "tenker i Kotlin" er hvor naturlig du bruker collections-API-et, null-safety og uttrykksbasert kode.
 
-## Hvordan kjøre
+## Ikke gjør det for lett
+Ikke skriv om til én kjede av femten operasjoner ingen forstår. Idiomatisk betyr lesbart — ikke maksimalt kompakt.
+
+## Intervjuspørsmål / debrief
+1. Når velger du en `for`-løkke fremfor en kjede av collection-operasjoner (ytelse/lesbarhet)?
+2. Hva er forskjellen på `let` og `run`, og når skaper scope functions mer forvirring enn verdi?
+3. Hvorfor er `List` i Kotlin read-only, men ikke immutable — og når betyr forskjellen noe?
+4. Når bruker du `sequence` i stedet for vanlige collection-operasjoner?
+
+## Kommandoer
+
 ```bash
 mvn test -pl case-26-kotlin-idioms-drill
 ```

@@ -34,11 +34,17 @@ Gjør `Loan` til et lite domeneobjekt med tydelige regler. Du må selv velge hvo
 ## Formål i intervjuet
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
 I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+
 ## Ikke gjør det for lett
 Ikke skjul “forlenget én gang”-regelen i en kommentar. Modellen må bære nok state til at regelen kan håndheves.
+
+## Intervjuspørsmål / debrief
+1. Hva gjør `Loan` til en entity og ikke et value object?
+2. Hvorfor må “forlenget én gang” ligge i modellen og ikke i en kommentar?
+3. Hvordan tester du dato-logikk uten å hardkode dagens dato?
 
 ## Kommandoer
 
 ```bash
-mvn -pl case-04-library-loan-domain test
+mvn test -pl case-04-library-loan-domain
 ```

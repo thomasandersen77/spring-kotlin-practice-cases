@@ -1,20 +1,29 @@
 # Case 30 - Bank account CRUD + JPA
-Lite banksystem for intervjuøving med Kotlin, Spring Boot, REST, JPA og DDD-light.
-## Scenario
-En liten bank trenger et internt API for administrasjon av kunder og bankkontoer. Løsningen skal støtte CRUD for kunder og kontoer, men saldo skal kun endres via eksplisitte domeneoperasjoner (`deposit`/`withdraw`) og ikke via generell `PUT`.
-## Læringsmål
-- idiomatisk Kotlin
-- REST CRUD
-- Bean Validation
-- JPA entities
-- `ManyToOne(fetch = LAZY)`
-- unike constraints
-- repository-porter (ports/adapters)
-- transaksjonsgrenser med `@Transactional`
+
+## Domene
+Bank / kontoadministrasjon
+
+## Tid
+90-120 minutter
+
+## Hva dette trener
+- Idiomatisk Kotlin
+- REST CRUD og Bean Validation
+- JPA entities og `ManyToOne(fetch = LAZY)`
+- Unike constraints
+- Repository-porter (ports/adapters)
+- Transaksjonsgrenser med `@Transactional`
 - H2-testing
-- domain invariants
-- forskjellen mellom CRUD-atferd og domeneoperasjoner
-## Oppgave (prioritert)
+- Domain invariants
+- Forskjellen mellom CRUD-atferd og domeneoperasjoner
+
+## Scenario
+En liten bank trenger et internt API for administrasjon av kunder og bankkontoer. Løsningen skal støtte CRUD for kunder og kontoer, men saldo skal kun endres via eksplisitte domeneoperasjoner (`deposit`/`withdraw`) og ikke via generell `PUT`. Systemet bruker kun norske kroner (NOK).
+
+## Oppgave
+Fullfør banksystemet slik at CRUD fungerer for kunder og kontoer, mens alle saldoendringer går gjennom domeneoperasjoner som beskytter invariantene. Testene beskriver kontrakten — flere er røde til du har implementert TODO-ene.
+
+## TODO / fokusområder (prioritert)
 1. Implementer `Money`-normalisering med skala = 2 og konsistent avrunding (`HALF_EVEN`).
 2. Fullfør domeneregler i `BankAccount.deposit`, `withdraw` og `close`.
 3. Sørg for at utilstrekkelig saldo gir tydelig domeneexception.
@@ -25,6 +34,7 @@ En liten bank trenger et internt API for administrasjon av kunder og bankkontoer
 8. Fullfør mapping- og valideringsregler der TODO er markert.
 9. Forbedre global feilhåndtering slik at feilkontrakten er konsekvent i alle lag.
 10. Gjør alle testene grønne uten å bryte lagdeling mellom domain/application/api/persistence.
+
 ## Akseptansekriterier
 - Domenet avhenger ikke av Spring, HTTP, JSON, JPA eller H2.
 - Konto opprettes alltid med `0,00 NOK`.
@@ -38,20 +48,14 @@ En liten bank trenger et internt API for administrasjon av kunder og bankkontoer
 - `Money` bruker `BigDecimal` med eksplisitt skala/avrunding.
 - `open-in-view` er slått av.
 - Testene dekker domene, repository, application service og REST-integrasjon.
-## Kjøring
-```bash
-mvn test
-mvn spring-boot:run
-```
-Fra rotprosjekt:
-```bash
-mvn test -pl case-30-bank-account-crud-jpa
-```
-## Nyttige URL-er
-- http://localhost:8080/api/customers
-- http://localhost:8080/api/accounts
-- http://localhost:8080/h2-console
-## Intervjuspørsmål
+
+## Formål i intervjuet
+Dette er det mest komplette caset i repoet: det trener hele stacken fra HTTP via application service og domene til JPA. Målet er å vise at du kan holde mange plater i lufta uten å miste lagdelingen — og at du kan forklare hvorfor saldo er en domeneoperasjon, ikke et felt som settes.
+
+## Ikke gjør det for lett
+Ikke implementer saldoendring via `PUT` for å "få CRUD komplett". Caset handler om skillet mellom CRUD og domeneoperasjoner. Hard sletting av bankkontoer er en bevisst forenkling for CRUD-trening — i produksjon ville stenging, arkivering og revisjonsspor vært mer aktuelt.
+
+## Intervjuspørsmål / debrief
 1. Hvorfor bør ikke saldo oppdateres gjennom vanlig `PUT`?
 2. Hvor bør regelen om utilstrekkelig saldo ligge?
 3. Hvorfor er domenemodellen skilt fra JPA-entitetene?
@@ -67,7 +71,18 @@ mvn test -pl case-30-bank-account-crud-jpa
 13. Hvordan ville du implementert revisjonsspor?
 14. Hvilke trade-offs finnes mellom separate domeneobjekter og JPA-entiteter?
 15. Hvordan ville du testet databasen mot ekte PostgreSQL med Testcontainers?
+
+## Kommandoer
+
+```bash
+mvn test -pl case-30-bank-account-crud-jpa
+mvn spring-boot:run -pl case-30-bank-account-crud-jpa
+```
+
+## Nyttige URL-er
+- http://localhost:8080/api/customers
+- http://localhost:8080/api/accounts
+- http://localhost:8080/h2-console
+
 ## Notat om JPA-entiteter
 JPA-entiteter er bevisst ikke `data class`. Auto-generert `equals/hashCode/toString` kan gi uønsket adferd med mutable entiteter og lazy-relasjoner.
-## Forenkling i dette caset
-Hard sletting av bankkontoer er en bevisst forenkling for CRUD-trening. I produksjon ville ofte stenging, arkivering og revisjonsspor vært mer passende.

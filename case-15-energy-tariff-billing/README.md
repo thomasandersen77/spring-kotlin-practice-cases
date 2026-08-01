@@ -34,11 +34,17 @@ Implementer beregning av forbruk, variable kostnader, fastledd, mva og avrunding
 ## Formål i intervjuet
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
 I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+
 ## Ikke gjør det for lett
 Ikke nøy deg med `assertThat(total).isPositive`. Skriv minst én test med forventet konkret total og én kanttest.
+
+## Intervjuspørsmål / debrief
+1. Hvorfor `BigDecimal` fremfor `Double` — og hva er forskjellen på scale og precision?
+2. Hvor avrunder du: per komponent eller på sluttbeløpet? Hvorfor?
+3. Hvordan tester du øredifferanser uten skjøre tester?
 
 ## Kommandoer
 
 ```bash
-mvn -pl case-15-energy-tariff-billing test
+mvn test -pl case-15-energy-tariff-billing
 ```

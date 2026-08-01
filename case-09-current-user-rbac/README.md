@@ -1,6 +1,16 @@
 # Case 09 - CurrentUser og tilgangskontroll
 
-Design testbar tilgangskontroll uten å blande Spring Security direkte inn i domenet.
+## Domene
+Saksbehandling / tilgang
+
+## Tid
+60 minutter
+
+## Hva dette trener
+- RBAC / access policy
+- Testbarhet uten security-rammeverk
+- Tynn controller
+- Eksplisitt feilmodellering
 
 ## Scenario
 En saksbehandler skal kunne lukke saker, men tilgangen avhenger av rolle, organisasjon og sakens status. Koden har en forenklet `@CurrentUser`-annotation og en `AccessPolicy`, men use case-flyten er ikke ferdig.
@@ -24,12 +34,17 @@ Gjør lukking av sak til et tydelig use case. Access policy skal kunne testes ut
 ## Formål i intervjuet
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
 I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+
 ## Ikke gjør det for lett
 Ikke gjør alle med riktig rolle automatisk autorisert. Caset handler om kombinasjonen rolle, organisasjon og sakstilstand.
 
-## Hvordan kjøre
+## Intervjuspørsmål / debrief
+1. Hvorfor skal `AccessPolicy` kunne testes uten `SecurityContextHolder`?
+2. Hvor hører autorisasjonsreglene hjemme — controller, service eller domene?
+3. Hvordan ville en ekte JWT fylt `User` uten å lekke inn i domenet?
+
+## Kommandoer
 
 ```bash
-mvn test
-mvn spring-boot:run
+mvn test -pl case-09-current-user-rbac
 ```

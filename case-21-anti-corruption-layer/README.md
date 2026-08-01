@@ -1,6 +1,16 @@
 # Case 21 - Anti-corruption layer
 
-Øv på en ekstern kredittintegrasjon der leverandørens DTO-er og felt-navn ikke skal bli en del av domenespråket.
+## Domene
+Kredittvurdering / integrasjon
+
+## Tid
+60-75 minutter
+
+## Hva dette trener
+- Anti-corruption layer
+- Oversettelse av ekstern modell
+- Policy-testing
+- Domenespråk
 
 ## Scenario
 En ekstern kredittleverandør returnerer tekniske/legacy-pregede felter som `score_value`, `red_flag` og `source_system`. Domenet skal snakke om `CreditRisk`, `LoanApplication` og `CreditDecision` i stedet.
@@ -24,12 +34,18 @@ Fullfør anti-corruption layeret og domenepolicyen. Hold ekstern mapping adskilt
 ## Formål i intervjuet
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
 I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+
 ## Ikke gjør det for lett
 Ikke hardkod hele beslutningen direkte i controller/service. Skill mellom oversettelse av ekstern data og intern kredittpolicy.
 
-## Hvordan kjøre
+## Intervjuspørsmål / debrief
+1. Hva er forskjellen på oversettelse (translator) og beslutning (policy)?
+2. Hvorfor skal `CreditPolicy` ikke kjenne `source_system`?
+3. Hvorfor er høy risiko ikke en teknisk feil?
+
+## Kommandoer
 
 ```bash
-mvn test
-mvn spring-boot:run
+mvn test -pl case-21-anti-corruption-layer
+mvn spring-boot:run -pl case-21-anti-corruption-layer
 ```

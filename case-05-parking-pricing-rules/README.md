@@ -34,11 +34,17 @@ Implementer en prisberegner som håndterer varighet, avrunding, rabatt/makspris 
 ## Formål i intervjuet
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
 I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+
 ## Ikke gjør det for lett
 Ikke implementer bare “under 15 minutter = 0”. Legg til nok regler til at avrunding og kjøretøytype må vurderes.
+
+## Intervjuspørsmål / debrief
+1. Hvilket avrundingsvalg tok du, og hvorfor hører det hjemme i domenet?
+2. Hva skiller en Domain Service fra en vanlig utility-klasse?
+3. Hvorfor er magiske tall for kjøretøytyper et problem i en intervjusituasjon?
 
 ## Kommandoer
 
 ```bash
-mvn -pl case-05-parking-pricing-rules test
+mvn test -pl case-05-parking-pricing-rules
 ```

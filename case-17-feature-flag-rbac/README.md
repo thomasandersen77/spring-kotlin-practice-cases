@@ -34,11 +34,17 @@ Implementer en testbar `FeatureFlagAccessPolicy` som uttrykker regelmatrisen tyd
 ## Formål i intervjuet
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
 I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+
 ## Ikke gjør det for lett
 Ikke la `ADMIN`-regelen skjule resten. Caset skal også vise hvordan du håndterer mer begrensede roller.
+
+## Intervjuspørsmål / debrief
+1. Hvordan holder du regelmatrisen lesbar i kode etter hvert som antall faktorer vokser?
+2. Hvorfor er produksjon strengere enn lavere miljøer — og hvor ligger det i modellen?
+3. Når lønner en regelmotor seg fremfor hardkodet policy?
 
 ## Kommandoer
 
 ```bash
-mvn -pl case-17-feature-flag-rbac test
+mvn test -pl case-17-feature-flag-rbac
 ```

@@ -1,6 +1,17 @@
 # Case 08 - Refaktorer en feit controller
 
-Refaktorer en abonnementsmodul som fortsatt bærer preg av `Map<String, String>`, primitive typer og blandede ansvarsområder.
+## Domene
+Abonnement
+
+## Tid
+60 minutter
+
+## Hva dette trener
+- SRP / ansvarsseparasjon
+- Refaktorering
+- DTO-er og commands
+- Primitive obsession
+- Testbarhet
 
 ## Scenario
 Koden er delvis ryddet, men den er fortsatt ikke ferdig refaktorert. Controlleren er tynnere, mens service-laget håndterer parsing, prisregler, persistence-detaljer og response-shape på én gang.
@@ -24,12 +35,17 @@ Gjør designet mer uttrykksfullt uten å overdesigne. Kandidaten skal kunne fork
 ## Formål i intervjuet
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
 I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+
 ## Ikke gjør det for lett
 Ikke bare flytt eksisterende kode én fil ned. Målet er å vise bedre grenser og bedre språk i koden, samtidig som løsningen fortsatt er enkel.
 
-## Hvordan kjøre
+## Intervjuspørsmål / debrief
+1. Hvilke ansvarsområder fant du i den feite controlleren, og hvor flyttet du dem?
+2. Hvordan tester du prisreglene uten Spring?
+3. Hva er igjen i controlleren etter refaktorering — og hvorfor akkurat det?
+
+## Kommandoer
 
 ```bash
-mvn test
-mvn spring-boot:run
+mvn test -pl case-08-refactor-fat-controller
 ```

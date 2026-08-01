@@ -34,11 +34,17 @@ Gjør reservasjonsflyten tydelig fra request til use case-resultat. Du skal kunn
 ## Formål i intervjuet
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
 I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+
 ## Ikke gjør det for lett
 Ikke godta alle reservasjoner bare fordi testen gjør det. Legg inn nok validering til at use case-designet må diskuteres.
+
+## Intervjuspørsmål / debrief
+1. Hva er forskjellen på API-validering og domeneregel? Gi et eksempel fra løsningen din.
+2. Hvorfor skal controlleren være tynn — og hva tester du da hvor?
+3. Hvor ville kapasitets-/bordtilgjengelighet ligget hvis caset ble utvidet?
 
 ## Kommandoer
 
 ```bash
-mvn -pl case-06-restaurant-reservation-api test
+mvn test -pl case-06-restaurant-reservation-api
 ```

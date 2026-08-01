@@ -1,6 +1,17 @@
 # Case 07 - Order API via core-lag til database
 
-Bygg videre på et lite ordre-API der en ordre er aggregatrot, ordrelinjer lever innenfor ordren, og JPA kun er en persistensdetalj.
+## Domene
+Ordre / e-handel
+
+## Tid
+75-90 minutter
+
+## Hva dette trener
+- Aggregate Root
+- Repository-port (ports/adapters)
+- Transaksjonsgrenser
+- JPA-mapping som persistensdetalj
+- Statusoverganger
 
 ## Scenario
 Du overtar en nesten fungerende Spring Boot-modul. Controller, service, repository-port, JPA-entity og domenemodell finnes allerede, men oppgaven er å stramme inn grensene og gjøre domenereglene tydelige.
@@ -24,12 +35,19 @@ Fullfør og forbedre løsningen slik at ordre kan opprettes, hentes, bekreftes o
 ## Formål i intervjuet
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
 I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+
 ## Ikke gjør det for lett
 Ikke løs alt med annotations i controlleren. Noe inputvalidering hører hjemme i API-laget, men forretningsreglene skal være testbare uten HTTP, JSON eller database.
 
-## Hvordan kjøre
+## Intervjuspørsmål / debrief
+1. Hvorfor er `Order` aggregatroten og ikke `OrderLine`?
+2. Hva er forskjellen på repository-porten og Spring Data-interfacet som implementerer den?
+3. Hvor går transaksjonsgrensen, og hvorfor akkurat der?
+4. Hvordan tester du domenet uten å starte Spring-konteksten?
+
+## Kommandoer
 
 ```bash
-mvn test
-mvn spring-boot:run
+mvn test -pl case-07-order-api-core-db
+mvn spring-boot:run -pl case-07-order-api-core-db
 ```

@@ -34,11 +34,17 @@ Implementer proratering på en måte som tydelig håndterer inkluderende datoer,
 ## Formål i intervjuet
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
 I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+
 ## Ikke gjør det for lett
 Ikke bare returner et positivt tall. Proration-caset handler om inkluderende datoer og presisjon.
+
+## Intervjuspørsmål / debrief
+1. Er `changeDate` inklusiv eller eksklusiv — og hvordan viser testene valget?
+2. Hvordan håndterer du nedgradering (negativ differanse)?
+3. Hvorfor er en ikke-heltallig dagssats en viktig test?
 
 ## Kommandoer
 
 ```bash
-mvn -pl case-19-subscription-proration test
+mvn test -pl case-19-subscription-proration
 ```

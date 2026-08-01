@@ -34,11 +34,17 @@ Implementer en liten state machine som bare tillater gyldige overganger og retur
 ## Formål i intervjuet
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
 I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+
 ## Ikke gjør det for lett
 Ikke returner overgangsobjekter uten å endre status. Da testes ikke state machine-delen av caset.
+
+## Intervjuspørsmål / debrief
+1. Hvordan hindrer du `close` direkte fra `OPEN`?
+2. Skal overgangshistorikken ligge i aggregatet? Hvilke trade-offs har valget?
+3. Hvorfor returnere `IncidentTransition` i stedet for `Unit`?
 
 ## Kommandoer
 
 ```bash
-mvn -pl case-16-incident-escalation-state-machine test
+mvn test -pl case-16-incident-escalation-state-machine
 ```

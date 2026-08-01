@@ -34,11 +34,17 @@ Bygg en liten strategi-basert løsning for gebyrberegning. Den skal være enkel 
 ## Formål i intervjuet
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
 I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+
 ## Ikke gjør det for lett
 Ikke hardkod alle gebyrer direkte i `calculateFee`. Poenget er å vise hvordan en strategi-grense kan se ut i liten skala.
+
+## Intervjuspørsmål / debrief
+1. Hvordan legger du til en ny betalingsmetode uten å endre calculatoren?
+2. Strategy Pattern vs. sealed class + `when` — når velger du hva?
+3. Hva skjer ved ukjent betalingsmetode, og hvorfor valgte du det?
 
 ## Kommandoer
 
 ```bash
-mvn -pl case-12-payment-settlement-strategy test
+mvn test -pl case-12-payment-settlement-strategy
 ```
