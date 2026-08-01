@@ -11,6 +11,14 @@ class CapacityPlannerTest {
         // Beskriv kontrakten eksplisitt:
         // - Skal from == to gi 0 eller 1 tilgjengelig arbeidsdag?
         // - Hvordan henger valget sammen med inclusive/exclusive-regelen i resten av perioden?
+
+        // to dato er eksklusiv og telles ikke
+        val from = LocalDate.of(2026, 6, 1)
+        val to = LocalDate.of(2026, 6, 1)
+
+        val availableWorkingDays = planner.availableWorkingDays(from, to, setOf())
+        assertThat(availableWorkingDays).isEqualTo(0)
+
     }
 
     @Test

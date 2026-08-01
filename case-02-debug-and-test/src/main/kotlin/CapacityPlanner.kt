@@ -1,4 +1,5 @@
 import org.springframework.web.bind.annotation.*
+import java.time.DayOfWeek
 import java.time.LocalDate
 
 @RestController
@@ -41,13 +42,13 @@ class CapacityPlanner {
         to: LocalDate,
         absenceDates: Set<LocalDate>
     ): Int {
+
         var date = from
         var count = 0
 
         while (date.isBefore(to)) {
-            val dayOfWeek = date.dayOfWeek.value
-            val isWeekend = dayOfWeek == 6 || dayOfWeek == 7
-            val isAbsent = absenceDates.contains(date)
+            val isWeekend = date.isInWeekend()
+            val isAbsent = absenceDates.contains(date) && !isWeekend
 
             if (!isWeekend && !isAbsent) {
                 count++
@@ -59,3 +60,7 @@ class CapacityPlanner {
         return count
     }
 }
+
+fun LocalDate.isInWeekend(): Boolean =
+    dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY
+
