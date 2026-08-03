@@ -63,5 +63,10 @@
         <module>case-28-oauth2-jwt-resource-server</module>
         <module>case-29-llm-port-adapter-fallback</module>
         <module>case-30-bank-account-crud-jpa</module>
+        <module>case-31-entity-dto-mapping</module>
+        <module>case-32-sealed-domain-modelling</module>
+        <module>case-33-collections-aggregation-report</module>
+        <module>case-34-null-safety-validation</module>
+        <module>case-35-kotlin-dsl-higher-order-functions</module>
     </modules>
 </project>

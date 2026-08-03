@@ -56,8 +56,13 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 28 oauth2-jwt-resource-server | Sikkerhet | Ikke startet | – | – | – |
 | 29 llm-port-adapter-fallback | Integrasjon | Ikke startet | – | – | – |
 | 30 bank-account-crud-jpa | Full stack / JPA | Ikke startet | – | – | – |
+| 31 entity-dto-mapping | Kotlin / Mapping | Ikke startet | – | – | – |
+| 32 sealed-domain-modelling | Kotlin / DDD | Ikke startet | – | – | – |
+| 33 collections-aggregation-report | Kotlin | Ikke startet | – | – | – |
+| 34 null-safety-validation | Kotlin | Ikke startet | – | – | – |
+| 35 kotlin-dsl-higher-order-functions | Kotlin | Ikke startet | – | – | – |
 
-**Oppsummert:** 3 løst · 0 påbegynt · 27 ikke startet · 0 mestret
+**Oppsummert:** 3 løst · 0 påbegynt · 32 ikke startet · 0 mestret
 
 ## Forsøkshistorikk
 

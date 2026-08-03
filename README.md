@@ -1,6 +1,6 @@
 # Sopra Steria Kotlin/Spring Boot interview cases
 
-Dette er et treningsrepositorium for teknisk intervju og parprogrammering i Kotlin, Spring Boot, JPA/Hibernate, DDD, SOLID og testbarhet. Repoet inneholder 30 små, uavhengige case-prosjekter — alle med vilje uferdige.
+Dette er et treningsrepositorium for teknisk intervju og parprogrammering i Kotlin, Spring Boot, JPA/Hibernate, DDD, SOLID og testbarhet. Repoet inneholder 35 små, uavhengige case-prosjekter — alle med vilje uferdige.
 
 **Målet er ikke å pugge løsninger.** Målet er å kunne:
 - oversette krav til tydelige domenevalg under tidspress
@@ -55,6 +55,11 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 | `case-02-debug-and-test` | Debugging og kontrakttester: off-by-one-feil i kapasitetsberegner |
 | `case-26-kotlin-idioms-drill` | Refaktorer Java-aktig Kotlin til idiomatisk Kotlin |
 | `case-27-coroutines-structured-concurrency` | Coroutines: async/coroutineScope, timeout, kansellering, virtuell tid |
+| `case-31-entity-dto-mapping` | Entitet → DTO med extension functions, list-mapping og delvis feltutvalg |
+| `case-32-sealed-domain-modelling` | Sealed interface/`data object`, uttømmende `when` uten `else` |
+| `case-33-collections-aggregation-report` | Collections-API i bredden: groupingBy, flatMap, partition, runningFold |
+| `case-34-null-safety-validation` | Null-safety, `runCatching` og feilakkumulering med `ValidationResult` |
+| `case-35-kotlin-dsl-higher-order-functions` | Lambda with receiver-DSL, `infix`/operatorer, `by lazy`, `buildString` |
 
 ### Domenemodellering / DDD
 | Case | Tema |
@@ -106,7 +111,8 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 
 | Runde | Caser | Fokus |
 |---|---|---|
-| 1 | 01, 02, 26 | Varm opp: ren Kotlin, TDD og idiomatisk syntaks |
+| 1 | 01, 02, 26, 33 | Varm opp: ren Kotlin, TDD, idiomatisk syntaks og collections |
+| 1b | 31, 32, 34, 35 | Språkfeatures i dybden: mapping, sealed, null-safety og DSL |
 | 2 | 03, 04, 05, 11, 12 | Domeneregler, value objects og enkle services |
 | 3 | 13, 14, 16, 18, 10, 19, 15 | Aggregater, statusoverganger og presisjon |
 | 4 | 06, 08, 09, 17, 07 | API, lagdeling og SOLID — avslutt med 07 som full Spring-flyt |
