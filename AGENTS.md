@@ -23,8 +23,7 @@ Les det som er relevant for oppgaven — ikke gjett innhold:
 3. **Fremdrift/score:** `STATUS.md` på `main` (autoritativ for committet status).
 4. **Treningsprotokoll:** `docs/TRENINGSGUIDE.md` (øktflyt, tenk-høyt, forsøk 1/2/3).
 5. **Oversikt/progresjon:** root-`README.md`.
-6. **Copilot PR-review:** `.github/copilot-instructions.md` (kort; ikke erstatning for denne filen).
-7. **CI:** `.github/workflows/validate-case.yml` — bruk Actions/testkjøringer som fakta for grønt/rødt.
+6. **CI:** `.github/workflows/validate-case.yml` — Maven-kompilering + tester for endrede case-moduler; bruk Actions som fakta for grønt/rødt.
 
 Personlig intervju-/ChatGPT-prosjektkontekst (`SOPRA_INTERVIEW_PROJECT_CONTEXT.md`) er **bevisst gitignored** og skal ikke committes. Bruk den bare hvis brukeren har den lokalt og eksplisitt ber deg lese den. Ikke anta innhold du ikke har sett.
 
