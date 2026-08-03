@@ -51,13 +51,13 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 23 optimistic-locking-concurrency | Samtidighet | Ikke startet | – | – | – |
 | 24 domain-events-outbox | Samtidighet | Ikke startet | – | – | – |
 | 25 idempotent-command-processing | Samtidighet | Ikke startet | – | – | – |
-| 26 kotlin-idioms-drill | Kotlin | Ikke startet | – | – | – |
+| 26 kotlin-idioms-drill | Kotlin | Løst | 9.1 | 2026-08-03 | case-26-forsoek-1 |
 | 27 coroutines-structured-concurrency | Kotlin / Samtidighet | Ikke startet | – | – | – |
 | 28 oauth2-jwt-resource-server | Sikkerhet | Ikke startet | – | – | – |
 | 29 llm-port-adapter-fallback | Integrasjon | Ikke startet | – | – | – |
 | 30 bank-account-crud-jpa | Full stack / JPA | Ikke startet | – | – | – |
 
-**Oppsummert:** 2 løst · 0 påbegynt · 28 ikke startet · 0 mestret
+**Oppsummert:** 3 løst · 0 påbegynt · 27 ikke startet · 0 mestret
 
 ## Forsøkshistorikk
 
@@ -65,6 +65,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 |---|---|---|---|---|---|
 | 2026-07-27 | 01 | 1 | main | 7.5 | Invariants (Money, Quantity, Percentage), fast-rabatt-guard og NoDiscount-test løst. Gjenstående forbedringer: eksplisitte kanttester for 0 % og 100 %, tydelig avrundings-/skalakontrakt, og begrunnelse for trade-off mellom sealed class og Strategy Pattern. |
 | 2026-08-01 | 02 | 1 | case-02-forsoek-1 | 8.9 | Løst med eksplisitt [from, to)-kontrakt, avvisning av from > to, lesbar datesUntil-implementasjon og ni grønne tester. Trekk for generelle testnavn, overflødig Java 9-konfigurasjon og mindre kodehygiene rundt isInWeekend()/whitespace. |
+| 2026-08-03 | 26 | 1 | case-26-forsoek-1 | 9.1 | Alle seks funksjoner refaktorert til lesbar, idiomatisk Kotlin. GitHub Actions kompilerte hele repoet og kjørte case-26-testene grønt. Sterk bruk av collections-API, null-safety, expression bodies, `when`, `joinToString` og en navngitt extension function. Trekk fordi case-insensitiv bysammenligning endrer original oppførsel, mens den omdøpte testen fortsatt bruker samme casing og derfor ikke verifiserer denne nye regelen; i tillegg noen små formateringsdetaljer. |
 
 ## Slik registrerer du et nytt forsøk
 
