@@ -21,9 +21,8 @@ class ConsultantReports {
             .sortedByDescending { it.hourlyRate }
             .map { it.name }
 
-
     fun describeLocation(consultant: Consultant?): String {
-        if(consultant == null) return "ingen konsulent"
+        if (consultant == null) return "ingen konsulent"
 
         val city = consultant.city
 
@@ -33,17 +32,10 @@ class ConsultantReports {
             "${consultant.name} jobber fra $city"
         }
 
-
-        /* Idiomatisk Kotlin nedenfor og fungerer, men mindre lesbart for konsulenter som kanskje kan Java bedre.
-           Jeg trenger ikke bruke scope-funksjon for å "show off" eller for å late som jeg er bedre en jeg er.
-           Men heller velge å være mer pragmatisk og gjøre en if mer return i funksjonen eller koden ovenfor.
-           Og deretter bruke take if med en if som et uttrykk i return statement.
-
-        val c = consultant ?: return "ingen konsulent"
-        return c.city
-            ?.takeIf { it.isNotBlank() }
-            ?.let { city -> "${c.name} jobber fra $city" }
-            ?: "${c.name} har ukjent lokasjon"
+        /*
+         * En kjedet løsning med takeIf, let og Elvis kan være mer kompakt,
+         * men den eksplisitte kontrollflyten er enklere å lese.
+         * Scope-funksjoner brukes når de faktisk forbedrer lesbarheten.
          */
     }
 
@@ -66,7 +58,6 @@ class ConsultantReports {
         hoursPerDay: Int
     ): Int = consultants.sumOf { it.hourlyRate * hoursPerDay }
 
-
     fun seniorityLabel(yearsOfExperience: Int): String =
         when {
             yearsOfExperience in 0..2 -> "junior"
@@ -75,7 +66,6 @@ class ConsultantReports {
             yearsOfExperience >= 15 -> "veteran"
             else -> throw IllegalArgumentException("Erfaring kan ikke være negativ")
         }
-
 
     // TODO: refaktorer til joinToString, og vurder en extension function for filtreringen
     fun summaryLine(consultants: List<Consultant>, city: String): String {
