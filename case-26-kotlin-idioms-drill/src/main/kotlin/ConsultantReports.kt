@@ -39,19 +39,18 @@ class ConsultantReports {
          */
     }
 
-    // TODO: refaktorer til groupBy + mapValues som én expression-body-funksjon
-    fun buildSkillIndex(consultants: List<Consultant>): Map<String, List<String>> {
-        val index = HashMap<String, MutableList<String>>()
-        for (c in consultants) {
-            for (skill in c.skills) {
-                if (!index.containsKey(skill)) {
-                    index[skill] = ArrayList()
+    fun buildSkillIndex(consultants: List<Consultant>): Map<String, List<String>> =
+        consultants
+            .flatMap { consultant ->
+                consultant.skills.map { skill ->
+                    skill to consultant.name
                 }
-                index[skill]!!.add(c.name)
+            }.groupBy { (skill, _) ->
+                skill
+            }.mapValues { (_, skillAndNames) ->
+                skillAndNames.map { (_, name) -> name }
             }
-        }
-        return index
-    }
+
 
     fun totalDailyCost(
         consultants: List<Consultant>,
@@ -67,23 +66,18 @@ class ConsultantReports {
             else -> throw IllegalArgumentException("Erfaring kan ikke være negativ")
         }
 
-    // TODO: refaktorer til joinToString, og vurder en extension function for filtreringen
-    fun summaryLine(consultants: List<Consultant>, city: String): String {
-        val inCity = ArrayList<Consultant>()
-        for (c in consultants) {
-            if (c.city != null && c.city == city) {
-                inCity.add(c)
-            }
-        }
-        var line = "Konsulenter i " + city + ": "
-        var first = true
-        for (c in inCity) {
-            if (!first) {
-                line = line + ", "
-            }
-            line = line + c.name
-            first = false
-        }
-        return line
+    fun summaryLine(consultants: List<Consultant>, city: String): String = consultants
+        .filter { it.isSameCity(city) }
+        .joinToString(
+            prefix = "Konsulenter i $city: ",
+            separator = ", "
+        )
+        { it.name }
+
+    private fun Consultant.isSameCity(city: String): Boolean {
+        return this.city.equals(
+            other = city,
+            ignoreCase = true
+        )
     }
 }

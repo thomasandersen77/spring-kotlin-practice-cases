@@ -50,7 +50,7 @@ class ConsultantReportsTest {
     }
 
     @Test
-    fun `summary line joins names in city`() {
+    fun `summary line joins names in city regardless of casing`() {
         val line = reports.summaryLine(listOf(kari, ola, liv, per), "Oslo")
         assertThat(line).isEqualTo("Konsulenter i Oslo: Kari, Per")
     }
