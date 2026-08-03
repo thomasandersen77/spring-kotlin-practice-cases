@@ -15,43 +15,36 @@ data class Consultant(
 
 class ConsultantReports {
 
-    // TODO: refaktorer til filter/sortedBy/map-kjede uten mutable liste
     fun namesOfSeniorsSortedByRate(consultants: List<Consultant>): List<String> =
         consultants
             .filter { it.yearsOfExperience >= 8 }
             .sortedByDescending { it.hourlyRate }
             .map { it.name }
 
-        /* GAMMEL KODE
-        val result = ArrayList<String>()
-        val seniors = ArrayList<Consultant>()
-        for (c in consultants) {
-            if (c.yearsOfExperience >= 8) {
-                seniors.add(c)
-            }
-        }
-        seniors.sortWith(Comparator { a, b -> b.hourlyRate - a.hourlyRate })
-        for (c in seniors) {
-            result.add(c.name)
-        }
-        return result
-        */
 
-
-    // TODO: refaktorer null-håndteringen med ?. og ?:
     fun describeLocation(consultant: Consultant?): String {
-        if (consultant != null) {
-            if (consultant.city != null) {
-                if (consultant.city.isNotBlank()) {
-                    return consultant.name + " jobber fra " + consultant.city
-                } else {
-                    return consultant.name + " har ukjent lokasjon"
-                }
-            } else {
-                return consultant.name + " har ukjent lokasjon"
-            }
+        if(consultant == null) return "ingen konsulent"
+
+        val city = consultant.city
+
+        return if (city.isNullOrBlank()) {
+            "${consultant.name} har ukjent lokasjon"
+        } else {
+            "${consultant.name} jobber fra $city"
         }
-        return "ingen konsulent"
+
+
+        /* Idiomatisk Kotlin nedenfor og fungerer, men mindre lesbart for konsulenter som kanskje kan Java bedre.
+           Jeg trenger ikke bruke scope-funksjon for å "show off" eller for å late som jeg er bedre en jeg er.
+           Men heller velge å være mer pragmatisk og gjøre en if mer return i funksjonen eller koden ovenfor.
+           Og deretter bruke take if med en if som et uttrykk i return statement.
+
+        val c = consultant ?: return "ingen konsulent"
+        return c.city
+            ?.takeIf { it.isNotBlank() }
+            ?.let { city -> "${c.name} jobber fra $city" }
+            ?: "${c.name} har ukjent lokasjon"
+         */
     }
 
     // TODO: refaktorer til groupBy + mapValues som én expression-body-funksjon
@@ -68,28 +61,21 @@ class ConsultantReports {
         return index
     }
 
-    // TODO: refaktorer til sumOf
     fun totalDailyCost(
         consultants: List<Consultant>,
         hoursPerDay: Int
     ): Int = consultants.sumOf { it.hourlyRate * hoursPerDay }
 
 
-    // TODO: refaktorer til when-uttrykk med expression body
-    fun seniorityLabel(yearsOfExperience: Int): String {
-        if (yearsOfExperience < 0) {
-            throw IllegalArgumentException("Erfaring kan ikke være negativ")
+    fun seniorityLabel(yearsOfExperience: Int): String =
+        when {
+            yearsOfExperience in 0..2 -> "junior"
+            yearsOfExperience in 3..7 -> "erfaren"
+            yearsOfExperience in 8..14 -> "senior"
+            yearsOfExperience >= 15 -> "veteran"
+            else -> throw IllegalArgumentException("Erfaring kan ikke være negativ")
         }
-        if (yearsOfExperience < 3) {
-            return "junior"
-        } else if (yearsOfExperience < 8) {
-            return "erfaren"
-        } else if (yearsOfExperience < 15) {
-            return "senior"
-        } else {
-            return "veteran"
-        }
-    }
+
 
     // TODO: refaktorer til joinToString, og vurder en extension function for filtreringen
     fun summaryLine(consultants: List<Consultant>, city: String): String {
