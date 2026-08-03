@@ -16,7 +16,13 @@ data class Consultant(
 class ConsultantReports {
 
     // TODO: refaktorer til filter/sortedBy/map-kjede uten mutable liste
-    fun namesOfSeniorsSortedByRate(consultants: List<Consultant>): List<String> {
+    fun namesOfSeniorsSortedByRate(consultants: List<Consultant>): List<String> =
+        consultants
+            .filter { it.yearsOfExperience >= 8 }
+            .sortedByDescending { it.hourlyRate }
+            .map { it.name }
+
+        /* GAMMEL KODE
         val result = ArrayList<String>()
         val seniors = ArrayList<Consultant>()
         for (c in consultants) {
@@ -29,7 +35,8 @@ class ConsultantReports {
             result.add(c.name)
         }
         return result
-    }
+        */
+
 
     // TODO: refaktorer null-håndteringen med ?. og ?:
     fun describeLocation(consultant: Consultant?): String {
@@ -62,13 +69,11 @@ class ConsultantReports {
     }
 
     // TODO: refaktorer til sumOf
-    fun totalDailyCost(consultants: List<Consultant>, hoursPerDay: Int): Int {
-        var total = 0
-        for (c in consultants) {
-            total = total + c.hourlyRate * hoursPerDay
-        }
-        return total
-    }
+    fun totalDailyCost(
+        consultants: List<Consultant>,
+        hoursPerDay: Int
+    ): Int = consultants.sumOf { it.hourlyRate * hoursPerDay }
+
 
     // TODO: refaktorer til when-uttrykk med expression body
     fun seniorityLabel(yearsOfExperience: Int): String {
