@@ -1,6 +1,6 @@
 # Sopra Steria Kotlin/Spring Boot interview cases
 
-Dette er et treningsrepositorium for teknisk intervju og parprogrammering i Kotlin, Spring Boot, JPA/Hibernate, DDD, SOLID og testbarhet. Repoet inneholder 35 små, uavhengige case-prosjekter — alle med vilje uferdige.
+Dette er et treningsrepositorium for teknisk intervju og parprogrammering i Kotlin, Spring Boot, JPA/Hibernate, DDD, SOLID og testbarhet. Repoet inneholder 36 små, uavhengige case-prosjekter — alle med vilje uferdige.
 
 **Målet er ikke å pugge løsninger.** Målet er å kunne:
 - oversette krav til tydelige domenevalg under tidspress
@@ -101,6 +101,7 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 | `case-24-domain-events-outbox` | Transactional outbox for konsistente domene-events |
 | `case-25-idempotent-command-processing` | Idempotency keys for retry-sikker betalingshåndtering |
 | `case-30-bank-account-crud-jpa` | Full stack: CRUD, JPA-relasjoner, transaksjoner, domeneoperasjoner |
+| `case-36-bank-transfer-fullstack-jpa` | Full stack: controller → service → domene → JPA → H2, atomisk overføring med rollback |
 
 ### Sikkerhet
 | Case | Tema |
@@ -118,7 +119,7 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 | 4 | 06, 08, 09, 17, 07 | API, lagdeling og SOLID — avslutt med 07 som full Spring-flyt |
 | 5 | 20, 21, 22, 29, 12 (repetisjon i integrasjonskontekst) | Porter, adaptere og integrasjoner |
 | 6 | 23, 24, 25, 27, 28 | Samtidighet, coroutines og sikkerhet |
-| 7 | 30 | Full stack (JPA, transaksjoner, REST, domene) — "mesterprøven" |
+| 7 | 30, 36 | Full stack (JPA, transaksjoner, REST, domene) — "mesterprøvene" |
 | 8+ | Gjenta svake caser fra STATUS.md på nye branches | Slå din egen score |
 
 ## Kjøring

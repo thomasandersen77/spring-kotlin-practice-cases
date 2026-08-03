@@ -61,8 +61,9 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 33 collections-aggregation-report | Kotlin | Ikke startet | – | – | – |
 | 34 null-safety-validation | Kotlin | Ikke startet | – | – | – |
 | 35 kotlin-dsl-higher-order-functions | Kotlin | Ikke startet | – | – | – |
+| 36 bank-transfer-fullstack-jpa | Full stack / JPA | Ikke startet | – | – | – |
 
-**Oppsummert:** 3 løst · 0 påbegynt · 32 ikke startet · 0 mestret
+**Oppsummert:** 3 løst · 0 påbegynt · 33 ikke startet · 0 mestret
 
 ## Forsøkshistorikk
 

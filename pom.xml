@@ -68,5 +68,6 @@
         <module>case-33-collections-aggregation-report</module>
         <module>case-34-null-safety-validation</module>
         <module>case-35-kotlin-dsl-higher-order-functions</module>
+        <module>case-36-bank-transfer-fullstack-jpa</module>
     </modules>
 </project>
