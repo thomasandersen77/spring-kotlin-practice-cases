@@ -4,8 +4,11 @@ Her føres fremgangen din per case. Oppdater raden etter hvert forsøk — og re
 
 **Statusverdier:** `Ikke startet` · `Påbegynt` · `Løst` · `Mestret`
 
+- **Påbegynt** = forsøk er gjort på branch, men caset er ikke ferdig (røde tester, uløste TODO-er, eller tidsboks stoppet arbeidet). Delscore og notater skal likevel føres.
 - **Løst** = testene er grønne og akseptansekriteriene er møtt.
 - **Mestret** = løst minst to ganger på separate branches, med lik eller bedre score andre gang — du kan caset, ikke bare husker løsningen.
+
+Ufullstendige forsøk er førsteklasses data: registrer dem. En ærlig 4.5 på `Påbegynt` er mer verdifull enn å vente til alt er grønt.
 
 ## Scoringskala (0.0–10.0)
 
