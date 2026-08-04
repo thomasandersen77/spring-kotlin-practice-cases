@@ -74,15 +74,15 @@ data class DepartmentSummaryDto(
  * Kontrakt: "$firstName $lastName".
  */
 val EmployeeEntity.fullName: String
-    get() = TODO("Implementer fullName som extension property på EmployeeEntity")
+    get() = "$firstName $lastName"
 
 /**
  * TODO 2: Implementer som extension function med expression body.
  * Kontrakt: ansatt er aktiv når employmentStart <= date OG (employmentEnd == null ELLER employmentEnd >= date).
  */
 fun EmployeeEntity.isActiveOn(date: LocalDate): Boolean =
-    TODO("Implementer aktiv-regelen uten if/else-pyramide")
-
+    employmentStart <= date &&
+            (employmentEnd == null || employmentEnd >= date)
 /**
  * TODO 3: Map én entitet til DTO. Ikke alle felter skal alltid med:
  * - `nationalIdentityNumber` og `internalNotes` skal ALDRI ut i DTO-en

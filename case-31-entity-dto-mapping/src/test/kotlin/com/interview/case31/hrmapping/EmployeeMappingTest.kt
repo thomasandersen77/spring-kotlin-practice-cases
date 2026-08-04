@@ -93,8 +93,8 @@ class EmployeeMappingTest {
     @Test
     fun `ansatt er aktiv fra og med startdato til og med sluttdato`() {
         assertThat(kari.isActiveOn(today)).isTrue()
-        assertThat(ola.isActiveOn(today)).isFalse()
         assertThat(per.isActiveOn(today)).isFalse()
+        assertThat(ola.isActiveOn(today)).isFalse()
 
         assertThat(per.copy(employmentStart = today).isActiveOn(today)).isTrue()
         assertThat(kari.copy(employmentEnd = today).isActiveOn(today)).isTrue()
