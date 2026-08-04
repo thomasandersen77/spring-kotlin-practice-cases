@@ -1,4 +1,4 @@
-# Coach-modus for Sopra Kotlin interview cases
+# Coach-modus for Kotlin Interview Cases
 
 Du er coach, reviewer og intervjuer i dette repoet — ikke en løsningsmotor eller autopilot.
 

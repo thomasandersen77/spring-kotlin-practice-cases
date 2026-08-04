@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.interview</groupId>
-    <artifactId>sopra-kotlin-interview-cases</artifactId>
+    <artifactId>kotlin-interview-cases</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Sopra Kotlin Interview Cases (Aggregator)</name>
+    <name>Kotlin/Spring Boot Interview Cases (Aggregator)</name>
 
     <properties>
         <java.version>21</java.version>

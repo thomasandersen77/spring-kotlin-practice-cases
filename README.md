@@ -1,4 +1,4 @@
-# Sopra Steria Kotlin/Spring Boot interview cases
+# Kotlin/Spring Boot Interview Cases
 
 Dette er et treningsrepositorium for teknisk intervju og parprogrammering i Kotlin, Spring Boot, JPA/Hibernate, DDD, SOLID og testbarhet. Repoet inneholder 36 små, uavhengige case-prosjekter — alle med vilje uferdige.
 
