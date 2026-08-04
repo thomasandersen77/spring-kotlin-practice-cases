@@ -41,11 +41,11 @@ class ConsultantReportsTest {
 
     @Test
     fun `seniority labels`() {
-        assertThat(reports.seniorityLabel(0)).isEqualTo("junior")
-        assertThat(reports.seniorityLabel(3)).isEqualTo("erfaren")
-        assertThat(reports.seniorityLabel(8)).isEqualTo("senior")
-        assertThat(reports.seniorityLabel(15)).isEqualTo("veteran")
-        assertThatThrownBy { reports.seniorityLabel(-1) }
+        assertThat(kari.seniority).isEqualTo(Seniority.SENIOR)
+        assertThat(ola.seniority).isEqualTo(Seniority.ERFAREN)
+        assertThat(liv.seniority).isEqualTo(Seniority.VETERAN)
+        assertThat(per.seniority).isEqualTo(Seniority.JUNIOR)
+        assertThatThrownBy { reports.seniority(-1) }
             .isInstanceOf(IllegalArgumentException::class.java)
     }
 

@@ -23,7 +23,7 @@ Skriv om Java-aktig Kotlin til idiomatisk Kotlin uten å endre oppførsel. Bruk 
 - TODO: Fjern null-sjekk-pyramidene med `?.`, `?:`, `let` og smart casts. Vurder hvor `!!` aldri hører hjemme.
 - TODO: Skriv om `buildSkillIndex` til én expression-body-funksjon.
 - TODO: Innfør en extension function (f.eks. `List<Consultant>.availableIn(city: String)`) der det gir bedre lesbarhet.
-- TODO: Bruk `when` som uttrykk i `seniorityLabel` i stedet for if/else-kjeden.
+- TODO: Bruk `when` som uttrykk i `seniority` i stedet for if/else-kjeden.
 - TODO: Erstatt string-konkatinering med string templates og `joinToString`.
 
 ## Akseptansekriterier

@@ -11,7 +11,10 @@ data class Consultant(
     val hourlyRate: Int,
     val yearsOfExperience: Int,
     val skills: List<String>
-)
+) {
+    val seniority: Seniority
+        get() = Seniority.from(yearsOfExperience)
+}
 
 class ConsultantReports {
 
@@ -57,14 +60,7 @@ class ConsultantReports {
         hoursPerDay: Int
     ): Int = consultants.sumOf { it.hourlyRate * hoursPerDay }
 
-    fun seniorityLabel(yearsOfExperience: Int): String =
-        when {
-            yearsOfExperience in 0..2 -> "junior"
-            yearsOfExperience in 3..7 -> "erfaren"
-            yearsOfExperience in 8..14 -> "senior"
-            yearsOfExperience >= 15 -> "veteran"
-            else -> throw IllegalArgumentException("Erfaring kan ikke være negativ")
-        }
+    fun seniority(yearsOfExperience: Int): Seniority = Seniority.from(yearsOfExperience)
 
     fun summaryLine(consultants: List<Consultant>, city: String): String = consultants
         .filter { it.isSameCity(city) }
