@@ -29,3 +29,4 @@ hs_err_pid*
 # --- Local AI / interview context (ChatGPT project source; not for git) ---
 SOPRA_INTERVIEW_PROJECT_CONTEXT.md
 
+/SOPRA_CODEX_FAST_IMPORT_GUIDE.md
