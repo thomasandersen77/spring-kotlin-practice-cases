@@ -117,14 +117,15 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 | Runde | Caser | Fokus |
 |---|---|---|
 | 1 | 01, 02, 26, 33 | Varm opp: ren Kotlin, TDD, idiomatisk syntaks og collections |
-| 1b | 31, 32, 34, 35 | Språkfeatures i dybden: mapping, sealed, null-safety og DSL |
+| 1b | 31, 32, 34, 35, 37 | Språkfeatures i dybden: mapping, sealed, null-safety og DSL — avslutt med 37 som Kotlin-konsolidering |
 | 2 | 03, 04, 05, 11, 12 | Domeneregler, value objects og enkle services |
 | 3 | 13, 14, 16, 18, 10, 19, 15 | Aggregater, statusoverganger og presisjon |
-| 4 | 06, 08, 09, 17, 07 | API, lagdeling og SOLID — avslutt med 07 som full Spring-flyt |
-| 5 | 20, 21, 22, 29, 12 (repetisjon i integrasjonskontekst) | Porter, adaptere og integrasjoner |
+| 4 | 06, 08, 09, 17, 38, 07 | API, lagdeling og SOLID — bygg en grunnleggende Spring/H2-flyt i 38 før full Spring-flyt i 07 |
+| 5 | 20, 21, 22, 39, 29, 12 (repetisjon i integrasjonskontekst) | Porter og ACL før ekte HTTP-integrasjon med WireMock, deretter fallback og repetisjon |
 | 6 | 23, 24, 25, 27, 28 | Samtidighet, coroutines og sikkerhet |
 | 7 | 30, 36 | Full stack (JPA, transaksjoner, REST, domene) — "mesterprøvene" |
-| 8+ | Gjenta svake caser fra STATUS.md på nye branches | Slå din egen score |
+| 8 | 40 | Avsluttende seniorcase: JWT, autorisasjon, request-livssyklus, ThreadLocal, H2 og audit |
+| 9+ | Gjenta svake caser fra STATUS.md på nye branches | Slå din egen score |
 
 ## Kjøring
 
