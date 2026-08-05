@@ -1,6 +1,6 @@
 # Kotlin/Spring Boot Interview Cases
 
-Dette er et treningsrepositorium for teknisk intervju og parprogrammering i Kotlin, Spring Boot, JPA/Hibernate, DDD, SOLID og testbarhet. Repoet inneholder 36 små, uavhengige case-prosjekter — alle med vilje uferdige.
+Dette er et treningsrepositorium for teknisk intervju og parprogrammering i Kotlin, Spring Boot, JPA/Hibernate, DDD, SOLID og testbarhet. Repoet inneholder 40 små, uavhengige case-prosjekter — alle med vilje uferdige.
 
 **Målet er ikke å pugge løsninger.** Målet er å kunne:
 - oversette krav til tydelige domenevalg under tidspress
@@ -60,6 +60,7 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 | `case-33-collections-aggregation-report` | Collections-API i bredden: groupingBy, flatMap, partition, runningFold |
 | `case-34-null-safety-validation` | Null-safety, `runCatching` og feilakkumulering med `ValidationResult` |
 | `case-35-kotlin-dsl-higher-order-functions` | Lambda with receiver-DSL, `infix`/operatorer, `by lazy`, `buildString` |
+| `case-37-kotlin-mapping-sealed-collections` | Mapping, sealed typer og sammensatt sortering |
 
 ### Domenemodellering / DDD
 | Case | Tema |
@@ -93,6 +94,7 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 | `case-21-anti-corruption-layer` | Ekstern kredittintegrasjon oversatt til domenespråk |
 | `case-22-insurance-claim-acl` | DTO-mapping og validering av ekstern skadedata |
 | `case-29-llm-port-adapter-fallback` | LLM bak port/adapter: modell-fallback ved 503, feilsemantikk |
+| `case-39-wiremock-external-integration` | RestClient, outbound port, ACL og WireMock |
 
 ### Persistens, konsistens og samtidighet
 | Case | Tema |
@@ -102,11 +104,13 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 | `case-25-idempotent-command-processing` | Idempotency keys for retry-sikker betalingshåndtering |
 | `case-30-bank-account-crud-jpa` | Full stack: CRUD, JPA-relasjoner, transaksjoner, domeneoperasjoner |
 | `case-36-bank-transfer-fullstack-jpa` | Full stack: controller → service → domene → JPA → H2, atomisk overføring med rollback |
+| `case-38-basic-spring-h2-rest` | REST-flyt med service, JPA, H2 og feiloversettelse |
 
 ### Sikkerhet
 | Case | Tema |
 |---|---|
 | `case-28-oauth2-jwt-resource-server` | SecurityFilterChain, scopes og rollemapping fra custom claim |
+| `case-40-security-request-context` | JWT, metodeautorisasjon, interceptor og trygg request-kontekst |
 
 ## Anbefalt progresjon
 

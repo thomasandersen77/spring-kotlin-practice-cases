@@ -62,8 +62,12 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 34 null-safety-validation | Kotlin | Ikke startet | – | – | – |
 | 35 kotlin-dsl-higher-order-functions | Kotlin | Ikke startet | – | – | – |
 | 36 bank-transfer-fullstack-jpa | Full stack / JPA | Ikke startet | – | – | – |
+| 37 kotlin-mapping-sealed-collections | Kotlin / Mapping | Ikke startet | – | – | – |
+| 38 basic-spring-h2-rest | Full stack / JPA | Ikke startet | – | – | – |
+| 39 wiremock-external-integration | Integrasjon | Ikke startet | – | – | – |
+| 40 security-request-context | Sikkerhet | Ikke startet | – | – | – |
 
-**Oppsummert:** 3 løst · 1 påbegynt · 32 ikke startet · 0 mestret
+**Oppsummert:** 3 løst · 1 påbegynt · 36 ikke startet · 0 mestret
 
 ## Forsøkshistorikk
 

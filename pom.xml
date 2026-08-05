@@ -69,5 +69,9 @@
         <module>case-34-null-safety-validation</module>
         <module>case-35-kotlin-dsl-higher-order-functions</module>
         <module>case-36-bank-transfer-fullstack-jpa</module>
+        <module>case-37-kotlin-mapping-sealed-collections</module>
+        <module>case-38-basic-spring-h2-rest</module>
+        <module>case-39-wiremock-external-integration</module>
+        <module>case-40-security-request-context</module>
     </modules>
 </project>
