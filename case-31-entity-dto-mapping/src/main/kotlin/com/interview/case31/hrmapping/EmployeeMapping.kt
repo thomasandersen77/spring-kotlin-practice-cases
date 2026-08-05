@@ -1,5 +1,6 @@
 package com.interview.case31.hrmapping
 
+import com.interview.case31.hrmapping.Audience.*
 import java.time.LocalDate
 
 /**
@@ -91,9 +92,45 @@ fun EmployeeEntity.isActiveOn(date: LocalDate): Boolean =
  * - `monthlySalaryNok` er kun med for MANAGER (null ellers)
  * - `certifiedSkills` = navn på sertifiserte skills, sortert på yearsOfExperience desc, deretter navn asc
  */
-fun EmployeeEntity.toDto(audience: Audience, today: LocalDate): EmployeeDto {
-    // THOMAS: Klarte ikke denne på første forsøk. Skjønte ikke sorteWith med comparator syntaxen og så thenBy
-    // siste map { it.name } forsto jeg
+fun EmployeeEntity.toDto(audience: Audience, today: LocalDate): EmployeeDto = when (audience) {
+    PUBLIC -> {
+        EmployeeDto(
+            id = id,
+            fullName = fullName,
+            departmentName = department.name,
+            email = null,
+            monthlySalaryNok = null,
+            active = isActiveOn(today),
+            certifiedSkills = emptyList()
+        )
+    }
+
+    INTERNAL -> {
+        EmployeeDto(
+            id = id,
+            fullName = fullName,
+            departmentName = department.name,
+            email = email,
+            monthlySalaryNok = null,
+            active = isActiveOn(today),
+            certifiedSkills = filterSkillsByExperienceThenSkillName()
+        )
+    }
+
+    MANAGER -> {
+        EmployeeDto(
+            id = id,
+            fullName = fullName,
+            departmentName = department.name,
+            email = email,
+            monthlySalaryNok = monthlySalaryNok,
+            active = isActiveOn(today),
+            certifiedSkills = filterSkillsByExperienceThenSkillName()
+        )
+    }
+}
+
+private fun EmployeeEntity.filterSkillsByExperienceThenSkillName(): List<String> {
     val skills = this.skills
         .filter { it.certified }
         .sortedWith(
@@ -103,45 +140,7 @@ fun EmployeeEntity.toDto(audience: Audience, today: LocalDate): EmployeeDto {
                 skill.name
             }
         ).map { it.name }
-
-    return when (audience) {
-        Audience.PUBLIC -> {
-            EmployeeDto(
-                id = id,
-                fullName = fullName,
-                departmentName = department.name,
-                email = null,
-                monthlySalaryNok = null,
-                active = isActiveOn(today),
-                certifiedSkills = emptyList()
-            )
-        }
-
-        Audience.INTERNAL -> {
-            EmployeeDto(
-                id = id,
-                fullName = fullName,
-                departmentName = department.name,
-                email = email,
-                monthlySalaryNok = null,
-                active = isActiveOn(today),
-                certifiedSkills = skills
-            )
-        }
-
-        Audience.MANAGER -> {
-            EmployeeDto(
-                id = id,
-                fullName = fullName,
-                departmentName = department.name,
-                email = email,
-                monthlySalaryNok = monthlySalaryNok,
-                active = isActiveOn(today),
-                certifiedSkills = skills
-            )
-        }
-    }
-
+    return skills
 }
 
 
@@ -150,15 +149,18 @@ fun EmployeeEntity.toDto(audience: Audience, today: LocalDate): EmployeeDto {
 /**
  * TODO 4: Map en liste av entiteter til en liste av DTO-er — uten mutable liste og uten for-løkke.
  */
-fun List<EmployeeEntity>.toDtos(audience: Audience, today: LocalDate): List<EmployeeDto> =
-    TODO("Map liste av entiteter til liste av DTO-er")
+fun List<EmployeeEntity>.toDtos(audience: Audience, today: LocalDate): List<EmployeeDto> {
+    return map { it.toDto(audience, today) }
+}
+
 
 /**
  * TODO 5: Map OG filtrer i én operasjon: bare ansatte som er aktive på `today` skal med.
  * Hint: dette er forskjellen på `map`, `filter` + `map`, og `mapNotNull` — vær klar til å begrunne valget.
  */
 fun List<EmployeeEntity>.toActiveDtos(audience: Audience, today: LocalDate): List<EmployeeDto> =
-    TODO("Map bare aktive ansatte til DTO-er")
+        filter { it.isActiveOn(today) }
+        .map { it.toDto(audience, today) }
 
 /**
  * TODO 6: Aggregert mapping: grupper ansatte per avdelingsnavn og bygg sammendrag.
@@ -173,4 +175,44 @@ fun List<EmployeeEntity>.toDepartmentSummaries(
     today: LocalDate,
     topSkillCount: Int = 3
 ): List<DepartmentSummaryDto> =
-    TODO("Grupper per avdeling og bygg DepartmentSummaryDto")
+    groupBy { employee ->
+        employee.department.name
+    }
+        .entries
+        .sortedBy { (departmentName, _) ->
+            departmentName
+        }
+        .map { (departmentName, employees) ->
+            val topCertifiedSkills = employees
+                .flatMap { employee ->
+                    employee.skills
+                }
+                .filter { skill ->
+                    skill.certified
+                }
+                .groupingBy { skill ->
+                    skill.name
+                }
+                .eachCount()
+                .entries
+                .sortedWith(
+                    compareByDescending<Map.Entry<String, Int>> { entry ->
+                        entry.value
+                    }.thenBy { entry ->
+                        entry.key
+                    }
+                )
+                .take(topSkillCount)
+                .map { entry ->
+                    entry.key
+                }
+
+            DepartmentSummaryDto(
+                departmentName = departmentName,
+                employeeCount = employees.size,
+                activeEmployeeCount = employees.count { employee ->
+                    employee.isActiveOn(today)
+                },
+                topCertifiedSkills = topCertifiedSkills
+            )
+        }
