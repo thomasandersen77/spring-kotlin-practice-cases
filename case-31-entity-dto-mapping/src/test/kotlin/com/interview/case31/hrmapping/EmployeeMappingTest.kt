@@ -85,7 +85,7 @@ class EmployeeMappingTest {
     private val allEmployees = listOf(kari, ola, liv, per)
 
     @Test
-    fun `fullName kombinerer fornavn og etternavn`() {
+    fun     `fullName kombinerer fornavn og etternavn`() {
         assertThat(kari.fullName).isEqualTo("Kari Nordmann")
         assertThat(per.fullName).isEqualTo("Per Ås")
     }

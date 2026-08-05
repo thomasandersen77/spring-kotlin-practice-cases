@@ -83,6 +83,7 @@ val EmployeeEntity.fullName: String
 fun EmployeeEntity.isActiveOn(date: LocalDate): Boolean =
     employmentStart <= date &&
             (employmentEnd == null || employmentEnd >= date)
+
 /**
  * TODO 3: Map én entitet til DTO. Ikke alle felter skal alltid med:
  * - `nationalIdentityNumber` og `internalNotes` skal ALDRI ut i DTO-en
@@ -90,8 +91,61 @@ fun EmployeeEntity.isActiveOn(date: LocalDate): Boolean =
  * - `monthlySalaryNok` er kun med for MANAGER (null ellers)
  * - `certifiedSkills` = navn på sertifiserte skills, sortert på yearsOfExperience desc, deretter navn asc
  */
-fun EmployeeEntity.toDto(audience: Audience, today: LocalDate): EmployeeDto =
-    TODO("Map entitet til DTO med audience-styrt feltutvalg")
+fun EmployeeEntity.toDto(audience: Audience, today: LocalDate): EmployeeDto {
+    // THOMAS: Klarte ikke denne på første forsøk. Skjønte ikke sorteWith med comparator syntaxen og så thenBy
+    // siste map { it.name } forsto jeg
+    val skills = this.skills
+        .filter { it.certified }
+        .sortedWith(
+            compareByDescending<SkillEntity> { skill ->
+                skill.yearsOfExperience
+            }.thenBy { skill ->
+                skill.name
+            }
+        ).map { it.name }
+
+    return when (audience) {
+        Audience.PUBLIC -> {
+            EmployeeDto(
+                id = id,
+                fullName = fullName,
+                departmentName = department.name,
+                email = null,
+                monthlySalaryNok = null,
+                active = isActiveOn(today),
+                certifiedSkills = emptyList()
+            )
+        }
+
+        Audience.INTERNAL -> {
+            EmployeeDto(
+                id = id,
+                fullName = fullName,
+                departmentName = department.name,
+                email = email,
+                monthlySalaryNok = null,
+                active = isActiveOn(today),
+                certifiedSkills = skills
+            )
+        }
+
+        Audience.MANAGER -> {
+            EmployeeDto(
+                id = id,
+                fullName = fullName,
+                departmentName = department.name,
+                email = email,
+                monthlySalaryNok = monthlySalaryNok,
+                active = isActiveOn(today),
+                certifiedSkills = skills
+            )
+        }
+    }
+
+}
+
+
+//TODO("Map entitet til DTO med audience-styrt feltutvalg")
 
 /**
  * TODO 4: Map en liste av entiteter til en liste av DTO-er — uten mutable liste og uten for-løkke.
