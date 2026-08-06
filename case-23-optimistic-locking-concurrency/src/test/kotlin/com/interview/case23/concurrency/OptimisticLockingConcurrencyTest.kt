@@ -25,7 +25,51 @@ class OptimisticLockingConcurrencyTest {
 
     @Test
     fun `exercise stale version should return conflict in use case`() {
-        // Lag en testdouble for InventoryReservationRepository som returnerer false ved save(expectedVersion, ...),
-        // og verifiser at use case returnerer ReserveResult.Conflict.
+        val initial = reservation()
+        val repository = FakeRepository(initial, saveSucceeds = false)
+
+        val result = ReserveInventoryUseCase(repository).reserve(ReserveInventoryCommand(initial.id, 1))
+
+        assertThat(result).isEqualTo(ReserveResult.Conflict)
+        assertThat(repository.expectedVersion).isEqualTo(initial.version)
+    }
+
+    @Test
+    fun `accepted reservation should save next version`() {
+        val initial = reservation()
+        val repository = FakeRepository(initial)
+
+        val result = ReserveInventoryUseCase(repository).reserve(ReserveInventoryCommand(initial.id, 2))
+
+        assertThat(result).isInstanceOf(ReserveResult.Accepted::class.java)
+        assertThat(repository.saved?.version).isEqualTo(Version(4))
+    }
+
+    @Test
+    fun `invalid quantity unavailable stock and missing aggregate should be rejected`() {
+        val initial = reservation()
+        val useCase = ReserveInventoryUseCase(FakeRepository(initial))
+        assertThat(useCase.reserve(ReserveInventoryCommand(initial.id, 0))).isEqualTo(ReserveResult.Rejected)
+        assertThat(useCase.reserve(ReserveInventoryCommand(initial.id, 11))).isEqualTo(ReserveResult.Rejected)
+        assertThat(ReserveInventoryUseCase(FakeRepository(null)).reserve(ReserveInventoryCommand(initial.id, 1)))
+            .isEqualTo(ReserveResult.Rejected)
+    }
+
+    private fun reservation() = InventoryReservation(
+        ReservationId(UUID.randomUUID()), "SKU-1", 10, 0, Version(3)
+    )
+
+    private class FakeRepository(
+        private val current: InventoryReservation?,
+        private val saveSucceeds: Boolean = true
+    ) : InventoryReservationRepository {
+        var expectedVersion: Version? = null
+        var saved: InventoryReservation? = null
+        override fun findById(id: ReservationId): InventoryReservation? = current
+        override fun save(expectedVersion: Version, reservation: InventoryReservation): Boolean {
+            this.expectedVersion = expectedVersion
+            saved = reservation
+            return saveSucceeds
+        }
     }
 }

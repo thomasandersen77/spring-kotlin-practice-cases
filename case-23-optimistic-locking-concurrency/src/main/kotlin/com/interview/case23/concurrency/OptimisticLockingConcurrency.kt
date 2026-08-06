@@ -16,6 +16,8 @@ data class InventoryReservation(
     val version: Version
 ) {
     init {
+        require(sku.isNotBlank()) { "sku cannot be blank" }
+        require(version.value >= 0) { "version must be >= 0" }
         require(availableQuantity >= 0) { "availableQuantity must be >= 0" }
         require(reservedQuantity >= 0) { "reservedQuantity must be >= 0" }
     }
@@ -47,6 +49,16 @@ interface InventoryReservationRepository {
 
 class ReserveInventoryUseCase(private val repository: InventoryReservationRepository) {
     fun reserve(command: ReserveInventoryCommand): ReserveResult {
-        TODO("Implement optimistic-locking flow: load aggregate, apply domain rule, save with expected version, return Accepted/Conflict/Rejected")
+        val current = repository.findById(command.reservationId) ?: return ReserveResult.Rejected
+        val updated = try {
+            current.reserve(command.quantity)
+        } catch (_: IllegalArgumentException) {
+            return ReserveResult.Rejected
+        }
+        return if (repository.save(current.version, updated)) {
+            ReserveResult.Accepted(updated)
+        } else {
+            ReserveResult.Conflict
+        }
     }
 }
