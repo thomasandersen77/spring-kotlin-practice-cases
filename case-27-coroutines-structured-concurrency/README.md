@@ -46,5 +46,5 @@ Ikke bruk `GlobalScope` eller `runBlocking` for å "få det til å virke". Poeng
 ## Kommandoer
 
 ```bash
-mvn test -pl case-27-coroutines-structured-concurrency
+./mvnw test -pl case-27-coroutines-structured-concurrency
 ```

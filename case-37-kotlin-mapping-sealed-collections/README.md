@@ -38,4 +38,4 @@ Ikke la inputmodellen lekke til DTO-en, og ikke bruk to uavhengige sorteringer n
 5. Hvilke mellomtyper har datastrømmen?
 
 ## Kommando
-`mvn test -pl case-37-kotlin-mapping-sealed-collections`
+`./mvnw test -pl case-37-kotlin-mapping-sealed-collections`

@@ -45,5 +45,5 @@ Ikke bruk bare “if exists return” uten å tenke på race conditions og lagri
 ## Kommandoer
 
 ```bash
-mvn test -pl case-25-idempotent-command-processing
+./mvnw test -pl case-25-idempotent-command-processing
 ```
