@@ -47,5 +47,5 @@ Ikke skriv om til én kjede av femten operasjoner ingen forstår. Idiomatisk bet
 ## Kommandoer
 
 ```bash
-mvn test -pl case-26-kotlin-idioms-drill
+./mvnw test -pl case-26-kotlin-idioms-drill
 ```

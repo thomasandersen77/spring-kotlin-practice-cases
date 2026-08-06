@@ -46,5 +46,5 @@ Ikke skjul “forlenget én gang”-regelen i en kommentar. Modellen må bære n
 ## Kommandoer
 
 ```bash
-mvn test -pl case-04-library-loan-domain
+./mvnw test -pl case-04-library-loan-domain
 ```

@@ -46,6 +46,6 @@ Ikke hardkod hele beslutningen direkte i controller/service. Skill mellom overse
 ## Kommandoer
 
 ```bash
-mvn test -pl case-21-anti-corruption-layer
-mvn spring-boot:run -pl case-21-anti-corruption-layer
+./mvnw test -pl case-21-anti-corruption-layer
+./mvnw spring-boot:run -pl case-21-anti-corruption-layer
 ```
