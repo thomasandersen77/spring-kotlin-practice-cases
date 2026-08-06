@@ -1,4 +1,5 @@
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class InvoiceScoringTest {
@@ -40,9 +41,41 @@ class InvoiceScoringTest {
 
     @Test
     fun `exercise clarify stacking rules for future discount codes`() {
-        // Dokumenter ønsket regelrekkefølge med tester før implementasjon:
-        // - skal VIP kombineres med kode?
-        // - hvis ja: i hvilken rekkefølge?
-        // - hvis nei: hvilken regel vinner?
+        val result = scoring.score(
+            InvoiceRequest(listOf(InvoiceLine(100, 2)), vipCustomer = true, discountCode = "SAVE10")
+        )
+
+        assertThat(result.discount).isEqualTo(40)
+        assertThat(result.total).isEqualTo(160)
+    }
+
+    @Test
+    fun `discount cannot make invoice total negative`() {
+        val result = scoring.score(
+            InvoiceRequest(listOf(InvoiceLine(20, 1)), vipCustomer = false, discountCode = "SAVE50")
+        )
+
+        assertThat(result.discount).isEqualTo(20)
+        assertThat(result.total).isZero()
+    }
+
+    @Test
+    fun `unknown discount code should fail explicitly`() {
+        assertThatThrownBy {
+            scoring.score(InvoiceRequest(listOf(InvoiceLine(100, 1)), false, "MISSING"))
+        }.isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessageContaining("unknown discount code")
+    }
+
+    @Test
+    fun `empty invoice and invalid lines should be rejected`() {
+        assertThatThrownBy { scoring.score(InvoiceRequest(emptyList(), false, null)) }
+            .isInstanceOf(IllegalArgumentException::class.java)
+        assertThatThrownBy {
+            scoring.score(InvoiceRequest(listOf(InvoiceLine(-1, 1)), false, null))
+        }.isInstanceOf(IllegalArgumentException::class.java)
+        assertThatThrownBy {
+            scoring.score(InvoiceRequest(listOf(InvoiceLine(1, 0)), false, null))
+        }.isInstanceOf(IllegalArgumentException::class.java)
     }
 }
