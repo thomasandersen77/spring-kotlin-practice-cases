@@ -8,8 +8,7 @@ import java.time.LocalDate
  * Entitetene under er "persistensmodellen": mange felter, noen nullable, noen sensitive.
  * DTO-ene er API-modellen: færre felter, andre navn, og innhold som avhenger av hvem som spør.
  *
- * Alle mapping-funksjonene er uløste (`TODO()`). Testene beskriver kontrakten.
- * Se README for TODO-liste, læringsmål og akseptansekriterier.
+ * Mapping-funksjonene under implementerer kontrakten som beskrives i README og testene.
  */
 
 // ---------- Entiteter (persistenslaget) ----------
@@ -70,21 +69,21 @@ data class DepartmentSummaryDto(
 // ---------- Mapping (din jobb) ----------
 
 /**
- * TODO 1: Implementer som extension property.
+ * Regel 1: Implementert som extension property.
  * Kontrakt: "$firstName $lastName".
  */
 val EmployeeEntity.fullName: String
     get() = "$firstName $lastName"
 
 /**
- * TODO 2: Implementer som extension function med expression body.
+ * Regel 2: Implementert som extension function med expression body.
  * Kontrakt: ansatt er aktiv når employmentStart <= date OG (employmentEnd == null ELLER employmentEnd >= date).
  */
 fun EmployeeEntity.isActiveOn(date: LocalDate): Boolean =
     !employmentStart.isAfter(date) && (employmentEnd == null || !employmentEnd.isBefore(date))
 
 /**
- * TODO 3: Map én entitet til DTO. Ikke alle felter skal alltid med:
+ * Regel 3: Map én entitet til DTO. Ikke alle felter skal alltid med:
  * - `nationalIdentityNumber` og `internalNotes` skal ALDRI ut i DTO-en
  * - `email` er kun med for INTERNAL og MANAGER (null for PUBLIC)
  * - `monthlySalaryNok` er kun med for MANAGER (null ellers)
@@ -108,13 +107,13 @@ fun EmployeeEntity.toDto(audience: Audience, today: LocalDate): EmployeeDto =
     )
 
 /**
- * TODO 4: Map en liste av entiteter til en liste av DTO-er — uten mutable liste og uten for-løkke.
+ * Regel 4: Map en liste av entiteter til en liste av DTO-er — uten mutable liste og uten for-løkke.
  */
 fun List<EmployeeEntity>.toDtos(audience: Audience, today: LocalDate): List<EmployeeDto> =
     map { employee -> employee.toDto(audience, today) }
 
 /**
- * TODO 5: Map OG filtrer i én operasjon: bare ansatte som er aktive på `today` skal med.
+ * Regel 5: Map og filtrer: bare ansatte som er aktive på `today` skal med.
  * Hint: dette er forskjellen på `map`, `filter` + `map`, og `mapNotNull` — vær klar til å begrunne valget.
  */
 fun List<EmployeeEntity>.toActiveDtos(audience: Audience, today: LocalDate): List<EmployeeDto> =
@@ -122,7 +121,7 @@ fun List<EmployeeEntity>.toActiveDtos(audience: Audience, today: LocalDate): Lis
         .map { employee -> employee.toDto(audience, today) }
 
 /**
- * TODO 6: Aggregert mapping: grupper ansatte per avdelingsnavn og bygg sammendrag.
+ * Regel 6: Aggregert mapping: grupper ansatte per avdelingsnavn og bygg sammendrag.
  * Kontrakt:
  * - én rad per avdelingsnavn, sortert på avdelingsnavn asc
  * - employeeCount = alle ansatte i avdelingen
