@@ -39,5 +39,10 @@ data class OrderLine(
     val quantity: Int,
     val unitPrice: BigDecimal
 ) {
+    init {
+        require(quantity > 0) { "Quantity must be positive" }
+        require(unitPrice.signum() > 0) { "Unit price must be positive" }
+    }
+
     fun lineTotal(): BigDecimal = unitPrice.multiply(BigDecimal(quantity))
 }
