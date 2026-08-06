@@ -38,6 +38,7 @@ class ExternalCreditProviderClient {
 @Component
 class CreditRiskTranslator {
     fun toCreditRisk(response: ExternalCreditScoreResponse): CreditRisk {
+        require(response.score_value in 0..1000) { "credit score must be between 0 and 1000" }
         if (response.red_flag) return CreditRisk.HIGH
 
         return when {

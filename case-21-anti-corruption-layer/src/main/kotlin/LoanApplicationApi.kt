@@ -1,4 +1,5 @@
 import org.springframework.web.bind.annotation.*
+import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.util.UUID
 
@@ -18,9 +19,11 @@ data class LoanApplicationRequest(
     val amount: BigDecimal
 )
 
+@Service
 class LoanApplicationService(
     private val externalCreditProviderClient: ExternalCreditProviderClient,
-    private val creditRiskTranslator: CreditRiskTranslator
+    private val creditRiskTranslator: CreditRiskTranslator,
+    private val creditPolicy: CreditPolicy
 ) {
     /**
      * Neste steg i caset:
@@ -40,6 +43,6 @@ class LoanApplicationService(
             risk = risk
         )
 
-        return CreditPolicy().decide(application)
+        return creditPolicy.decide(application)
     }
 }
