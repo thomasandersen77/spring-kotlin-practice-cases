@@ -1,0 +1,4 @@
+provider:
+  capacity:
+    base-url: http://localhost:9099
+    api-key: training-key

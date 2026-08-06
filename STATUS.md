@@ -4,8 +4,11 @@ Her føres fremgangen din per case. Oppdater raden etter hvert forsøk — og re
 
 **Statusverdier:** `Ikke startet` · `Påbegynt` · `Løst` · `Mestret`
 
+- **Påbegynt** = forsøk er gjort på branch, men caset er ikke ferdig (røde tester, uløste TODO-er, eller tidsboks stoppet arbeidet). Delscore og notater skal likevel føres.
 - **Løst** = testene er grønne og akseptansekriteriene er møtt.
 - **Mestret** = løst minst to ganger på separate branches, med lik eller bedre score andre gang — du kan caset, ikke bare husker løsningen.
+
+Ufullstendige forsøk er førsteklasses data: registrer dem. En ærlig 4.5 på `Påbegynt` er mer verdifull enn å vente til alt er grønt.
 
 ## Scoringskala (0.0–10.0)
 
@@ -24,7 +27,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | Case | Tema | Status | Beste score | Siste forsøk | Branch |
 |---|---|---|---|---|---|
 | 01 pure-kotlin-domain | Kotlin / DDD | Løst | 7.5 | 2026-07-27 | main |
-| 02 debug-and-test | Kotlin / TDD | Påbegynt | – | 2026-08-01 | (ucommittet lokalt) |
+| 02 debug-and-test | Kotlin / TDD | Løst | 8.9 | 2026-08-01 | case-02-forsoek-1 |
 | 03 business-rules-kata | DDD | Ikke startet | – | – | – |
 | 04 library-loan-domain | DDD | Ikke startet | – | – | – |
 | 05 parking-pricing-rules | DDD | Ikke startet | – | – | – |
@@ -48,20 +51,32 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 23 optimistic-locking-concurrency | Samtidighet | Ikke startet | – | – | – |
 | 24 domain-events-outbox | Samtidighet | Ikke startet | – | – | – |
 | 25 idempotent-command-processing | Samtidighet | Ikke startet | – | – | – |
-| 26 kotlin-idioms-drill | Kotlin | Ikke startet | – | – | – |
+| 26 kotlin-idioms-drill | Kotlin | Løst | 9.2 | 2026-08-04 | case-26-forsoek-1 |
 | 27 coroutines-structured-concurrency | Kotlin / Samtidighet | Ikke startet | – | – | – |
 | 28 oauth2-jwt-resource-server | Sikkerhet | Ikke startet | – | – | – |
 | 29 llm-port-adapter-fallback | Integrasjon | Ikke startet | – | – | – |
 | 30 bank-account-crud-jpa | Full stack / JPA | Ikke startet | – | – | – |
+| 31 entity-dto-mapping | Kotlin / Mapping | Påbegynt | 3.0 | 2026-08-04 | case-31-forsoek-1 |
+| 32 sealed-domain-modelling | Kotlin / DDD | Ikke startet | – | – | – |
+| 33 collections-aggregation-report | Kotlin | Ikke startet | – | – | – |
+| 34 null-safety-validation | Kotlin | Ikke startet | – | – | – |
+| 35 kotlin-dsl-higher-order-functions | Kotlin | Ikke startet | – | – | – |
+| 36 bank-transfer-fullstack-jpa | Full stack / JPA | Ikke startet | – | – | – |
+| 37 kotlin-mapping-sealed-collections | Kotlin / Mapping | Ikke startet | – | – | – |
+| 38 basic-spring-h2-rest | Full stack / JPA | Ikke startet | – | – | – |
+| 39 wiremock-external-integration | Integrasjon | Ikke startet | – | – | – |
+| 40 security-request-context | Sikkerhet | Ikke startet | – | – | – |
 
-**Oppsummert:** 1 løst · 1 påbegynt · 28 ikke startet · 0 mestret
+**Oppsummert:** 3 løst · 1 påbegynt · 36 ikke startet · 0 mestret
 
 ## Forsøkshistorikk
 
 | Dato | Case | Forsøk | Branch | Score | Notater |
 |---|---|---|---|---|---|
 | 2026-07-27 | 01 | 1 | main | 7.5 | Invariants (Money, Quantity, Percentage), fast-rabatt-guard og NoDiscount-test løst. Gjenstående forbedringer: eksplisitte kanttester for 0 % og 100 %, tydelig avrundings-/skalakontrakt, og begrunnelse for trade-off mellom sealed class og Strategy Pattern. |
-| 2026-08-01 | 02 | 1 | (ucommittet) | – | Påbegynt: `to` avklart som eksklusiv, helg refaktorert til `isInWeekend()`. Gjenstår: edge-tester (helg i start/slutt, fravær på helg, fravær utenfor, from > to) og lesbarhetsrefaktorering av løkken. |
+| 2026-08-01 | 02 | 1 | case-02-forsoek-1 | 8.9 | Løst med eksplisitt [from, to)-kontrakt, avvisning av from > to, lesbar datesUntil-implementasjon og ni grønne tester. Trekk for generelle testnavn, overflødig Java 9-konfigurasjon og mindre kodehygiene rundt isInWeekend()/whitespace. |
+| 2026-08-04 | 26 | 1 | case-26-forsoek-1 | 9.2 | Alle seks funksjoner er refaktorert til lesbar, idiomatisk Kotlin. Den siste revisjonen innfører en typesikker `Seniority`-enum, en beregnet `Consultant.seniority`-property og én sentral klassifiserings- og valideringsregel i `Seniority.from()`. Sterk bruk av collections-API, null-safety, expression bodies, `when` og `joinToString`. Trekk fordi refaktoreringen endrer den opprinnelige offentlige kontrakten fra tekstetikett til `Seniority`, den case-insensitive byregelen ikke testes med ulik casing, overgangsgrensene er ufullstendig testet, og det gjenstår små formateringsdetaljer. |
+| 2026-08-04 | 31 | 1 | case-31-forsoek-1 | 3.0 | Påbegynt. `fullName` og `isActiveOn` er korrekt og idiomatisk implementert som extension property/function med expression body; de to tilhørende testene passerer. Hele modulen er rød: 2 av 13 tester passerer, mens 11 feiler fordi TODO 3–6 fortsatt er uløst. Muntlig debrief er ikke vurdert. |
 
 ## Slik registrerer du et nytt forsøk
 
