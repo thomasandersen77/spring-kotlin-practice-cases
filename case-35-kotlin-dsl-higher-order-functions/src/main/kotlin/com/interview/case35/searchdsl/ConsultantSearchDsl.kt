@@ -1,5 +1,7 @@
 package com.interview.case35.searchdsl
 
+import kotlin.math.roundToInt
+
 /**
  * DSL, HIGHER-ORDER FUNCTIONS OG DELEGERING
  *
@@ -30,37 +32,43 @@ data class Consultant(
 /** Et søkekriterium er bare en funksjon. Det er hele poenget med higher-order functions. */
 typealias ConsultantPredicate = (Consultant) -> Boolean
 
+@DslMarker
+annotation class ConsultantSearchDsl
+
 /**
  * Builder for søke-DSL-en. Kriterier på toppnivå kombineres med AND.
  *
  * TODO 1: Velg intern representasjon (f.eks. en privat liste av `ConsultantPredicate`)
  * og implementer kriteriefunksjonene under. Ingenting av dette skal være synlig utenfra.
  */
+@ConsultantSearchDsl
 class ConsultantSearchBuilder {
+
+    private val predicates = mutableListOf<ConsultantPredicate>()
 
     /** TODO 2: Konsulenten må ha denne ferdigheten (eksakt match). */
     fun skill(name: String) {
-        TODO("Legg til ferdighetskriterium")
+        predicates += { consultant -> name in consultant.skills }
     }
 
     /** TODO 3: Konsulenten må være i denne byen (eksakt match). */
     fun inCity(city: String) {
-        TODO("Legg til bykriterium")
+        predicates += { consultant -> consultant.city == city }
     }
 
     /** TODO 4: Timepris mindre enn eller lik `rateNok`. */
     fun maxHourlyRate(rateNok: Int) {
-        TODO("Legg til priskriterium")
+        predicates += { consultant -> consultant.hourlyRateNok <= rateNok }
     }
 
     /** TODO 5: Minst så mange års erfaring. */
     fun minYearsOfExperience(years: Int) {
-        TODO("Legg til erfaringskriterium")
+        predicates += { consultant -> consultant.yearsOfExperience >= years }
     }
 
     /** TODO 6: Bare tilgjengelige konsulenter. */
     fun availableOnly() {
-        TODO("Legg til tilgjengelighetskriterium")
+        predicates += Consultant::available
     }
 
     /**
@@ -69,7 +77,10 @@ class ConsultantSearchBuilder {
      * Hint: bygg en ny `ConsultantSearchBuilder`, kjør blokken på den, og kombiner predikatene.
      */
     fun anyOf(block: ConsultantSearchBuilder.() -> Unit) {
-        TODO("Implementer OR-gruppe med lambda with receiver")
+        val anyOfPredicate = ConsultantSearchBuilder()
+            .apply(block)
+            .buildAny()
+        predicates += anyOfPredicate
     }
 
     /**
@@ -77,39 +88,42 @@ class ConsultantSearchBuilder {
      * Hint: `all { }`/`none { }` over de innsamlede predikatene, eller `fold`.
      */
     fun build(): ConsultantPredicate =
-        TODO("Bygg samlet predikat")
+        { consultant -> predicates.all { predicate -> predicate(consultant) } }
+
+    private fun buildAny(): ConsultantPredicate =
+        { consultant -> predicates.isEmpty() || predicates.any { predicate -> predicate(consultant) } }
 }
 
 /**
  * TODO 9: Inngangspunkt til DSL-en: kjør blokken på en ny builder og returner predikatet.
  */
 fun consultantSearch(block: ConsultantSearchBuilder.() -> Unit): ConsultantPredicate =
-    TODO("Implementer DSL-inngangspunktet")
+    ConsultantSearchBuilder().apply(block).build()
 
 /**
  * TODO 10: Søk direkte på en liste. Rekkefølgen fra kildelisten bevares.
  */
 fun List<Consultant>.search(block: ConsultantSearchBuilder.() -> Unit): List<Consultant> =
-    TODO("Implementer søk på liste")
+    filter(consultantSearch(block))
 
 /** TODO 11: Kombiner to predikater med AND. */
 infix fun ConsultantPredicate.and(other: ConsultantPredicate): ConsultantPredicate =
-    TODO("Implementer AND-komposisjon")
+    { consultant -> this(consultant) && other(consultant) }
 
 /** TODO 12: Kombiner to predikater med OR. */
 infix fun ConsultantPredicate.or(other: ConsultantPredicate): ConsultantPredicate =
-    TODO("Implementer OR-komposisjon")
+    { consultant -> this(consultant) || other(consultant) }
 
 /** TODO 13: Inverter et predikat, slik at `!predikat` fungerer. */
 operator fun ConsultantPredicate.not(): ConsultantPredicate =
-    TODO("Implementer negasjon som operator")
+    { consultant -> !this(consultant) }
 
 /**
  * TODO 14: Higher-order function som lager et predikat: konsulenten må ha ALLE ferdighetene.
  * Ingen ferdigheter oppgitt = matcher alle.
  */
 fun hasAllSkills(vararg skills: String): ConsultantPredicate =
-    TODO("Implementer predikatfabrikk med vararg")
+    { consultant -> skills.all(consultant.skills::contains) }
 
 /**
  * Indeks over konsulenter. `load` er dyr (tenk databasekall) og skal kalles maks én gang —
@@ -120,17 +134,25 @@ fun hasAllSkills(vararg skills: String): ConsultantPredicate =
  */
 class ConsultantIndex(private val load: () -> List<Consultant>) {
 
+    private val consultants: List<Consultant> by lazy(load)
+
     /** Ferdighet -> konsulenter, i samme rekkefølge som kildelisten. */
-    val bySkill: Map<String, List<Consultant>>
-        get() = TODO("Implementer lazy ferdighetsindeks")
+    val bySkill: Map<String, List<Consultant>> by lazy {
+        consultants
+            .flatMap { consultant ->
+                consultant.skills.map { skill -> skill to consultant }
+            }
+            .groupBy(keySelector = { it.first }, valueTransform = { it.second })
+    }
 
     /** By -> konsulenter, i samme rekkefølge som kildelisten. */
-    val byCity: Map<String, List<Consultant>>
-        get() = TODO("Implementer lazy byindeks")
+    val byCity: Map<String, List<Consultant>> by lazy {
+        consultants.groupBy(Consultant::city)
+    }
 
     /** Tom liste for ukjent ferdighet. */
     fun withSkill(skill: String): List<Consultant> =
-        TODO("Slå opp i ferdighetsindeksen")
+        bySkill[skill].orEmpty()
 }
 
 /**
@@ -142,5 +164,25 @@ class ConsultantIndex(private val load: () -> List<Consultant>) {
  * - siste linje: "Snittpris: <gjennomsnitt avrundet til nærmeste hele> kr/t"
  * - tom liste: "Rapport: <title>" etterfulgt av linjen "(ingen treff)" og ingen snittpris
  */
-fun List<Consultant>.toReport(title: String): String =
-    TODO("Implementer rapportbygging med buildString")
+fun List<Consultant>.toReport(title: String): String = buildString {
+    append("Rapport: $title")
+
+    if (this@toReport.isEmpty()) {
+        append("\n(ingen treff)")
+    } else {
+        this@toReport
+            .sortedBy(Consultant::name)
+            .forEach { consultant ->
+                append(
+                    "\n- ${consultant.name} (${consultant.city}), " +
+                        "${consultant.hourlyRateNok} kr/t, ${consultant.yearsOfExperience} år"
+                )
+            }
+
+        val averageRate = this@toReport
+            .map(Consultant::hourlyRateNok)
+            .average()
+            .roundToInt()
+        append("\nSnittpris: $averageRate kr/t")
+    }
+}
