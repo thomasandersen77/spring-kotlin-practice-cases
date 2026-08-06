@@ -49,7 +49,20 @@ class ProcessPaymentUseCase(
     private val store: IdempotencyStore,
     private val paymentGateway: PaymentGateway
 ) {
+    @Synchronized
     fun handle(command: ProcessPaymentCommand): ProcessPaymentResult {
-        TODO("Implement idempotent command flow: lookup key, return existing receipt or charge once and store result")
+        require(command.customerId.isNotBlank()) { "customer id cannot be blank" }
+        require(command.amount.signum() > 0) { "amount must be positive" }
+        store.find(command.idempotencyKey)?.let { return ProcessPaymentResult.AlreadyProcessed(it) }
+
+        val receipt = paymentGateway.charge(command.customerId, command.amount)
+        if (!store.save(command.idempotencyKey, receipt)) {
+            val winner = store.find(command.idempotencyKey)
+                ?: throw IdempotencyPersistenceException("could not persist idempotency result")
+            return ProcessPaymentResult.AlreadyProcessed(winner)
+        }
+        return ProcessPaymentResult.Processed(receipt)
     }
 }
+
+class IdempotencyPersistenceException(message: String) : RuntimeException(message)
