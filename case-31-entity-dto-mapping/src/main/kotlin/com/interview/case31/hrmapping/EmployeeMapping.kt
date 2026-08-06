@@ -74,14 +74,14 @@ data class DepartmentSummaryDto(
  * Kontrakt: "$firstName $lastName".
  */
 val EmployeeEntity.fullName: String
-    get() = TODO("Implementer fullName som extension property på EmployeeEntity")
+    get() = "$firstName $lastName"
 
 /**
  * TODO 2: Implementer som extension function med expression body.
  * Kontrakt: ansatt er aktiv når employmentStart <= date OG (employmentEnd == null ELLER employmentEnd >= date).
  */
 fun EmployeeEntity.isActiveOn(date: LocalDate): Boolean =
-    TODO("Implementer aktiv-regelen uten if/else-pyramide")
+    !employmentStart.isAfter(date) && (employmentEnd == null || !employmentEnd.isBefore(date))
 
 /**
  * TODO 3: Map én entitet til DTO. Ikke alle felter skal alltid med:
@@ -91,20 +91,35 @@ fun EmployeeEntity.isActiveOn(date: LocalDate): Boolean =
  * - `certifiedSkills` = navn på sertifiserte skills, sortert på yearsOfExperience desc, deretter navn asc
  */
 fun EmployeeEntity.toDto(audience: Audience, today: LocalDate): EmployeeDto =
-    TODO("Map entitet til DTO med audience-styrt feltutvalg")
+    EmployeeDto(
+        id = id,
+        fullName = fullName,
+        departmentName = department.name,
+        email = email.takeIf { audience.canSeeEmail },
+        monthlySalaryNok = monthlySalaryNok.takeIf { audience.canSeeSalary },
+        active = isActiveOn(today),
+        certifiedSkills = skills
+            .filter(SkillEntity::certified)
+            .sortedWith(
+                compareByDescending<SkillEntity> { it.yearsOfExperience }
+                    .thenBy { it.name }
+            )
+            .map(SkillEntity::name)
+    )
 
 /**
  * TODO 4: Map en liste av entiteter til en liste av DTO-er — uten mutable liste og uten for-løkke.
  */
 fun List<EmployeeEntity>.toDtos(audience: Audience, today: LocalDate): List<EmployeeDto> =
-    TODO("Map liste av entiteter til liste av DTO-er")
+    map { employee -> employee.toDto(audience, today) }
 
 /**
  * TODO 5: Map OG filtrer i én operasjon: bare ansatte som er aktive på `today` skal med.
  * Hint: dette er forskjellen på `map`, `filter` + `map`, og `mapNotNull` — vær klar til å begrunne valget.
  */
 fun List<EmployeeEntity>.toActiveDtos(audience: Audience, today: LocalDate): List<EmployeeDto> =
-    TODO("Map bare aktive ansatte til DTO-er")
+    filter { employee -> employee.isActiveOn(today) }
+        .map { employee -> employee.toDto(audience, today) }
 
 /**
  * TODO 6: Aggregert mapping: grupper ansatte per avdelingsnavn og bygg sammendrag.
@@ -118,5 +133,36 @@ fun List<EmployeeEntity>.toActiveDtos(audience: Audience, today: LocalDate): Lis
 fun List<EmployeeEntity>.toDepartmentSummaries(
     today: LocalDate,
     topSkillCount: Int = 3
-): List<DepartmentSummaryDto> =
-    TODO("Grupper per avdeling og bygg DepartmentSummaryDto")
+): List<DepartmentSummaryDto> {
+    require(topSkillCount >= 0) { "topSkillCount cannot be negative" }
+
+    return groupBy { employee -> employee.department.name }
+        .map { (departmentName, employees) ->
+            DepartmentSummaryDto(
+                departmentName = departmentName,
+                employeeCount = employees.size,
+                activeEmployeeCount = employees.count { it.isActiveOn(today) },
+                topCertifiedSkills = employees.topCertifiedSkills(topSkillCount)
+            )
+        }
+        .sortedBy(DepartmentSummaryDto::departmentName)
+}
+
+private val Audience.canSeeEmail: Boolean
+    get() = this != Audience.PUBLIC
+
+private val Audience.canSeeSalary: Boolean
+    get() = this == Audience.MANAGER
+
+private fun List<EmployeeEntity>.topCertifiedSkills(limit: Int): List<String> =
+    flatMap(EmployeeEntity::skills)
+        .filter(SkillEntity::certified)
+        .groupingBy(SkillEntity::name)
+        .eachCount()
+        .entries
+        .sortedWith(
+            compareByDescending<Map.Entry<String, Int>> { it.value }
+                .thenBy { it.key }
+        )
+        .take(limit)
+        .map(Map.Entry<String, Int>::key)
