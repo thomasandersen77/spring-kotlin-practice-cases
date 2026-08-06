@@ -2,7 +2,7 @@
 
 ## Agentarbeidsflyter
 
-Gjentakbare arbeidsflyter er definert i `docs/AGENT-WORKFLOWS.md`.
+Gjentakbare arbeidsflyter er definert i `docs/AGENTS-WORKFLOW.md`.
 
 - Ved eksplisitt bestilling av fasit: bruk `FASIT_CODEX`.
 - Ved Git-, branch- eller worktree-kontroll i Warp: bruk `KONTROLL_WARP`.
@@ -52,7 +52,7 @@ Ved motstrid gjelder denne rekkefølgen:
 3. Nærmeste gjeldende `AGENTS.md`
 4. Relevant case-README og eksisterende tester
 5. `STATUS.md` på `main`
-6. `docs/TRENINGSGUIDE.md` og `docs/AGENT-WORKFLOWS.md`
+6. `docs/TRENINGSGUIDE.md` og `docs/AGENTS-WORKFLOW.md`
 7. Eldre samtaler, vurderinger og ucommittede notater
 
 Gamle scorer, tidligere kodeutdrag eller eldre samtaler skal aldri overstyre
