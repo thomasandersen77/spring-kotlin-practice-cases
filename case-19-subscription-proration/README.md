@@ -46,5 +46,5 @@ Ikke bare returner et positivt tall. Proration-caset handler om inkluderende dat
 ## Kommandoer
 
 ```bash
-mvn test -pl case-19-subscription-proration
+./mvnw test -pl case-19-subscription-proration
 ```
