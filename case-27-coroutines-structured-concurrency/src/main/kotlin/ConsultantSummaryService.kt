@@ -5,8 +5,8 @@ import kotlinx.coroutines.withTimeoutOrNull
 /**
  * COROUTINES / STRUCTURED CONCURRENCY
  *
- * Dagens implementasjon er sekvensiell og naiv. Se README for TODO-er:
- * parallelliser med async, legg på timeout og avklar feil-/kanselleringssemantikk.
+ * Implementasjonen parallelliserer kallene med async og har eksplisitt timeout-
+ * og kanselleringssemantikk.
  */
 
 @JvmInline
