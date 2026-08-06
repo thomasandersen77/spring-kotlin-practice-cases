@@ -80,7 +80,7 @@ Et Maven multi-modul-prosjekt (`kotlin-interview-cases`). Felles teknisk konteks
 - Kotlin 1.9.25, Java 21, Spring Boot 3.3 (kun i casene som trenger det)
 - JUnit 5 + AssertJ, MockK i enkelte caser
 - Hvert case er en egen modul med egen `README.md` (scenario, TODO-er, akseptansekriterier)
-- Kjøres med `./mvnw test -pl <case-modul>`
+- Kjøres med `mvn test -pl <case-modul>`
 - **Flere caser har tester som feiler med vilje** — de beskriver kontrakten jeg skal implementere (TDD-stil). Ikke anta at rød test = feil i testen.
 
 ## Modulene, gruppert etter tema

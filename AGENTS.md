@@ -234,7 +234,7 @@ Før review eller score:
 Bruk prosjektets dokumenterte Maven-kommando. Typisk:
 
 ```bash
-./mvnw test -pl <modul>
+mvn test -pl <modul>
 ```
 
 Ikke rapporter «grønne tester» uten å ha kjørt dem eller lest et relevant,
@@ -246,7 +246,7 @@ sikkerheten i vurderingen.
 ### 1. Verifiser før score
 
 Les case-README og relevante tester. Sammenlign branch og eventuelt working tree
-mot branchens faktiske utgangspunkt. Kjør `./mvnw test -pl <modul>` når det er
+mot branchens faktiske utgangspunkt. Kjør `mvn test -pl <modul>` når det er
 mulig.
 
 Skill eksplisitt mellom:

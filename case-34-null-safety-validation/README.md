@@ -68,5 +68,5 @@ Ikke fail-fast med `require`/`throw` på første feil — hele poenget er at bru
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-34-null-safety-validation
+mvn test -pl case-34-null-safety-validation
 ```

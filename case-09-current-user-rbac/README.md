@@ -46,5 +46,5 @@ Ikke gjør alle med riktig rolle automatisk autorisert. Caset handler om kombina
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-09-current-user-rbac
+mvn test -pl case-09-current-user-rbac
 ```

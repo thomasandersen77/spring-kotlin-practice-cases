@@ -46,5 +46,5 @@ Ikke gjør rabattreglene maksimalt generiske med en gang. Vis først en enkel, b
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-03-business-rules-kata
+mvn test -pl case-03-business-rules-kata
 ```

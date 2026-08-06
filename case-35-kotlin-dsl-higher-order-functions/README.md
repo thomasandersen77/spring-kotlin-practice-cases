@@ -75,5 +75,5 @@ Ikke la builderen returnere `this` og bygge en fluent chain — poenget er lambd
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-35-kotlin-dsl-higher-order-functions
+mvn test -pl case-35-kotlin-dsl-higher-order-functions
 ```

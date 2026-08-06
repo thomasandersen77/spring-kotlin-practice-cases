@@ -35,7 +35,7 @@ jobs:
           cache: maven
 
       - name: Compile all modules
-        run: ./mvnw -B -ntp -DskipTests package
+        run: mvn -B -ntp -DskipTests package
 
       - name: Resolve modules to test
         id: modules
@@ -82,7 +82,7 @@ jobs:
           while IFS= read -r module; do
             [ -z "$module" ] && continue
             echo "::group::Tester $module"
-            ./mvnw -B -ntp test -pl "$module"
+            mvn -B -ntp test -pl "$module"
             echo "::endgroup::"
           done <<< "${{ steps.modules.outputs.modules }}"
 

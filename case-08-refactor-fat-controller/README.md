@@ -47,5 +47,5 @@ Ikke bare flytt eksisterende kode én fil ned. Målet er å vise bedre grenser o
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-08-refactor-fat-controller
+mvn test -pl case-08-refactor-fat-controller
 ```

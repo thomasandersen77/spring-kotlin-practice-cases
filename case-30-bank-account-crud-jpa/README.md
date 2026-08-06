@@ -76,8 +76,8 @@ Ikke implementer saldoendring via `PUT` for å "få CRUD komplett". Caset handle
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-30-bank-account-crud-jpa
-./mvnw spring-boot:run -pl case-30-bank-account-crud-jpa
+mvn test -pl case-30-bank-account-crud-jpa
+mvn spring-boot:run -pl case-30-bank-account-crud-jpa
 ```
 
 ## Nyttige URL-er

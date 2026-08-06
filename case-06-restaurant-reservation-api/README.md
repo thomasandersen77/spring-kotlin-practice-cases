@@ -46,5 +46,5 @@ Ikke godta alle reservasjoner bare fordi testen gjør det. Legg inn nok valideri
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-06-restaurant-reservation-api
+mvn test -pl case-06-restaurant-reservation-api
 ```

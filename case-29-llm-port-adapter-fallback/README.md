@@ -50,5 +50,5 @@ Ikke fang alle exceptions og prøv fallback uansett. Forskjellen på kapasitetsf
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-29-llm-port-adapter-fallback
+mvn test -pl case-29-llm-port-adapter-fallback
 ```

@@ -46,5 +46,5 @@ Ikke implementer bare “under 15 minutter = 0”. Legg til nok regler til at av
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-05-parking-pricing-rules
+mvn test -pl case-05-parking-pricing-rules
 ```

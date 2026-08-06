@@ -51,5 +51,5 @@ Ikke nøy deg med `anyRequest().authenticated()`. Poenget er granulære regler: 
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-28-oauth2-jwt-resource-server
+mvn test -pl case-28-oauth2-jwt-resource-server
 ```

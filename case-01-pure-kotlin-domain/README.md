@@ -48,5 +48,5 @@ Ikke bare få nåværende tester grønne. Legg til minst én test som tvinger de
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-01-pure-kotlin-domain
+mvn test -pl case-01-pure-kotlin-domain
 ```

@@ -38,7 +38,7 @@ git switch -c case-05-forsoek-2 main
 
 1. Les casets `README.md` — spesielt scenario, TODO-er og akseptansekriterier.
 2. Sett en tidsboks (se `## Tid` i casets README).
-3. Kjør `./mvnw test -pl <modul>` og se hva som er rødt.
+3. Kjør `mvn test -pl <modul>` og se hva som er rødt.
 4. Skriv kontrakttester først der det er naturlig (TDD).
 5. Fullfør TODO-ene stegvis — tenk høyt som i parprogrammering.
 6. Avslutt med debrief: svar på casets `## Intervjuspørsmål / debrief` **høyt**, som om intervjueren sitter ved siden av deg.
@@ -129,28 +129,16 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 
 ## Kjøring
 
-Bruk **Maven-wrapperen** (`./mvnw`, `.\mvnw.cmd` på Windows) — den henter Maven 3.9.6, så alle maskiner bygger med samme Maven-versjon. Du trenger ikke Maven installert lokalt.
-
-**Java 21 er påkrevd.** Kotlin 1.9.25 støtter ikke JDK 22 eller nyere, og bygget feiler på JDK 25. Repoet har en `.sdkmanrc` — kjør `sdk env` i repo-roten (eller `sdk use java 21.0.7-tem`) før du bygger. Bygger du med feil JDK, stopper `maven-enforcer-plugin` med en tydelig feilmelding i stedet for en kryptisk Kotlin-krasj.
-
 ```bash
-# Sjekk at wrapperen kjører på Java 21:
-./mvnw -v
-
-# Alle caser (rødt er forventet på main — TODO-ene er uløste):
-./mvnw test
+# Alle caser:
+mvn test
 
 # Ett case:
-./mvnw test -pl case-01-pure-kotlin-domain
-
-# Verifiser at hele repoet kompilerer (uten å kjøre tester):
-./mvnw clean test-compile -DskipTests
+mvn test -pl case-01-pure-kotlin-domain
 
 # Spring Boot-caser kan også startes:
-./mvnw spring-boot:run -pl case-30-bank-account-crud-jpa
+mvn spring-boot:run -pl case-30-bank-account-crud-jpa
 ```
-
-> `./mvnw test` på `main` gir **BUILD FAILURE** med vilje: casene er uferdige og kaster `NotImplementedError` fra `TODO()`. Bruk `./mvnw clean test-compile -DskipTests` når du vil sjekke at selve repoet er friskt — den skal alltid gi BUILD SUCCESS.
 
 ## Regler for repoet
 

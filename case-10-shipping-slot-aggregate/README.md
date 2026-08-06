@@ -45,5 +45,5 @@ Ikke bare returner en booking fra `book`. Modellen må vise hvordan kapasitet og
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-10-shipping-slot-aggregate
+mvn test -pl case-10-shipping-slot-aggregate
 ```

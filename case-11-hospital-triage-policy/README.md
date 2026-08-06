@@ -46,5 +46,5 @@ Ikke la første test definere hele policyen. Legg inn nok regler til at priorite
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-11-hospital-triage-policy
+mvn test -pl case-11-hospital-triage-policy
 ```

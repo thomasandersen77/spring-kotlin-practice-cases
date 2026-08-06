@@ -38,4 +38,4 @@ Ikke legg regler i controlleren, returner JPA-entiteten eller behold en åpen pe
 Hvorfor tynn controller? Hvor ligger `@Transactional`? Hva skiller DTO, domene og entity? Hvorfor `open-in-view=false`? Hva ville du endret i produksjon?
 
 ## Kommando
-`./mvnw test -pl case-38-basic-spring-h2-rest`
+`mvn test -pl case-38-basic-spring-h2-rest`

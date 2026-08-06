@@ -46,5 +46,5 @@ Ikke bare kall `ClaimType.valueOf`. Caset handler om robust oversettelse, valide
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-22-insurance-claim-acl
+mvn test -pl case-22-insurance-claim-acl
 ```

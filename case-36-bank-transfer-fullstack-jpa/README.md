@@ -165,6 +165,6 @@ Dette er det mest komplette caset i repoet ved siden av case 30: det trener hele
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-36-bank-transfer-fullstack-jpa
-./mvnw spring-boot:run -pl case-36-bank-transfer-fullstack-jpa
+mvn test -pl case-36-bank-transfer-fullstack-jpa
+mvn spring-boot:run -pl case-36-bank-transfer-fullstack-jpa
 ```

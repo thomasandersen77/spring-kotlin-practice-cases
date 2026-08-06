@@ -45,5 +45,5 @@ Ikke publiser event direkte i use case uten mellomlag. Caset handler om kontroll
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-24-domain-events-outbox
+mvn test -pl case-24-domain-events-outbox
 ```

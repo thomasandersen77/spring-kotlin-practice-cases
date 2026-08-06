@@ -48,6 +48,6 @@ Ikke løs alt med annotations i controlleren. Noe inputvalidering hører hjemme 
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-07-order-api-core-db
-./mvnw spring-boot:run -pl case-07-order-api-core-db
+mvn test -pl case-07-order-api-core-db
+mvn spring-boot:run -pl case-07-order-api-core-db
 ```

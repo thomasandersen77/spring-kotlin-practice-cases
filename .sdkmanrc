@@ -1,4 +1,0 @@
-# Kjør "sdk env" i repo-roten for å aktivere riktig JDK.
-# (Med sdkman_auto_env=true i ~/.sdkman/etc/config skjer det automatisk.)
-# Kotlin 1.9.25 støtter ikke JDK 22+ — bygget feiler på nyere JDK-er.
-java=21.0.7-tem

@@ -45,5 +45,5 @@ Ikke “løs” konflikten ved å hente og overskrive på nytt uten diskusjon. C
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-23-optimistic-locking-concurrency
+mvn test -pl case-23-optimistic-locking-concurrency
 ```

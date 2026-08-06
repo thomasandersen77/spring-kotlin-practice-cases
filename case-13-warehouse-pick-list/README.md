@@ -46,5 +46,5 @@ Ikke la metodene være tomme “commands” uten observerbar state. Kandidaten m
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-13-warehouse-pick-list
+mvn test -pl case-13-warehouse-pick-list
 ```

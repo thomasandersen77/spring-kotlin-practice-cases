@@ -55,5 +55,5 @@ Ikke lag én `toDto()` per audience med copy-paste-kode, og ikke løs feltmasker
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-31-entity-dto-mapping
+mvn test -pl case-31-entity-dto-mapping
 ```

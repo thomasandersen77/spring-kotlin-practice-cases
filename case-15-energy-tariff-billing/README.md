@@ -46,5 +46,5 @@ Ikke nøy deg med `assertThat(total).isPositive`. Skriv minst én test med forve
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-15-energy-tariff-billing
+mvn test -pl case-15-energy-tariff-billing
 ```

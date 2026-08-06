@@ -46,5 +46,5 @@ Ikke hardkod alle gebyrer direkte i `calculateFee`. Poenget er å vise hvordan e
 ## Kommandoer
 
 ```bash
-./mvnw test -pl case-12-payment-settlement-strategy
+mvn test -pl case-12-payment-settlement-strategy
 ```
