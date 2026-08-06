@@ -12,7 +12,7 @@ import java.time.LocalDate
  * Validatoren skal samle ALLE feil, ikke stoppe på den første, og aldri kaste exception
  * for forventet ugyldig input. Ingen `!!`.
  *
- * Se README for TODO-liste, læringsmål, valideringsregler og akseptansekriterier.
+ * Se README for læringsmål, valideringsregler og akseptansekriterier.
  */
 
 data class RegistrationForm(
@@ -48,14 +48,14 @@ sealed interface ValidationResult<out T> {
 // ---------- Hjelpefunksjoner (din jobb) ----------
 
 /**
- * TODO 1: Trimmet verdi hvis strengen finnes og ikke er blank, ellers `null`.
+ * Regel 1: Trimmet verdi hvis strengen finnes og ikke er blank, ellers `null`.
  * Hint: `?.trim()?.takeIf { it.isNotEmpty() }` — én expression body, ingen if/else.
  */
 fun String?.normalizedOrNull(): String? =
     this?.trim()?.takeIf(String::isNotEmpty)
 
 /**
- * TODO 2: Parse ISO-dato (`yyyy-MM-dd`) uten å kaste exception. Returner `null` ved ugyldig input.
+ * Regel 2: Parse ISO-dato (`yyyy-MM-dd`) uten å kaste exception. Returner `null` ved ugyldig input.
  * Hint: `runCatching { }.getOrNull()`.
  */
 fun String?.toLocalDateOrNull(): LocalDate? =
@@ -68,7 +68,7 @@ fun String?.toLocalDateOrNull(): LocalDate? =
 class RegistrationValidator(private val today: LocalDate) {
 
     /**
-     * TODO 3: Valider skjemaet og bygg `Customer`.
+     * Regel 3: Valider skjemaet og bygg `Customer`.
      * Returner `ValidationResult.Valid` med normaliserte verdier, eller `ValidationResult.Invalid`
      * med ALLE feil (maks én per felt, sortert på feltnavn asc).
      * Reglene og de eksakte feilmeldingene står i README.
@@ -179,7 +179,7 @@ class RegistrationValidator(private val today: LocalDate) {
 }
 
 /**
- * TODO 4: Bare de skjemaene som validerer skal bli `Customer`. Hint: `mapNotNull`.
+ * Regel 4: Bare de skjemaene som validerer skal bli `Customer`. Hint: `mapNotNull`.
  */
 fun List<RegistrationForm>.validCustomers(validator: RegistrationValidator): List<Customer> =
     mapNotNull { form ->
@@ -190,7 +190,7 @@ fun List<RegistrationForm>.validCustomers(validator: RegistrationValidator): Lis
     }
 
 /**
- * TODO 5: Alle feil fra alle skjemaer, i skjemarekkefølge. Hint: `flatMap` + `filterIsInstance`.
+ * Regel 5: Alle feil fra alle skjemaer, i skjemarekkefølge. Hint: `flatMap` + `filterIsInstance`.
  */
 fun List<RegistrationForm>.allErrors(validator: RegistrationValidator): List<FieldError> =
     map(validator::validate)
