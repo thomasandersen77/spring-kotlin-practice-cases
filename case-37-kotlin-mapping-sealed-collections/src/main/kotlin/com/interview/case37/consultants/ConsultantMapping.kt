@@ -18,7 +18,7 @@ data class Consultant(val id: String, val name: String, val yearsOfExperience: I
 data class ConsultantDto(val id: String, val displayName: String, val experienceYears: Int, val availabilityLabel: String, val certifiedSkills: List<String>)
 data class SkillPopularityDto(val skillName: String, val consultantCount: Int)
 
-// TODO 1: Oversett statuskode til sealed domenetype. PARTIAL krever en gyldig prosent.
+// Oversett statuskode til sealed domenetype. PARTIAL krever en gyldig prosent.
 fun availabilityFrom(code: String?, partialPercent: Int? = null): Availability =
     when (code) {
         "AVAILABLE" -> Availability.Available
@@ -30,7 +30,7 @@ fun availabilityFrom(code: String?, partialPercent: Int? = null): Availability =
         else -> Availability.Unknown(code)
     }
 
-// TODO 2: Returner null for blankt navn eller negative erfaringsår.
+// Returner null for blankt navn eller negative erfaringsår.
 fun ConsultantInput.toDomain(): Consultant? {
     val normalizedName = name?.trim()?.takeIf(String::isNotEmpty) ?: return null
     if (yearsOfExperience < 0) return null
@@ -46,7 +46,7 @@ fun ConsultantInput.toDomain(): Consultant? {
     )
 }
 
-// TODO 3: Map til DTO med uttømmende when for availabilityLabel.
+// Map til DTO med uttømmende when for availabilityLabel.
 fun Consultant.toDto(): ConsultantDto = ConsultantDto(
     id = id,
     displayName = name,
@@ -63,10 +63,10 @@ fun Consultant.toDto(): ConsultantDto = ConsultantDto(
     certifiedSkills = certifiedSkills
 )
 
-// TODO 4: Map bare gyldige inputrader uten mutable liste.
+// Map bare gyldige inputrader uten mutable liste.
 fun List<ConsultantInput>.toDomainConsultants(): List<Consultant> = mapNotNull(ConsultantInput::toDomain)
 
-// TODO 5: Ta med Available og PartiallyAvailable; sorter erfaring desc og navn asc.
+// Ta med Available og PartiallyAvailable; sorter erfaring desc og navn asc.
 fun List<Consultant>.rankAvailable(): List<ConsultantDto> =
     filter { consultant ->
         consultant.availability is Availability.Available ||
@@ -78,7 +78,7 @@ fun List<Consultant>.rankAvailable(): List<ConsultantDto> =
         )
         .map(Consultant::toDto)
 
-// TODO 6: Tell sertifiserte skill-navn; sorter antall desc og navn asc.
+// Tell sertifiserte skill-navn; sorter antall desc og navn asc.
 fun List<Consultant>.skillPopularity(): List<SkillPopularityDto> =
     flatMap { consultant -> consultant.certifiedSkills.distinct() }
         .groupingBy { skillName -> skillName }
