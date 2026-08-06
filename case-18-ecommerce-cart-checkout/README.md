@@ -46,5 +46,5 @@ Ikke implementer checkout som en tom metode. Caset handler om at aggregate og us
 ## Kommandoer
 
 ```bash
-mvn test -pl case-18-ecommerce-cart-checkout
+./mvnw test -pl case-18-ecommerce-cart-checkout
 ```

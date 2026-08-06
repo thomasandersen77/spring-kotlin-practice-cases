@@ -46,5 +46,5 @@ Ikke returner overgangsobjekter uten å endre status. Da testes ikke state machi
 ## Kommandoer
 
 ```bash
-mvn test -pl case-16-incident-escalation-state-machine
+./mvnw test -pl case-16-incident-escalation-state-machine
 ```

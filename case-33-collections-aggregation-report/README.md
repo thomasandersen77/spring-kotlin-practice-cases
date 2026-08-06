@@ -63,5 +63,5 @@ Ikke skriv én uleselig kjede på femten operasjoner per funksjon — del opp me
 ## Kommandoer
 
 ```bash
-mvn test -pl case-33-collections-aggregation-report
+./mvnw test -pl case-33-collections-aggregation-report
 ```

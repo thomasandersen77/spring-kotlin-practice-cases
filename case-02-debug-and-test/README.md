@@ -47,5 +47,5 @@ Ikke endre forventede tall tilfeldig til testene passer. Start med å formulere 
 ## Kommandoer
 
 ```bash
-mvn test -pl case-02-debug-and-test
+./mvnw test -pl case-02-debug-and-test
 ```

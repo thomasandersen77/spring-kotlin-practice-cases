@@ -8,7 +8,7 @@ Hvordan få mest mulig ut av dette repoet før teknisk intervju.
 2. **Lag branch:** `git switch -c case-NN-forsoek-M main`.
 3. **Sett tidsboks** etter casets `## Tid`. Stopp når tiden er ute — intervjuer har også tidsboks.
 4. **Les README-en grundig** før du åpner koden. Formuler oppgaven med egne ord, høyt.
-5. **Kjør testene** (`mvn test -pl <modul>`) og les hva som er rødt. Røde tester er kontrakten, ikke fienden.
+5. **Kjør testene** (`./mvnw test -pl <modul>`) og les hva som er rødt. Røde tester er kontrakten, ikke fienden.
 6. **Skriv kontrakttester først** der caset ber om det (TDD). Navngi tester slik at de dokumenterer regelen.
 7. **Implementer stegvis.** Tenk høyt hele veien: "Nå legger jeg invarianten her fordi ..."
 8. **Refaktorer til slutt** — ikke optimaliser for tidlig.

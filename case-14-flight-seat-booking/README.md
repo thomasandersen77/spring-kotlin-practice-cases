@@ -46,5 +46,5 @@ Ikke returner `SeatReserved` uten å lagre noe. Da viser ikke caset konsistensgr
 ## Kommandoer
 
 ```bash
-mvn test -pl case-14-flight-seat-booking
+./mvnw test -pl case-14-flight-seat-booking
 ```

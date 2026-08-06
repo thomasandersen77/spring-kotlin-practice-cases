@@ -62,5 +62,5 @@ Ikke gjør hierarkiet flatt ved å legge alt i én `data class` med en `type`-en
 ## Kommandoer
 
 ```bash
-mvn test -pl case-32-sealed-domain-modelling
+./mvnw test -pl case-32-sealed-domain-modelling
 ```
