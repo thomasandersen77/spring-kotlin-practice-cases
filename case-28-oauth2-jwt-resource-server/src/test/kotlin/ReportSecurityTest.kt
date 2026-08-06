@@ -1,5 +1,6 @@
 package com.interview.reports
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -7,11 +8,13 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.oauth2.jwt.JwtDecoder
+import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.time.Instant
 
 /**
  * Disse testene beskriver kontrakten for sikkerhetskonfigurasjonen.
@@ -75,6 +78,16 @@ class ReportSecurityTest {
             .andExpect(status().isNoContent)
     }
 
-    // TODO: skriv en test som bruker jwt().jwt { it.claim("roles", listOf("ADMIN")) }
-    //       og verifiser at din JwtAuthenticationConverter mapper claimet til ROLE_ADMIN
+    @Test
+    fun `custom roles claim maps to admin authority`() {
+        val token = Jwt(
+            "token", Instant.parse("2026-01-01T00:00:00Z"), Instant.parse("2026-01-01T01:00:00Z"),
+            mapOf("alg" to "none"), mapOf("sub" to "user", "roles" to listOf("ADMIN"), "scope" to "reports:read")
+        )
+
+        val authentication = SecurityConfig().jwtAuthenticationConverter().convert(token)
+
+        assertThat(authentication.authorities.map { it.authority })
+            .contains("ROLE_ADMIN", "SCOPE_reports:read")
+    }
 }

@@ -5,7 +5,14 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.ResponseEntity
+import org.springframework.http.HttpMethod
+import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.oauth2.jwt.Jwt
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -61,9 +68,30 @@ class SecurityConfig {
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .csrf { it.disable() }
+            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { auth ->
-                auth.anyRequest().permitAll() // <- med vilje feil: alt er åpent
+                auth.requestMatchers("/public/**").permitAll()
+                auth.requestMatchers(HttpMethod.GET, "/api/reports").hasAuthority("SCOPE_reports:read")
+                auth.requestMatchers(HttpMethod.DELETE, "/api/reports/**").hasRole("ADMIN")
+                auth.anyRequest().authenticated()
+            }
+            .oauth2ResourceServer { resource ->
+                resource.jwt { jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()) }
             }
         return http.build()
+    }
+
+    @Bean
+    fun jwtAuthenticationConverter(): JwtAuthenticationConverter {
+        val scopes = JwtGrantedAuthoritiesConverter()
+        return JwtAuthenticationConverter().apply {
+            setJwtGrantedAuthoritiesConverter { jwt: Jwt ->
+                val authorities = scopes.convert(jwt)?.toMutableSet() ?: mutableSetOf<GrantedAuthority>()
+                jwt.getClaimAsStringList("roles").orEmpty()
+                    .map { SimpleGrantedAuthority("ROLE_${it.uppercase()}") }
+                    .forEach(authorities::add)
+                authorities
+            }
+        }
     }
 }
