@@ -15,18 +15,13 @@ class CaseController(
      */
     @PostMapping("/{caseId}/close")
     fun closeCase(
-        @RequestBody request: CloseCaseRequest,
+        @PathVariable caseId: UUID,
         @CurrentUser user: User
     ): CloseCaseResponse {
-        val caseId = CaseId(request.caseId)
-        service.closeCase(user, caseId)
-        return CloseCaseResponse(caseId,CaseStatus.CLOSED)
+        val closed = service.closeCase(user, CaseId(caseId))
+        return CloseCaseResponse(closed.id, closed.status)
     }
 }
-
-data class CloseCaseRequest(
-    val caseId: UUID,
-)
 
 data class CloseCaseResponse(
     val caseId: CaseId,
@@ -35,19 +30,19 @@ data class CloseCaseResponse(
 
 @Service
 class CaseService(
-    val accessPolicy: AccessPolicy
+    private val accessPolicy: AccessPolicy,
+    private val repository: CaseRepository
 ) {
-    /**
-     * Neste steg i caset:
-     *  - Les sak fra repository-port eller testbar in-memory adapter.
-     *  - Bruk AccessPolicy før statusendring.
-     *  - Modellér manglende tilgang eksplisitt (exception eller resultat-type).
-     *  - Skriv tester som dekker både autorisert og uautorisert flyt.
-     */
-    fun closeCase(user: User, caseId: CaseId) {
-
-
-        // Implementer use case-flyt: hent sak -> valider tilgang -> utfør lukking -> persistér.
-
+    fun closeCase(user: User, caseId: CaseId): CustomerCase {
+        val customerCase = repository.findById(caseId) ?: throw NoSuchElementException("Case ${caseId.value} not found")
+        if (!accessPolicy.canCloseCase(user, customerCase)) throw CaseAccessDeniedException(caseId)
+        return repository.save(customerCase.close())
     }
+}
+
+class CaseAccessDeniedException(caseId: CaseId) : RuntimeException("Access denied for case ${caseId.value}")
+
+interface CaseRepository {
+    fun findById(id: CaseId): CustomerCase?
+    fun save(customerCase: CustomerCase): CustomerCase
 }
