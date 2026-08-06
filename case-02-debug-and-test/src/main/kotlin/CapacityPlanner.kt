@@ -1,4 +1,5 @@
 import org.springframework.web.bind.annotation.*
+import java.time.DayOfWeek
 import java.time.LocalDate
 
 @RestController
@@ -24,38 +25,21 @@ data class CapacityResponse(
 )
 
 class CapacityPlanner {
-
-    /**
-     * BUG:
-     *  - Denne har minst én off-by-one-feil.
-     *  - Den håndterer helg litt naivt.
-     *
-     * CASE-FOKUS:
-     *  - Skriv kontrakt-tester før du endrer implementasjonen.
-     *  - Avklar om `to` er inclusive eller exclusive, og la testnavn dokumentere valget.
-     *  - Del gjerne opp i navngitte hjelpefunksjoner som uttrykker domenespråk (arbeidsdag, fravær, periode).
-     *  - Forklar trade-off mellom enkelhet og tydelighet i dato-semantikken.
-     */
     fun availableWorkingDays(
         from: LocalDate,
         to: LocalDate,
         absenceDates: Set<LocalDate>
     ): Int {
-        var date = from
-        var count = 0
+        require(!from.isAfter(to)) { "from must be on or before to" }
 
-        while (date.isBefore(to)) {
-            val dayOfWeek = date.dayOfWeek.value
-            val isWeekend = dayOfWeek == 6 || dayOfWeek == 7
-            val isAbsent = absenceDates.contains(date)
-
-            if (!isWeekend && !isAbsent) {
-                count++
-            }
-
-            date = date.plusDays(1)
-        }
-
-        return count
+        return datesInHalfOpenPeriod(from, to)
+            .count { date -> date.isWorkingDay() && date !in absenceDates }
     }
+
+    private fun datesInHalfOpenPeriod(from: LocalDate, to: LocalDate): Sequence<LocalDate> =
+        generateSequence(from) { date -> date.plusDays(1) }
+            .takeWhile { date -> date.isBefore(to) }
+
+    private fun LocalDate.isWorkingDay(): Boolean =
+        dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != DayOfWeek.SUNDAY
 }
