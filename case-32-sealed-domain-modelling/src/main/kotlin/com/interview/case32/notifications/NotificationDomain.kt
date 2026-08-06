@@ -10,8 +10,7 @@ import java.time.Instant
  * og hva som skjedde (`DeliveryResult`). Reglene skal uttrykkes som `when`-uttrykk uten `else`,
  * slik at kompilatoren sier fra når en ny variant legges til.
  *
- * Alt som skal implementeres er markert med `TODO()`. Testene beskriver kontrakten.
- * Se README for TODO-liste, læringsmål og akseptansekriterier.
+ * Reglene under implementerer kontrakten som beskrives i README og testene.
  */
 
 // ---------- Hva skal varsles ----------
@@ -104,7 +103,7 @@ data class DeliveryReport(
 // ---------- Regler (din jobb) ----------
 
 /**
- * TODO 1: Implementer som extension property med `when` uten `else`.
+ * Regel 1: Extension property med `when` uten `else`.
  * Kontrakt: Email -> "e-post", Sms -> "SMS", InApp -> "app".
  */
 val Channel.label: String
@@ -117,7 +116,7 @@ val Channel.label: String
 object NotificationPolicy {
 
     /**
-     * TODO 2: Hvilke kanaler skal brukes? `when` over `Notification` uten `else`.
+     * Regel 2: Hvilke kanaler skal brukes? `when` over `Notification` uten `else`.
      * Kontrakt (rekkefølgen i listen er en del av kontrakten):
      * - PasswordReset  -> [Email] hvis mottakeren har e-post, ellers tom liste (ingen InApp: brukeren er utestengt)
      * - PaymentFailed  -> [Sms, Email, InApp] — de kanalene mottakeren faktisk har, InApp alltid
@@ -150,7 +149,7 @@ object NotificationPolicy {
         }
 
     /**
-     * TODO 3: Prioritet som `when`-uttrykk.
+     * Regel 3: Prioritet som `when`-uttrykk.
      * Kontrakt: PasswordReset og PaymentFailed -> HIGH, OrderShipped -> NORMAL, MarketingCampaign -> LOW.
      */
     fun priorityOf(notification: Notification): Priority =
@@ -163,7 +162,7 @@ object NotificationPolicy {
         }
 
     /**
-     * TODO 4: Hvorfor ble ingenting sendt?
+     * Regel 4: Hvorfor ble ingenting sendt?
      * Kontrakt:
      * - null hvis `channelsFor` gir minst én kanal
      * - MARKETING_CONSENT_MISSING hvis det er en MarketingCampaign uten samtykke
@@ -188,7 +187,7 @@ object NotificationPolicy {
 }
 
 /**
- * TODO 5: Menneskelesbar beskrivelse. `when` over `DeliveryResult` uten `else`, med smart casts.
+ * Regel 5: Menneskelesbar beskrivelse. `when` over `DeliveryResult` uten `else`, med smart casts.
  * Kontrakt:
  * - Delivered -> "Levert via <label> (ref=<providerReference>)"
  * - Rejected  -> "Avvist via <label>: <reason>"
@@ -207,7 +206,7 @@ fun describe(result: DeliveryResult): String =
     }
 
 /**
- * TODO 6: Oppsummer en batch med resultater.
+ * Regel 6: Oppsummer en batch med resultater.
  * Kontrakt:
  * - tellere per variant
  * - nextRetryAfter = korteste `retryAfter` blant Retryable, eller null hvis ingen kan prøves igjen
@@ -223,7 +222,7 @@ fun List<DeliveryResult>.toReport(): DeliveryReport =
     )
 
 /**
- * TODO 7: Sorter varsler slik at de viktigste kommer først, og bevar innbyrdes rekkefølge
+ * Regel 7: Sorter varsler slik at de viktigste kommer først, og bevar innbyrdes rekkefølge
  * innenfor samme prioritet (stabil sortering).
  */
 fun List<Notification>.highestPriorityFirst(): List<Notification> =
