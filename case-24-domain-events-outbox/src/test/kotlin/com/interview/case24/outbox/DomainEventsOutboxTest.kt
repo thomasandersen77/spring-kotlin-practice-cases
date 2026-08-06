@@ -1,6 +1,7 @@
 package com.interview.case24.outbox
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 import java.time.Instant
@@ -28,7 +29,42 @@ class DomainEventsOutboxTest {
 
     @Test
     fun `exercise use case should treat order save and outbox append as one transaction boundary`() {
-        // Bygg to testdoubles (orderRepository/outboxRepository) og beskriv i test
-        // hva som er forventet atferd ved feil i outbox-skriving.
+        val orders = mutableListOf<PurchaseOrder>()
+        val messages = mutableListOf<OutboxMessage>()
+        var transactions = 0
+        val useCase = PlaceOrderUseCase(
+            { orders += it },
+            { messages += it },
+            TransactionBoundary { block -> transactions++; block() }
+        )
+
+        val id = useCase.place(PlaceOrderCommand("cust-42", BigDecimal("199.00")), Instant.parse("2026-01-01T10:15:30Z"))
+
+        assertThat(transactions).isEqualTo(1)
+        assertThat(orders.single().id).isEqualTo(id)
+        assertThat(messages.single().payload).contains(id.value.toString())
+    }
+
+    @Test
+    fun `outbox failure should propagate from transaction boundary`() {
+        val useCase = PlaceOrderUseCase(
+            { },
+            { throw IllegalStateException("outbox unavailable") },
+            TransactionBoundary { block -> block() }
+        )
+
+        assertThatThrownBy { useCase.place(PlaceOrderCommand("cust", BigDecimal.TEN)) }
+            .isInstanceOf(IllegalStateException::class.java).hasMessageContaining("outbox")
+    }
+
+    @Test
+    fun `invalid order command should fail before persistence`() {
+        var writes = 0
+        val useCase = PlaceOrderUseCase({ writes++ }, { writes++ })
+        assertThatThrownBy { useCase.place(PlaceOrderCommand("bad customer!", BigDecimal.ONE)) }
+            .isInstanceOf(IllegalArgumentException::class.java)
+        assertThatThrownBy { useCase.place(PlaceOrderCommand("cust", BigDecimal.ZERO)) }
+            .isInstanceOf(IllegalArgumentException::class.java)
+        assertThat(writes).isZero()
     }
 }

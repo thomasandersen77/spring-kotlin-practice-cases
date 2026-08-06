@@ -40,19 +40,36 @@ data class OutboxMessage(
     }
 }
 
-interface PurchaseOrderRepository {
+fun interface PurchaseOrderRepository {
     fun save(order: PurchaseOrder)
 }
 
-interface OutboxRepository {
+fun interface OutboxRepository {
     fun append(message: OutboxMessage)
+}
+
+fun interface TransactionBoundary {
+    fun inTransaction(block: () -> OrderId): OrderId
 }
 
 class PlaceOrderUseCase(
     private val orderRepository: PurchaseOrderRepository,
-    private val outboxRepository: OutboxRepository
+    private val outboxRepository: OutboxRepository,
+    private val transactionBoundary: TransactionBoundary = TransactionBoundary { it() }
 ) {
     fun place(command: PlaceOrderCommand, now: Instant = Instant.now()): OrderId {
-        TODO("Implement application flow: validate command, create order, create event, persist order and outbox atomically")
+        require(command.customerId.matches(Regex("[A-Za-z0-9_-]+"))) { "customer id is invalid" }
+        require(command.amount.signum() > 0) { "amount must be positive" }
+
+        val orderId = OrderId(UUID.randomUUID())
+        val order = PurchaseOrder(orderId, command.customerId, command.amount, now)
+        val event = OrderPlaced(EventId(UUID.randomUUID()), orderId, now, command.customerId, command.amount)
+        val message = OutboxMessage.from(event)
+
+        return transactionBoundary.inTransaction {
+            orderRepository.save(order)
+            outboxRepository.append(message)
+            orderId
+        }
     }
 }
