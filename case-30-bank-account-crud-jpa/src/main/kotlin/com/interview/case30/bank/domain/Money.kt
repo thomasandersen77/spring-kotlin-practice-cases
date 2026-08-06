@@ -22,8 +22,7 @@ data class Money private constructor(val amount: BigDecimal) : Comparable<Money>
 
         fun of(rawAmount: BigDecimal): Money {
             require(rawAmount >= BigDecimal.ZERO) { "Amount cannot be negative" }
-            // TODO(case-30): normaliser alltid scale konsekvent her
-            return Money(rawAmount)
+            return Money(rawAmount.setScale(SCALE, ROUNDING_MODE))
         }
 
         fun ofPositive(rawAmount: BigDecimal): Money {

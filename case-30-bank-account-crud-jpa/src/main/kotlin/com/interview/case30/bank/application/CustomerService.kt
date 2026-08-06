@@ -39,7 +39,9 @@ class CustomerService(
     fun update(customerId: CustomerId, name: String, email: String): Customer {
         val existing = customerRepository.findById(customerId) ?: throw CustomerNotFoundException(customerId)
 
-        // TODO(case-30): håndter konflikt ved e-postendring hvis e-post allerede er i bruk av annen kunde
+        if (customerRepository.existsByEmailExcludingId(email, customerId)) {
+            throw EmailAlreadyInUseException(email)
+        }
         val updated = existing.rename(name).changeEmail(email)
         return customerRepository.save(updated)
     }

@@ -33,7 +33,7 @@ class BankAccount(
 
     fun deposit(amount: Money) {
         require(amount > Money.ZERO) { "Deposit amount must be greater than zero" }
-        // TODO(case-30): lukket konto skal avvise innskudd
+        if (status == AccountStatus.CLOSED) throw AccountClosedException(id)
         balance = balance + amount
     }
 
@@ -42,12 +42,12 @@ class BankAccount(
         if (status == AccountStatus.CLOSED) {
             throw AccountClosedException(id)
         }
-        // TODO(case-30): kast domain exception i stedet for IllegalStateException fra subtractSafely
+        if (balance < amount) throw InsufficientFundsException(id)
         balance = balance.subtractSafely(amount)
     }
 
     fun close() {
-        // TODO(case-30): konto skal bare kunne lukkes når saldoen er null
+        if (balance != Money.ZERO) throw AccountHasBalanceException(id)
         status = AccountStatus.CLOSED
     }
 

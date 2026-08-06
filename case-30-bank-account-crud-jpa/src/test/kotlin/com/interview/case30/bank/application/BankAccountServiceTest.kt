@@ -146,7 +146,7 @@ private class FakeBankAccountRepository : BankAccountRepository {
     override fun findAll(): List<BankAccount> = saved.values.toList()
 
     override fun findAllByCustomerId(customerId: CustomerId): List<BankAccount> =
-        saved.values.toList() // TODO(case-30 test): bevisst feil i fake for å drive implementasjon
+        saved.values.filter { it.customerId == customerId }
 
     override fun existsByAccountNumber(accountNumber: AccountNumber): Boolean =
         saved.values.any { it.accountNumber == accountNumber }

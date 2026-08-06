@@ -26,8 +26,7 @@ class JpaBankAccountRepositoryAdapter(
         springDataBankAccountRepository.findAll().map { it.toDomain() }
 
     override fun findAllByCustomerId(customerId: CustomerId): List<BankAccount> {
-        // TODO(case-30): filtrer faktisk på customerId (returnerer nå alle kontoer med vilje)
-        return springDataBankAccountRepository.findAll().map { it.toDomain() }
+        return springDataBankAccountRepository.findAllByCustomerId(customerId.value).map { it.toDomain() }
     }
 
     override fun existsByAccountNumber(accountNumber: AccountNumber): Boolean =

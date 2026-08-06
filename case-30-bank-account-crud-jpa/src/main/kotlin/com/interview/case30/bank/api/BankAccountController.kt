@@ -55,8 +55,8 @@ class BankAccountController(
         @PathVariable accountId: UUID,
         @Valid @RequestBody request: AmountRequest
     ): AccountResponse {
-        // TODO(case-30): implementer faktisk innskudd via service (nå returneres bare gjeldende konto)
-        return bankAccountService.get(AccountId(accountId)).toResponse()
+        val amount = request.amount ?: throw IllegalArgumentException("amount is required")
+        return bankAccountService.deposit(AccountId(accountId), Money.ofPositive(amount)).toResponse()
     }
 
     @PostMapping("/{accountId}/withdrawals")
