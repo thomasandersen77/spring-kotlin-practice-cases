@@ -16,8 +16,7 @@ import kotlin.math.roundToInt
  *         }
  *     }
  *
- * Alt som skal implementeres er markert med `TODO()`. Testene beskriver kontrakten.
- * Se README for TODO-liste, læringsmål og akseptansekriterier.
+ * Implementasjonen under følger kontrakten som beskrives i README og testene.
  */
 
 data class Consultant(
@@ -38,41 +37,40 @@ annotation class ConsultantSearchDsl
 /**
  * Builder for søke-DSL-en. Kriterier på toppnivå kombineres med AND.
  *
- * TODO 1: Velg intern representasjon (f.eks. en privat liste av `ConsultantPredicate`)
- * og implementer kriteriefunksjonene under. Ingenting av dette skal være synlig utenfra.
+ * Builderen bruker en privat liste av `ConsultantPredicate`; intern tilstand er ikke synlig utenfra.
  */
 @ConsultantSearchDsl
 class ConsultantSearchBuilder {
 
     private val predicates = mutableListOf<ConsultantPredicate>()
 
-    /** TODO 2: Konsulenten må ha denne ferdigheten (eksakt match). */
+    /** Konsulenten må ha denne ferdigheten (eksakt match). */
     fun skill(name: String) {
         predicates += { consultant -> name in consultant.skills }
     }
 
-    /** TODO 3: Konsulenten må være i denne byen (eksakt match). */
+    /** Konsulenten må være i denne byen (eksakt match). */
     fun inCity(city: String) {
         predicates += { consultant -> consultant.city == city }
     }
 
-    /** TODO 4: Timepris mindre enn eller lik `rateNok`. */
+    /** Timepris mindre enn eller lik `rateNok`. */
     fun maxHourlyRate(rateNok: Int) {
         predicates += { consultant -> consultant.hourlyRateNok <= rateNok }
     }
 
-    /** TODO 5: Minst så mange års erfaring. */
+    /** Minst så mange års erfaring. */
     fun minYearsOfExperience(years: Int) {
         predicates += { consultant -> consultant.yearsOfExperience >= years }
     }
 
-    /** TODO 6: Bare tilgjengelige konsulenter. */
+    /** Bare tilgjengelige konsulenter. */
     fun availableOnly() {
         predicates += Consultant::available
     }
 
     /**
-     * TODO 7: OR-gruppe. Kriteriene inne i blokken kombineres med OR, og gruppen som helhet
+     * OR-gruppe. Kriteriene inne i blokken kombineres med OR, og gruppen som helhet
      * kombineres med AND mot resten av søket. En tom `anyOf`-blokk skal matche alle.
      * Hint: bygg en ny `ConsultantSearchBuilder`, kjør blokken på den, og kombiner predikatene.
      */
@@ -84,7 +82,7 @@ class ConsultantSearchBuilder {
     }
 
     /**
-     * TODO 8: Bygg det samlede predikatet. Ingen kriterier = matcher alle.
+     * Bygg det samlede predikatet. Ingen kriterier = matcher alle.
      * Hint: `all { }`/`none { }` over de innsamlede predikatene, eller `fold`.
      */
     fun build(): ConsultantPredicate =
@@ -95,31 +93,31 @@ class ConsultantSearchBuilder {
 }
 
 /**
- * TODO 9: Inngangspunkt til DSL-en: kjør blokken på en ny builder og returner predikatet.
+ * Inngangspunkt til DSL-en: kjør blokken på en ny builder og returner predikatet.
  */
 fun consultantSearch(block: ConsultantSearchBuilder.() -> Unit): ConsultantPredicate =
     ConsultantSearchBuilder().apply(block).build()
 
 /**
- * TODO 10: Søk direkte på en liste. Rekkefølgen fra kildelisten bevares.
+ * Søk direkte på en liste. Rekkefølgen fra kildelisten bevares.
  */
 fun List<Consultant>.search(block: ConsultantSearchBuilder.() -> Unit): List<Consultant> =
     filter(consultantSearch(block))
 
-/** TODO 11: Kombiner to predikater med AND. */
+/** Kombiner to predikater med AND. */
 infix fun ConsultantPredicate.and(other: ConsultantPredicate): ConsultantPredicate =
     { consultant -> this(consultant) && other(consultant) }
 
-/** TODO 12: Kombiner to predikater med OR. */
+/** Kombiner to predikater med OR. */
 infix fun ConsultantPredicate.or(other: ConsultantPredicate): ConsultantPredicate =
     { consultant -> this(consultant) || other(consultant) }
 
-/** TODO 13: Inverter et predikat, slik at `!predikat` fungerer. */
+/** Inverter et predikat, slik at `!predikat` fungerer. */
 operator fun ConsultantPredicate.not(): ConsultantPredicate =
     { consultant -> !this(consultant) }
 
 /**
- * TODO 14: Higher-order function som lager et predikat: konsulenten må ha ALLE ferdighetene.
+ * Higher-order function som lager et predikat: konsulenten må ha ALLE ferdighetene.
  * Ingen ferdigheter oppgitt = matcher alle.
  */
 fun hasAllSkills(vararg skills: String): ConsultantPredicate =
@@ -129,8 +127,8 @@ fun hasAllSkills(vararg skills: String): ConsultantPredicate =
  * Indeks over konsulenter. `load` er dyr (tenk databasekall) og skal kalles maks én gang —
  * og bare hvis indeksen faktisk brukes.
  *
- * TODO 15: Bytt ut `get() = TODO(...)` med delegert lazy-initialisering (`by lazy`), slik at
- * `load` kalles én gang totalt, uansett hvor mange av medlemmene som brukes.
+ * Delegert lazy-initialisering sørger for at `load` kalles én gang totalt,
+ * uansett hvor mange av medlemmene som brukes.
  */
 class ConsultantIndex(private val load: () -> List<Consultant>) {
 
@@ -156,7 +154,7 @@ class ConsultantIndex(private val load: () -> List<Consultant>) {
 }
 
 /**
- * TODO 16: Bygg en rapport med `buildString`.
+ * Bygg en rapport med `buildString`.
  * Kontrakt (linjer skilt med "\n", ingen linjeskift på slutten):
  * - første linje: "Rapport: <title>"
  * - deretter én linje per konsulent, sortert på navn asc:
