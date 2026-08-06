@@ -108,7 +108,11 @@ data class DeliveryReport(
  * Kontrakt: Email -> "e-post", Sms -> "SMS", InApp -> "app".
  */
 val Channel.label: String
-    get() = TODO("Implementer label som when-uttrykk over Channel-hierarkiet")
+    get() = when (this) {
+        is Channel.Email -> "e-post"
+        is Channel.Sms -> "SMS"
+        Channel.InApp -> "app"
+    }
 
 object NotificationPolicy {
 
@@ -121,14 +125,42 @@ object NotificationPolicy {
      * - MarketingCampaign -> [Email] bare hvis mottakeren har både samtykke og e-post, ellers tom liste
      */
     fun channelsFor(notification: Notification, recipient: Recipient): List<Channel> =
-        TODO("Implementer kanalvalg som when-uttrykk over Notification")
+        when (notification) {
+            is Notification.PasswordReset -> listOfNotNull(
+                recipient.email?.let(Channel::Email)
+            )
+
+            is Notification.PaymentFailed -> listOfNotNull(
+                recipient.msisdn?.let(Channel::Sms),
+                recipient.email?.let(Channel::Email),
+                Channel.InApp
+            )
+
+            is Notification.OrderShipped -> listOfNotNull(
+                recipient.email?.let(Channel::Email),
+                Channel.InApp
+            )
+
+            is Notification.MarketingCampaign ->
+                if (recipient.marketingConsent) {
+                    listOfNotNull(recipient.email?.let(Channel::Email))
+                } else {
+                    emptyList()
+                }
+        }
 
     /**
      * TODO 3: Prioritet som `when`-uttrykk.
      * Kontrakt: PasswordReset og PaymentFailed -> HIGH, OrderShipped -> NORMAL, MarketingCampaign -> LOW.
      */
     fun priorityOf(notification: Notification): Priority =
-        TODO("Implementer prioritet som when-uttrykk")
+        when (notification) {
+            is Notification.PasswordReset,
+            is Notification.PaymentFailed -> Priority.HIGH
+
+            is Notification.OrderShipped -> Priority.NORMAL
+            is Notification.MarketingCampaign -> Priority.LOW
+        }
 
     /**
      * TODO 4: Hvorfor ble ingenting sendt?
@@ -137,8 +169,22 @@ object NotificationPolicy {
      * - MARKETING_CONSENT_MISSING hvis det er en MarketingCampaign uten samtykke
      * - MISSING_CONTACT_INFO ellers
      */
-    fun rejectionReasonFor(notification: Notification, recipient: Recipient): RejectionReason? =
-        TODO("Implementer avvisningsårsak uten å duplisere kanalreglene")
+    fun rejectionReasonFor(notification: Notification, recipient: Recipient): RejectionReason? {
+        if (channelsFor(notification, recipient).isNotEmpty()) return null
+
+        return when (notification) {
+            is Notification.MarketingCampaign ->
+                if (!recipient.marketingConsent) {
+                    RejectionReason.MARKETING_CONSENT_MISSING
+                } else {
+                    RejectionReason.MISSING_CONTACT_INFO
+                }
+
+            is Notification.PasswordReset,
+            is Notification.PaymentFailed,
+            is Notification.OrderShipped -> RejectionReason.MISSING_CONTACT_INFO
+        }
+    }
 }
 
 /**
@@ -149,7 +195,16 @@ object NotificationPolicy {
  * - Retryable -> "Nytt forsøk via <label> om <sekunder> s"
  */
 fun describe(result: DeliveryResult): String =
-    TODO("Implementer beskrivelse som when-uttrykk over DeliveryResult")
+    when (result) {
+        is DeliveryResult.Delivered ->
+            "Levert via ${result.channel.label} (ref=${result.providerReference})"
+
+        is DeliveryResult.Rejected ->
+            "Avvist via ${result.channel.label}: ${result.reason}"
+
+        is DeliveryResult.Retryable ->
+            "Nytt forsøk via ${result.channel.label} om ${result.retryAfter.seconds} s"
+    }
 
 /**
  * TODO 6: Oppsummer en batch med resultater.
@@ -159,11 +214,17 @@ fun describe(result: DeliveryResult): String =
  * Hint: `filterIsInstance`, `count { }`, `minOfOrNull`.
  */
 fun List<DeliveryResult>.toReport(): DeliveryReport =
-    TODO("Implementer oppsummering av leveringsresultater")
+    DeliveryReport(
+        deliveredCount = count { it is DeliveryResult.Delivered },
+        rejectedCount = count { it is DeliveryResult.Rejected },
+        retryableCount = count { it is DeliveryResult.Retryable },
+        nextRetryAfter = filterIsInstance<DeliveryResult.Retryable>()
+            .minOfOrNull(DeliveryResult.Retryable::retryAfter)
+    )
 
 /**
  * TODO 7: Sorter varsler slik at de viktigste kommer først, og bevar innbyrdes rekkefølge
  * innenfor samme prioritet (stabil sortering).
  */
 fun List<Notification>.highestPriorityFirst(): List<Notification> =
-    TODO("Sorter varsler på prioritet, stabilt")
+    sortedBy { notification -> NotificationPolicy.priorityOf(notification).ordinal }
