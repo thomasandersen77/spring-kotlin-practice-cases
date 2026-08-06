@@ -46,5 +46,5 @@ Ikke skriv én `if` som bare tilfredsstiller temperaturtesten. Caset skal vise u
 ## Kommandoer
 
 ```bash
-mvn test -pl case-20-iot-sensor-alerting
+./mvnw test -pl case-20-iot-sensor-alerting
 ```

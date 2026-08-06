@@ -46,5 +46,5 @@ Ikke la `ADMIN`-regelen skjule resten. Caset skal også vise hvordan du håndter
 ## Kommandoer
 
 ```bash
-mvn test -pl case-17-feature-flag-rbac
+./mvnw test -pl case-17-feature-flag-rbac
 ```

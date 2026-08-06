@@ -18,6 +18,7 @@
         <junit.jupiter.version>5.10.2</junit.jupiter.version>
         <assertj.version>3.25.3</assertj.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.enforcer.plugin.version>3.5.0</maven.enforcer.plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -31,6 +32,37 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <plugins>
+            <!--
+              Kotlin 1.9.25 klarer ikke lese Java-versjoner nyere enn 21 og feiler med
+              "java.lang.IllegalArgumentException: 25". Enforcer gir en lesbar feilmelding
+              i stedet, slik at man raskt ser at man må bytte til JDK 21.
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven.enforcer.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>enforce-java-21</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>[21,22)</version>
+                                    <message>Dette repoet krever JDK 21 (Kotlin 1.9.25 støtter ikke nyere JDK-er). Bytt med f.eks. "sdk use java 21.0.7-tem" og kjør på nytt med ./mvnw.</message>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <modules>
         <module>case-01-pure-kotlin-domain</module>

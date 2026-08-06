@@ -36,4 +36,4 @@ Ikke les `SecurityContextHolder` i domenet, ikke legg brukeren i global `ThreadL
 Autentisering vs autorisasjon? 401 vs 403? Hvorfor eksplisitt `CurrentUser`? Hvorfor `remove()`? Interceptor vs filter? Hva skjer med coroutines? Hvordan kobles dette til en virkelig IdP?
 
 ## Kommando
-`mvn test -pl case-40-security-request-context`
+`./mvnw test -pl case-40-security-request-context`

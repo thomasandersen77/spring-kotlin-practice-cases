@@ -29,4 +29,4 @@ Ikke returner ekstern DTO fra controlleren, ikke la eksterne statuskoder lekke u
 Hvorfor eier application-siden porten? Hva beskytter ACL-en? Hva skiller 404 fra 500? Hva kan retries? Hva overvåkes? Når er en enkel mapper nok?
 
 ## Kommando
-`mvn test -pl case-39-wiremock-external-integration`
+`./mvnw test -pl case-39-wiremock-external-integration`
