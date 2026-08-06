@@ -4,6 +4,7 @@ import com.interview.case36.bank.adapter.web.dto.ApiErrorResponse
 import com.interview.case36.bank.domain.BankingException
 import jakarta.validation.ConstraintViolationException
 import org.springframework.http.ResponseEntity
+import org.springframework.http.HttpStatus
 import org.springframework.validation.FieldError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -56,5 +57,13 @@ class BankingExceptionHandler {
      */
     @ExceptionHandler(BankingException::class)
     fun handleBankingException(ex: BankingException): ResponseEntity<ApiErrorResponse> =
-        TODO("TODO 14: map ex.code til riktig HttpStatus og bygg en ApiErrorResponse")
+        ResponseEntity.status(
+            when (ex.code) {
+                "ACCOUNT_NOT_FOUND" -> HttpStatus.NOT_FOUND
+                "INVALID_TRANSFER" -> HttpStatus.BAD_REQUEST
+                "INSUFFICIENT_FUNDS" -> HttpStatus.UNPROCESSABLE_ENTITY
+                "ACCOUNT_BLOCKED" -> HttpStatus.CONFLICT
+                else -> HttpStatus.BAD_REQUEST
+            }
+        ).body(ApiErrorResponse(ex.code, ex.message, Instant.now()))
 }

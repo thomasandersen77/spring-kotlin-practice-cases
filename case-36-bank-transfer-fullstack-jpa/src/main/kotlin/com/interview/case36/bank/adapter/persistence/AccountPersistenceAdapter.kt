@@ -18,7 +18,7 @@ class AccountPersistenceAdapter(
      * TODO 6: Look up the entity by id and map it to the domain, or return null if it does not exist.
      */
     override fun findById(id: AccountId): BankAccount? =
-        TODO("TODO 6: sla opp AccountJpaEntity og map til domene, eller returner null")
+        accountJpaRepository.findById(id.value).orElse(null)?.toDomain()
 
     /**
      * TODO 6: Save an account.
@@ -29,5 +29,7 @@ class AccountPersistenceAdapter(
      * account (existingVersion defaults to 0).
      */
     override fun save(account: BankAccount): BankAccount =
-        TODO("TODO 6: bevar eksisterende versjon ved oppdatering, lagre og map tilbake til domene")
+        accountJpaRepository.save(
+            account.toEntity(accountJpaRepository.findById(account.id.value).orElse(null)?.version ?: 0)
+        ).toDomain()
 }

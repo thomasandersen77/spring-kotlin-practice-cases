@@ -47,7 +47,7 @@ value class Money private constructor(val amountOre: Long) : Comparable<Money> {
      * smallest unit of NOK.
      */
     fun toKroner(): BigDecimal =
-        TODO("TODO 1: konverter amountOre til BigDecimal kroner med skala 2")
+        BigDecimal.valueOf(amountOre, 2)
 
     companion object {
         val ZERO = Money(0)
@@ -75,6 +75,11 @@ value class Money private constructor(val amountOre: Long) : Comparable<Money> {
          * @throws IllegalArgumentException if the amount is negative or has more than two decimals.
          */
         fun ofKroner(amountKroner: BigDecimal): Money =
-            TODO("TODO 1: valider ikke-negativt belop og maks to desimaler, konverter eksakt til ore")
+            try {
+                require(amountKroner.signum() >= 0) { "Amount cannot be negative" }
+                Money(amountKroner.setScale(2).movePointRight(2).longValueExact())
+            } catch (ex: ArithmeticException) {
+                throw IllegalArgumentException("Amount must have at most two decimals and fit in øre", ex)
+            }
     }
 }

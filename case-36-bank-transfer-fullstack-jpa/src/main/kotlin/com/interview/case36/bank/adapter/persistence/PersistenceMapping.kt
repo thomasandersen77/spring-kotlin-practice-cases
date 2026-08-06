@@ -2,6 +2,10 @@ package com.interview.case36.bank.adapter.persistence
 
 import com.interview.case36.bank.domain.BankAccount
 import com.interview.case36.bank.domain.BankTransfer
+import com.interview.case36.bank.domain.AccountId
+import com.interview.case36.bank.domain.AccountStatus
+import com.interview.case36.bank.domain.Money
+import com.interview.case36.bank.domain.TransferId
 
 /**
  * Explicit mapping functions between the domain model and JPA entities. Kept as extension functions,
@@ -14,7 +18,7 @@ import com.interview.case36.bank.domain.BankTransfer
  * Hint: use [BankAccount.reconstitute] - not `BankAccount.open(...)` - since the account already exists.
  */
 fun AccountJpaEntity.toDomain(): BankAccount =
-    TODO("TODO 5: map AccountJpaEntity til BankAccount via BankAccount.reconstitute")
+    BankAccount.reconstitute(AccountId(id), ownerName, status, Money.ofOre(balanceOre))
 
 /**
  * TODO 4: Map a domain [BankAccount] to an [AccountJpaEntity].
@@ -25,17 +29,17 @@ fun AccountJpaEntity.toDomain(): BankAccount =
  * in here - never invent a version number in this mapping function itself.
  */
 fun BankAccount.toEntity(existingVersion: Long = 0): AccountJpaEntity =
-    TODO("TODO 4: map BankAccount til AccountJpaEntity, bevar existingVersion")
+    AccountJpaEntity(id.value, ownerName, status, balance.amountOre, existingVersion)
 
 /**
  * TODO 5: Map a persisted [TransferJpaEntity] back to the domain.
  */
 fun TransferJpaEntity.toDomain(): BankTransfer =
-    TODO("TODO 5: map TransferJpaEntity til BankTransfer")
+    BankTransfer(TransferId(id), AccountId(fromAccountId), AccountId(toAccountId), Money.ofOre(amountOre), executedAt)
 
 /**
  * TODO 4: Map a domain [BankTransfer] to a [TransferJpaEntity]. A transfer is only ever created once
  * and never updated, so there is no version/existing-row concern here.
  */
 fun BankTransfer.toEntity(): TransferJpaEntity =
-    TODO("TODO 4: map BankTransfer til TransferJpaEntity")
+    TransferJpaEntity(id.value, fromAccountId.value, toAccountId.value, amount.amountOre, executedAt)

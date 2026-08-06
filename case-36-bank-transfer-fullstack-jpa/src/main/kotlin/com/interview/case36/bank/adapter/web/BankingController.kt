@@ -36,20 +36,20 @@ class BankingController(
     @PostMapping("/accounts")
     @ResponseStatus(HttpStatus.CREATED)
     fun createAccount(@Valid @RequestBody request: CreateAccountRequest): AccountResponse =
-        TODO("TODO 13: kall bankingService.createAccount(request.toCommand()) og map til AccountResponse")
+        bankingService.createAccount(request.toCommand()).toResponse()
 
     @GetMapping("/accounts/{accountId}")
     fun getAccount(@PathVariable accountId: UUID): AccountResponse =
-        TODO("TODO 13: kall bankingService.getAccount(AccountId(accountId)) og map til AccountResponse")
+        bankingService.getAccount(AccountId(accountId)).toResponse()
 
     @PostMapping("/accounts/{accountId}/deposits")
     fun deposit(
         @PathVariable accountId: UUID,
         @Valid @RequestBody request: DepositRequest
     ): AccountResponse =
-        TODO("TODO 13: kall bankingService.deposit(request.toCommand(AccountId(accountId))) og map til AccountResponse")
+        bankingService.deposit(request.toCommand(AccountId(accountId))).toResponse()
 
     @PostMapping("/transfers")
     fun transfer(@Valid @RequestBody request: TransferMoneyRequest): TransferResponse =
-        TODO("TODO 13: kall bankingService.transfer(request.toCommand()) og map til TransferResponse")
+        bankingService.transfer(request.toCommand()).toResponse()
 }

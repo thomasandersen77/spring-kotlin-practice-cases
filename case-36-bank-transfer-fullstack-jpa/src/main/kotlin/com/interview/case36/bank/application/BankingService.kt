@@ -5,6 +5,10 @@ import com.interview.case36.bank.application.port.TransferRepository
 import com.interview.case36.bank.domain.AccountId
 import com.interview.case36.bank.domain.BankAccount
 import com.interview.case36.bank.domain.BankTransfer
+import com.interview.case36.bank.domain.AccountNotFoundException
+import com.interview.case36.bank.domain.InvalidTransferException
+import com.interview.case36.bank.domain.Money
+import com.interview.case36.bank.domain.TransferId
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.Clock
@@ -28,7 +32,7 @@ class BankingService(
      */
     @Transactional
     fun createAccount(command: CreateAccountCommand): BankAccount {
-        TODO("TODO 9: opprett og lagre en ny BankAccount")
+        return accountRepository.save(BankAccount.open(command.ownerName))
     }
 
     /**
@@ -36,7 +40,7 @@ class BankingService(
      */
     @Transactional(readOnly = true)
     fun getAccount(accountId: AccountId): BankAccount {
-        TODO("TODO 10: sla opp konto, kast AccountNotFoundException hvis den mangler")
+        return accountRepository.findById(accountId) ?: throw AccountNotFoundException(accountId)
     }
 
     /**
@@ -46,7 +50,9 @@ class BankingService(
      */
     @Transactional
     fun deposit(command: DepositCommand): BankAccount {
-        TODO("TODO 11: hent konto, krediter via domenet, lagre og returner oppdatert konto")
+        val account = getAccount(command.accountId)
+        account.credit(command.amount)
+        return accountRepository.save(account)
     }
 
     /**
@@ -73,6 +79,19 @@ class BankingService(
      */
     @Transactional
     fun transfer(command: TransferMoneyCommand): BankTransfer {
-        TODO("TODO 12: implementer atomisk overforing mellom to kontoaggregater")
+        if (command.fromAccountId == command.toAccountId) {
+            throw InvalidTransferException("Source and destination account must differ")
+        }
+        if (command.amount <= Money.ZERO) throw InvalidTransferException("Transfer amount must be positive")
+
+        val from = getAccount(command.fromAccountId)
+        val to = getAccount(command.toAccountId)
+        from.debit(command.amount)
+        to.credit(command.amount)
+        accountRepository.save(from)
+        accountRepository.save(to)
+        return transferRepository.save(
+            BankTransfer(TransferId.new(), from.id, to.id, command.amount, clock.instant())
+        )
     }
 }

@@ -13,7 +13,7 @@ class TransferPersistenceAdapter(
      * TODO 6: Map the transfer to an entity, save it, and map the saved entity back to the domain.
      */
     override fun save(transfer: BankTransfer): BankTransfer =
-        TODO("TODO 6: map til entitet, lagre og map tilbake til domene")
+        transferJpaRepository.save(transfer.toEntity()).toDomain()
 
     override fun count(): Long = transferJpaRepository.count()
 }

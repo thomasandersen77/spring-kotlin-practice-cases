@@ -12,7 +12,6 @@ import com.interview.case36.bank.support.TestDataFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito
 import org.mockito.Mockito.doThrow
 import org.springframework.beans.factory.annotation.Autowired
@@ -53,6 +52,12 @@ class BankingServiceTransactionIntegrationTest {
 
     private fun requireAccount(id: AccountId): BankAccount =
         accountRepository.findById(id) ?: error("expected account $id to exist")
+
+    @Suppress("UNCHECKED_CAST")
+    private fun <T> anyNonNull(): T {
+        Mockito.any<T>()
+        return null as T
+    }
 
     @Test
     fun `vellykket overforing debiterer avsender, krediterer mottaker og lagrer en overforingsrad`() {
@@ -117,7 +122,7 @@ class BankingServiceTransactionIntegrationTest {
         val toId = seed(TestDataFactory.activeAccount(balanceKroner = "0.00"))
 
         doThrow(RuntimeException("Simulert lagringsfeil for transfer"))
-            .`when`(transferRepository).save(any())
+            .`when`(transferRepository).save(anyNonNull())
 
         try {
             assertThatThrownBy {

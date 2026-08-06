@@ -11,6 +11,7 @@ import com.interview.case36.bank.application.TransferMoneyCommand
 import com.interview.case36.bank.domain.AccountId
 import com.interview.case36.bank.domain.BankAccount
 import com.interview.case36.bank.domain.BankTransfer
+import com.interview.case36.bank.domain.Money
 
 /**
  * Explicit mapping at the web boundary - the same kind of training as case 31, now wired into a real
@@ -22,28 +23,32 @@ import com.interview.case36.bank.domain.BankTransfer
  * TODO 7: Map an incoming [CreateAccountRequest] to a [CreateAccountCommand].
  */
 fun CreateAccountRequest.toCommand(): CreateAccountCommand =
-    TODO("TODO 7: map CreateAccountRequest til CreateAccountCommand")
+    CreateAccountCommand(ownerName)
 
 /**
  * TODO 7: Map an incoming [DepositRequest] (plus the path-variable account id) to a [DepositCommand].
  */
 fun DepositRequest.toCommand(accountId: AccountId): DepositCommand =
-    TODO("TODO 7: map DepositRequest til DepositCommand")
+    DepositCommand(accountId, Money.ofKroner(requireNotNull(amount) { "amount is required" }))
 
 /**
  * TODO 7: Map an incoming [TransferMoneyRequest] to a [TransferMoneyCommand].
  */
 fun TransferMoneyRequest.toCommand(): TransferMoneyCommand =
-    TODO("TODO 7: map TransferMoneyRequest til TransferMoneyCommand")
+    TransferMoneyCommand(
+        AccountId(requireNotNull(fromAccountId) { "fromAccountId is required" }),
+        AccountId(requireNotNull(toAccountId) { "toAccountId is required" }),
+        Money.ofKroner(requireNotNull(amount) { "amount is required" })
+    )
 
 /**
  * TODO 8: Map a [BankAccount] to its API representation.
  */
 fun BankAccount.toResponse(): AccountResponse =
-    TODO("TODO 8: map BankAccount til AccountResponse")
+    AccountResponse(id.value, ownerName, status.name, balance.toKroner())
 
 /**
  * TODO 8: Map a [BankTransfer] to its API representation.
  */
 fun BankTransfer.toResponse(): TransferResponse =
-    TODO("TODO 8: map BankTransfer til TransferResponse")
+    TransferResponse(id.value, fromAccountId.value, toAccountId.value, amount.toKroner(), executedAt)

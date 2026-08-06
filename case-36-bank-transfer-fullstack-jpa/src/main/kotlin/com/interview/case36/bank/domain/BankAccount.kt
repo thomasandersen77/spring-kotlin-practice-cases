@@ -33,7 +33,9 @@ class BankAccount private constructor(
      * - On success, [balance] increases by exactly `amount`.
      */
     fun credit(amount: Money) {
-        TODO("TODO 2: implementer kreditering med regler for blokkert konto og positivt belop")
+        require(amount > Money.ZERO) { "Credit amount must be positive" }
+        if (!isActive()) throw AccountBlockedException(id)
+        balance += amount
     }
 
     /**
@@ -48,7 +50,10 @@ class BankAccount private constructor(
      * - On success, [balance] decreases by exactly `amount`.
      */
     fun debit(amount: Money) {
-        TODO("TODO 3: implementer debitering med regler for blokkert konto og manglende dekning")
+        require(amount > Money.ZERO) { "Debit amount must be positive" }
+        if (!isActive()) throw AccountBlockedException(id)
+        if (balance.isLessThan(amount)) throw InsufficientFundsException(id)
+        balance -= amount
     }
 
     companion object {
