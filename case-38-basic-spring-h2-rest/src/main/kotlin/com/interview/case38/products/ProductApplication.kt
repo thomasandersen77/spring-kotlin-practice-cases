@@ -24,8 +24,12 @@ class ProductEntity(
     @Column(nullable = false) var stock: Int = 0,
     @Column(nullable = false) var active: Boolean = true
 ) {
-    // TODO 1: Endre beholdningen og avvis negativ sluttverdi.
-    fun changeStock(delta: Int) { TODO("Beskytt stock-invarianten") }
+    fun changeStock(delta: Int) {
+        val next = stock.toLong() + delta
+        if (next < 0) throw StockConflict("Beholdningen kan ikke bli negativ")
+        require(next <= Int.MAX_VALUE) { "Beholdningen er for stor" }
+        stock = next.toInt()
+    }
 }
 
 data class CreateProductRequest(@field:NotBlank val sku: String, @field:NotBlank val name: String, @field:Min(0) val initialStock: Int)
@@ -40,15 +44,21 @@ class ProductNotFound(id: Long) : RuntimeException("Produkt $id finnes ikke")
 class StockConflict(message: String) : RuntimeException(message)
 
 // TODO 2: Implementer mappingene uten å eksponere entity fra API-et.
-fun CreateProductRequest.toEntity(): ProductEntity = TODO("Map request til entity")
-fun ProductEntity.toResponse(): ProductResponse = TODO("Map entity til response")
+fun CreateProductRequest.toEntity(): ProductEntity = ProductEntity(sku = sku.trim(), name = name.trim(), stock = initialStock)
+fun ProductEntity.toResponse(): ProductResponse = ProductResponse(requireNotNull(id), sku, name, stock, active)
 
 @Service
 class ProductService(private val repository: ProductRepository) {
-    @Transactional fun create(request: CreateProductRequest): ProductResponse = TODO("Lagre produkt")
-    @Transactional(readOnly = true) fun get(id: Long): ProductResponse = TODO("Hent eller kast ProductNotFound")
-    @Transactional(readOnly = true) fun listActive(): List<ProductResponse> = TODO("Bruk repository-query og map")
-    @Transactional fun changeStock(id: Long, delta: Int): ProductResponse = TODO("Hent, endre invariant og map")
+    @Transactional fun create(request: CreateProductRequest): ProductResponse = repository.save(request.toEntity()).toResponse()
+    @Transactional(readOnly = true) fun get(id: Long): ProductResponse =
+        repository.findById(id).orElseThrow { ProductNotFound(id) }.toResponse()
+    @Transactional(readOnly = true) fun listActive(): List<ProductResponse> =
+        repository.findByActiveTrueOrderByNameAsc().map(ProductEntity::toResponse)
+    @Transactional fun changeStock(id: Long, delta: Int): ProductResponse {
+        val product = repository.findById(id).orElseThrow { ProductNotFound(id) }
+        product.changeStock(delta)
+        return product.toResponse()
+    }
 }
 
 @RestController @RequestMapping("/api/products")
@@ -64,4 +74,5 @@ class ProductExceptionHandler {
     // TODO 7: Begrunn og fullfør mappingen av domene-/applikasjonsfeil til HTTP.
     @ExceptionHandler(ProductNotFound::class) @ResponseStatus(HttpStatus.NOT_FOUND) fun notFound(ex: ProductNotFound) = mapOf("error" to ex.message)
     @ExceptionHandler(StockConflict::class) @ResponseStatus(HttpStatus.CONFLICT) fun conflict(ex: StockConflict) = mapOf("error" to ex.message)
+    @ExceptionHandler(IllegalArgumentException::class) @ResponseStatus(HttpStatus.BAD_REQUEST) fun badRequest(ex: IllegalArgumentException) = mapOf("error" to ex.message)
 }
