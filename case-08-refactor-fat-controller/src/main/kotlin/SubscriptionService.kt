@@ -1,12 +1,23 @@
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.util.*
 
 @Service
 class SubscriptionService(
-    val repository: SubscriptionJpaRepository? = null
+    private val repository: SubscriptionRepository? = null
 ) {
+    fun create(command: CreateSubscriptionCommand): Subscription {
+        val subscription = Subscription(
+            id = UUID.randomUUID(),
+            customerId = command.customerId,
+            plan = command.plan,
+            active = true,
+            createdDate = LocalDate.now()
+        )
+        return repository?.save(subscription) ?: subscription
+    }
 
     fun create(request: Map<String, String>): Map<String, Any> {
         val planName = request["plan"] ?: throw IllegalArgumentException("Missing plan")
@@ -16,45 +27,23 @@ class SubscriptionService(
             throw IllegalArgumentException("Unknown plan: $planName")
         }
 
-        val monthlyPrice = plan.monthlyPrice
-
-        val subscription = mapOf<String, Any>(
-            "id" to UUID.randomUUID().toString(),
-            "plan" to plan,
-            "monthlyPrice" to monthlyPrice,
-            "active" to true,
-            "createdDate" to LocalDate.now()
-        )
-
-        val repo = repository
-        if (repo != null && request.containsKey("customerId")) {
-            val customerId = UUID.fromString(request["customerId"])
-            val entity = SubscriptionEntity(
-                id = UUID.randomUUID(),
-                customerId = customerId,
-                plan = plan.name,
-                monthlyPrice = monthlyPrice,
-                active = true,
-                createdDate = LocalDate.now()
-            )
-            repo.save(entity)
-        }
-
-        return subscription
+        val customerId = request["customerId"]?.let(::parseCustomerId)
+        return create(CreateSubscriptionCommand(customerId, plan)).toLegacyResponse()
     }
 
-    fun cancel(id: UUID): Map<String, Any> {
+    fun cancelSubscription(id: UUID): Subscription {
         val repo = repository ?: throw IllegalStateException("Repository not available")
-        val entity = repo.findById(id).orElseThrow()
-        entity.active = false
-        val saved = repo.save(entity)
-
-        return mapOf(
-            "id" to saved.id.toString(),
-            "active" to saved.active
-        )
+        val subscription = repo.findById(id) ?: throw NoSuchElementException("Subscription $id not found")
+        return if (!subscription.active) subscription else repo.save(subscription.cancel())
     }
 
+    fun cancel(id: UUID): Map<String, Any> = cancelSubscription(id).toLegacyResponse()
+
+    private fun parseCustomerId(value: String): UUID = try {
+        UUID.fromString(value)
+    } catch (_: IllegalArgumentException) {
+        throw IllegalArgumentException("Invalid customerId: $value")
+    }
 }
 
 enum class Plan(val monthlyPrice: Int) {
@@ -63,4 +52,39 @@ enum class Plan(val monthlyPrice: Int) {
     ENTERPRISE(499)
 }
 
+data class CreateSubscriptionCommand(val customerId: UUID?, val plan: Plan)
+
+data class Subscription(
+    val id: UUID,
+    val customerId: UUID?,
+    val plan: Plan,
+    val active: Boolean,
+    val createdDate: LocalDate
+) {
+    fun cancel(): Subscription = if (active) copy(active = false) else this
+}
+
+private fun Subscription.toLegacyResponse(): Map<String, Any> = mapOf(
+    "id" to id.toString(), "plan" to plan, "monthlyPrice" to plan.monthlyPrice,
+    "active" to active, "createdDate" to createdDate
+)
+
+interface SubscriptionRepository {
+    fun save(subscription: Subscription): Subscription
+    fun findById(id: UUID): Subscription?
+}
+
 interface SubscriptionJpaRepository : JpaRepository<SubscriptionEntity, UUID>
+
+@Repository
+class JpaSubscriptionRepository(private val jpa: SubscriptionJpaRepository) : SubscriptionRepository {
+    override fun save(subscription: Subscription): Subscription = jpa.save(subscription.toEntity()).toDomain()
+    override fun findById(id: UUID): Subscription? = jpa.findById(id).orElse(null)?.toDomain()
+}
+
+private fun Subscription.toEntity() = SubscriptionEntity(
+    id, requireNotNull(customerId) { "customerId is required for persistence" },
+    plan.name, plan.monthlyPrice, active, createdDate
+)
+
+private fun SubscriptionEntity.toDomain() = Subscription(id, customerId, Plan.valueOf(plan), active, createdDate)

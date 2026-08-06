@@ -22,15 +22,32 @@ class SubscriptionController(
     private val subscriptionService: SubscriptionService
 ) {
     @PostMapping
-    fun create(@RequestBody request: Map<String, String>): Map<String, Any> {
-        return subscriptionService.create(request)
-    }
+    fun create(@RequestBody request: CreateSubscriptionRequest): SubscriptionResponse =
+        subscriptionService.create(request.toCommand()).toResponse()
 
     @PostMapping("/{id}/cancel")
-    fun cancel(@PathVariable id: UUID): Map<String, Any> {
-        return subscriptionService.cancel(id)
+    fun cancel(@PathVariable id: UUID): SubscriptionResponse =
+        subscriptionService.cancelSubscription(id).toResponse()
+}
+
+data class CreateSubscriptionRequest(val customerId: String?, val plan: String) {
+    fun toCommand(): CreateSubscriptionCommand {
+        val parsedPlan = try { Plan.valueOf(plan.trim().uppercase()) }
+        catch (_: IllegalArgumentException) { throw IllegalArgumentException("Unknown plan: $plan") }
+        val parsedCustomer = customerId?.let {
+            try { UUID.fromString(it) }
+            catch (_: IllegalArgumentException) { throw IllegalArgumentException("Invalid customerId: $it") }
+        }
+        return CreateSubscriptionCommand(parsedCustomer, parsedPlan)
     }
 }
+
+data class SubscriptionResponse(
+    val id: UUID, val customerId: UUID?, val plan: Plan, val monthlyPrice: Int,
+    val active: Boolean, val createdDate: LocalDate
+)
+
+fun Subscription.toResponse() = SubscriptionResponse(id, customerId, plan, plan.monthlyPrice, active, createdDate)
 
 @Entity
 @Table(name = "subscriptions")
@@ -43,5 +60,4 @@ class SubscriptionEntity(
     var active: Boolean = true,
     var createdDate: LocalDate = LocalDate.now()
 )
-
 
