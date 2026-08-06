@@ -54,19 +54,19 @@ data class DailyRevenue(
  * TODO 1: Extension property: `quantity * unitPriceOre`.
  */
 val OrderLine.lineTotalOre: Long
-    get() = TODO("Implementer linjetotal som extension property")
+    get() = quantity * unitPriceOre
 
 /**
  * TODO 2: Summen av alle linjene i ordren. Hint: `sumOf`.
  */
 fun Order.totalOre(): Long =
-    TODO("Implementer ordretotal")
+    lines.sumOf(OrderLine::lineTotalOre)
 
 /**
  * TODO 3: Alle ordre som ikke er kansellert.
  */
 fun List<Order>.excludingCancelled(): List<Order> =
-    TODO("Filtrer bort kansellerte ordre")
+    filter { order -> order.status != OrderStatus.CANCELLED }
 
 /**
  * TODO 4: Omsetning per kategori.
@@ -74,7 +74,10 @@ fun List<Order>.excludingCancelled(): List<Order> =
  * Hint: `flatMap`, `groupBy`, `mapValues`, `sumOf`, `toSortedMap`/`sortedBy`.
  */
 fun List<Order>.revenuePerCategory(): Map<String, Long> =
-    TODO("Implementer omsetning per kategori")
+    sellableLines()
+        .groupBy(OrderLine::category)
+        .mapValues { (_, lines) -> lines.sumOf(OrderLine::lineTotalOre) }
+        .toSortedMap()
 
 /**
  * TODO 5: Bestselgere.
@@ -82,8 +85,24 @@ fun List<Order>.revenuePerCategory(): Map<String, Long> =
  * og returner maks `limit` rader.
  * Hint: `flatMap`, `groupBy`, `map`, `sortedWith(compareByDescending<...>{ }.thenBy { })`, `take`.
  */
-fun List<Order>.topSellingSkus(limit: Int): List<SkuSales> =
-    TODO("Implementer bestselgerliste")
+fun List<Order>.topSellingSkus(limit: Int): List<SkuSales> {
+    require(limit >= 0) { "limit cannot be negative" }
+
+    return sellableLines()
+        .groupBy(OrderLine::sku)
+        .map { (sku, lines) ->
+            SkuSales(
+                sku = sku,
+                unitsSold = lines.sumOf(OrderLine::quantity),
+                revenueOre = lines.sumOf(OrderLine::lineTotalOre)
+            )
+        }
+        .sortedWith(
+            compareByDescending<SkuSales>(SkuSales::unitsSold)
+                .thenBy(SkuSales::sku)
+        )
+        .take(limit)
+}
 
 /**
  * TODO 6: Antall ordre per kunde (kansellerte teller ikke).
@@ -91,28 +110,44 @@ fun List<Order>.topSellingSkus(limit: Int): List<SkuSales> =
  * Hint: `groupingBy { }.eachCount()`.
  */
 fun List<Order>.orderCountPerCustomer(): Map<String, Int> =
-    TODO("Implementer ordreantall per kunde")
+    excludingCancelled()
+        .groupingBy(Order::customerId)
+        .eachCount()
 
 /**
  * TODO 7: Kunden med høyest omsetning, eller `null` hvis ingen tellende ordre finnes.
  * Ved likt beløp vinner kunde-id-en som kommer først alfabetisk.
  */
 fun List<Order>.bestCustomerByRevenue(): String? =
-    TODO("Implementer beste kunde")
+    excludingCancelled()
+        .groupBy(Order::customerId)
+        .mapValues { (_, orders) -> orders.sumOf(Order::totalOre) }
+        .entries
+        .sortedWith(
+            compareByDescending<Map.Entry<String, Long>> { it.value }
+                .thenBy { it.key }
+        )
+        .firstOrNull()
+        ?.key
 
 /**
  * TODO 8: Del ordrene i to: `first` = kansellerte, `second` = resten. Rekkefølgen bevares.
  * Hint: `partition`.
  */
 fun List<Order>.splitByCancellation(): Pair<List<Order>, List<Order>> =
-    TODO("Implementer partisjonering på kansellering")
+    partition { order -> order.status == OrderStatus.CANCELLED }
 
 /**
  * TODO 9: Gjennomsnittlig ordreverdi i øre, eller `null` når det ikke finnes tellende ordre.
  * Hint: `map`, `average`, `takeIf` — og tenk gjennom hvorfor `average()` på tom liste gir `NaN`.
  */
-fun List<Order>.averageOrderValueOre(): Double? =
-    TODO("Implementer gjennomsnittlig ordreverdi")
+fun List<Order>.averageOrderValueOre(): Double? {
+    val orders = excludingCancelled()
+    return orders
+        .takeIf(List<Order>::isNotEmpty)
+        ?.map(Order::totalOre)
+        ?.average()
+}
 
 /**
  * TODO 10: Omsetning per dag med løpende sum.
@@ -120,8 +155,24 @@ fun List<Order>.averageOrderValueOre(): Double? =
  * er summen til og med den dagen. Dager uten ordre skal ikke gi rader.
  * Hint: `groupBy { it.placedAt.toLocalDate() }`, `toSortedMap`/`sortedBy`, `runningFold`/`scan`.
  */
-fun List<Order>.dailyRevenue(): List<DailyRevenue> =
-    TODO("Implementer daglig omsetning med løpende sum")
+fun List<Order>.dailyRevenue(): List<DailyRevenue> {
+    val revenueByDate = excludingCancelled()
+        .groupBy { order -> order.placedAt.toLocalDate() }
+        .toSortedMap()
+        .map { (date, orders) -> date to orders.sumOf(Order::totalOre) }
+
+    val cumulativeRevenue = revenueByDate
+        .runningFold(0L) { accumulated, (_, revenue) -> accumulated + revenue }
+        .drop(1)
+
+    return revenueByDate.zip(cumulativeRevenue) { (date, revenue), cumulative ->
+        DailyRevenue(
+            date = date,
+            revenueOre = revenue,
+            cumulativeRevenueOre = cumulative
+        )
+    }
+}
 
 /**
  * TODO 11: Hvilke kunder har kjøpt hvilke SKU-er?
@@ -129,4 +180,10 @@ fun List<Order>.dailyRevenue(): List<DailyRevenue> =
  * Hint: `flatMap` over ordre og linjer, `groupBy`, `mapValues { it.value.map { ... }.toSet() }`.
  */
 fun List<Order>.customersPerSku(): Map<String, Set<String>> =
-    TODO("Implementer kunder per SKU")
+    excludingCancelled()
+        .flatMap { order -> order.lines.map { line -> line.sku to order.customerId } }
+        .groupBy(keySelector = { it.first }, valueTransform = { it.second })
+        .mapValues { (_, customerIds) -> customerIds.toSet() }
+
+private fun List<Order>.sellableLines(): List<OrderLine> =
+    excludingCancelled().flatMap(Order::lines)
