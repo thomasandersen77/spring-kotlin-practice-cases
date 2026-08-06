@@ -1,3 +1,7 @@
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withTimeoutOrNull
+
 /**
  * COROUTINES / STRUCTURED CONCURRENCY
  *
@@ -29,17 +33,30 @@ interface CvClient {
 
 class ConsultantSummaryService(
     private val profileClient: ProfileClient,
-    private val cvClient: CvClient
+    private val cvClient: CvClient,
+    private val cvTimeoutMillis: Long = DEFAULT_CV_TIMEOUT_MILLIS
 ) {
+    init {
+        require(cvTimeoutMillis > 0) { "cvTimeoutMillis must be greater than zero" }
+    }
 
-    // TODO: parallelliser med coroutineScope + async, og legg på timeout for CV-kallet
-    suspend fun fetchSummary(id: ConsultantId): ConsultantSummary {
-        val profile = profileClient.fetchProfile(id)
-        val cv = cvClient.fetchCv(id)
-        return ConsultantSummary(
+    suspend fun fetchSummary(id: ConsultantId): ConsultantSummary = coroutineScope {
+        val profileDeferred = async { profileClient.fetchProfile(id) }
+        val cvDeferred = async {
+            withTimeoutOrNull(cvTimeoutMillis) { cvClient.fetchCv(id) }
+        }
+
+        val profile = profileDeferred.await()
+        val cv = cvDeferred.await()
+
+        ConsultantSummary(
             name = profile.name,
             role = profile.role,
-            skills = cv.skills
+            skills = cv?.skills.orEmpty()
         )
+    }
+
+    private companion object {
+        const val DEFAULT_CV_TIMEOUT_MILLIS = 1_500L
     }
 }
