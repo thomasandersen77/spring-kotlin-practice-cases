@@ -2,7 +2,7 @@
  * KOTLIN IDIOMS DRILL
  *
  * Koden under fungerer og testene er grønne — men den er skrevet som Java.
- * Refaktorer til idiomatisk Kotlin uten å endre oppførsel. Se README for TODO-er.
+ * Referanseløsningen viser idiomatisk Kotlin uten å endre oppførsel.
  */
 
 data class Consultant(
