@@ -11,6 +11,10 @@ import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.RestClient
+import org.springframework.web.client.RestClientException
+import org.springframework.web.client.ResourceAccessException
+import org.springframework.http.client.SimpleClientHttpRequestFactory
+import java.time.LocalDate
 
 @SpringBootApplication
 class CapacityApplication
@@ -58,7 +62,28 @@ class ProviderUnavailable(cause: Throwable? = null) : RuntimeException("Leverand
 class InvalidProviderResponse(message: String, cause: Throwable? = null) : RuntimeException(message, cause)
 
 // TODO 1–2: Oversett leverandørens semantikk og valider transportdata.
-fun ExternalCapacityResponse.toDomain(): ConsultantCapacity = TODO("Map ekstern DTO gjennom ACL")
+fun ExternalCapacityResponse.toDomain(): ConsultantCapacity {
+    require(consultantRef.isNotBlank()) { "consultant_ref is required" }
+    val availability = when (stateCode) {
+        "FREE" -> Availability.Available
+        "PARTIAL" -> Availability.PartiallyAvailable
+        "BUSY" -> Availability.Unavailable
+        else -> throw InvalidProviderResponse("Ukjent state_code: $stateCode")
+    }
+    val mappedPeriods = periods.orEmpty().map {
+        val from = try { LocalDate.parse(it.fromDate) } catch (ex: Exception) {
+            throw InvalidProviderResponse("Ugyldig from_date", ex)
+        }
+        val to = try { LocalDate.parse(it.toDate) } catch (ex: Exception) {
+            throw InvalidProviderResponse("Ugyldig to_date", ex)
+        }
+        if (to.isBefore(from) || it.capacityPercent !in 0..100) {
+            throw InvalidProviderResponse("Ugyldig kapasitetsperiode")
+        }
+        CapacityPeriod(from.toString(), to.toString(), it.capacityPercent)
+    }
+    return ConsultantCapacity(consultantRef, availability, mappedPeriods, skills.orEmpty().distinct().sorted())
+}
 
 fun interface CapacityPort {
     fun getCapacity(consultantId: String): ConsultantCapacity
@@ -68,7 +93,9 @@ fun interface CapacityPort {
 class RestClientConfig {
     @Bean
     fun capacityRestClient(@Value("\${provider.capacity.base-url}") baseUrl: String): RestClient =
-        RestClient.builder().baseUrl(baseUrl).build()
+        RestClient.builder().baseUrl(baseUrl).requestFactory(
+            SimpleClientHttpRequestFactory().apply { setConnectTimeout(500); setReadTimeout(500) }
+        ).build()
 }
 
 @Component
@@ -77,13 +104,47 @@ class RestClientCapacityAdapter(
     @Value("\${provider.capacity.api-key}") private val apiKey: String
 ) : CapacityPort {
     // TODO 3–4: GET /external/consultants/{id}/capacity, X-Api-Key og presis feiloversettelse.
-    override fun getCapacity(consultantId: String): ConsultantCapacity = TODO("Kall leverandør og map respons/feil")
+    override fun getCapacity(consultantId: String): ConsultantCapacity {
+        require(consultantId.isNotBlank()) { "consultant id cannot be blank" }
+        return try {
+            val external = restClient.get()
+                .uri("/external/consultants/{id}/capacity", consultantId)
+                .header("X-Api-Key", apiKey)
+                .retrieve()
+                .onStatus({ it.value() == 404 }) { _, _ -> throw ConsultantNotFound(consultantId) }
+                .onStatus({ it.is5xxServerError }) { _, _ -> throw ProviderUnavailable() }
+                .body(ExternalCapacityResponse::class.java)
+                ?: throw InvalidProviderResponse("Tom leverandørrespons")
+            external.toDomain()
+        } catch (ex: ConsultantNotFound) {
+            throw ex
+        } catch (ex: ProviderUnavailable) {
+            throw ex
+        } catch (ex: InvalidProviderResponse) {
+            throw ex
+        } catch (ex: ResourceAccessException) {
+            throw ProviderUnavailable(ex)
+        } catch (ex: RestClientException) {
+            throw InvalidProviderResponse("Ugyldig leverandørrespons", ex)
+        }
+    }
 }
 
 @Service
 class CapacityService(private val port: CapacityPort) {
     // TODO 5–6: Bruk porten og map intern modell til stabil DTO.
-    fun get(consultantId: String): CapacityResponse = TODO("Orkestrer og map response")
+    fun get(consultantId: String): CapacityResponse {
+        val capacity = port.getCapacity(consultantId)
+        val status = when (capacity.availability) {
+            Availability.Available -> "LEDIG"
+            Availability.PartiallyAvailable -> "DELVIS"
+            Availability.Unavailable -> "OPPTATT"
+        }
+        return CapacityResponse(
+            capacity.consultantId, status, capacity.periods.minByOrNull(CapacityPeriod::from)?.percent,
+            capacity.skills.sorted()
+        )
+    }
 }
 
 @RestController
