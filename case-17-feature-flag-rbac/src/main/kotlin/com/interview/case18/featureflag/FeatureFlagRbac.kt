@@ -17,6 +17,17 @@ data class FeatureFlag(val name: String, val productArea: String, val experiment
 
 class FeatureFlagAccessPolicy {
     fun canActivate(user: CurrentUser, flag: FeatureFlag, environment: Environment, approvedForProd: Boolean): Boolean {
-        TODO("Implement explicit RBAC matrix by role/environment/productArea and production approval constraints")
+        require(user.userId.isNotBlank()) { "user id cannot be blank" }
+        require(flag.name.isNotBlank() && flag.productArea.isNotBlank()) { "flag identity cannot be blank" }
+
+        if (environment == Environment.PRODUCTION && (!approvedForProd || flag.experimental)) return false
+        if (user.role == Role.ADMIN) return true
+        if (user.productArea.isNullOrBlank() || user.productArea != flag.productArea) return false
+
+        return when (user.role) {
+            Role.ADMIN -> true
+            Role.PRODUCT_OWNER -> environment in setOf(Environment.DEV, Environment.STAGING, Environment.PRODUCTION)
+            Role.DEVELOPER -> environment == Environment.DEV
+        }
     }
 }
