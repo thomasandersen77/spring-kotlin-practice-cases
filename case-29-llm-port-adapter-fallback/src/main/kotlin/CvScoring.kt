@@ -7,12 +7,14 @@
  */
 
 @JvmInline
-value class ModelId(val value: String)
+value class ModelId(val value: String) {
+    init { require(value.isNotBlank()) { "model id cannot be blank" } }
+}
 
 @JvmInline
 value class Score(val value: Int) {
     init {
-        // TODO: valider 0..100 slik at en hallusinert verdi aldri blir et gyldig domeneobjekt
+        require(value in 0..100) { "score must be between 0 and 100" }
     }
 }
 
@@ -54,6 +56,14 @@ class CvScoringService(
      *  - resultatet skal vise hvilken modell som faktisk ble brukt
      */
     fun score(cv: CvDocument, request: ProjectRequest): ScoringResult {
-        return llmClient.scoreCv(primaryModel, cv, request)
+        require(cv.consultantName.isNotBlank() && cv.text.isNotBlank()) { "CV must contain name and text" }
+        require(request.customer.isNotBlank() && request.requirements.isNotBlank()) {
+            "project request must contain customer and requirements"
+        }
+        return try {
+            llmClient.scoreCv(primaryModel, cv, request)
+        } catch (_: LlmOverloadedException) {
+            llmClient.scoreCv(fallbackModel, cv, request)
+        }
     }
 }
