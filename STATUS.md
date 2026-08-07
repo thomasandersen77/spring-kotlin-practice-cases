@@ -57,7 +57,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 29 llm-port-adapter-fallback | Integrasjon | Ikke startet | – | – | – |
 | 30 bank-account-crud-jpa | Full stack / JPA | Ikke startet | – | – | – |
 | 31 entity-dto-mapping | Kotlin / Mapping | Påbegynt | 3.0 | 2026-08-04 | case-31-forsoek-1 |
-| 32 sealed-domain-modelling | Kotlin / DDD | Ikke startet | – | – | – |
+| 32 sealed-domain-modelling | Kotlin / DDD | Påbegynt | 8.2 | 2026-08-07 | case-32-forsoek-1 |
 | 33 collections-aggregation-report | Kotlin | Ikke startet | – | – | – |
 | 34 null-safety-validation | Kotlin | Ikke startet | – | – | – |
 | 35 kotlin-dsl-higher-order-functions | Kotlin | Ikke startet | – | – | – |
@@ -67,7 +67,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 39 wiremock-external-integration | Integrasjon | Ikke startet | – | – | – |
 | 40 security-request-context | Sikkerhet | Ikke startet | – | – | – |
 
-**Oppsummert:** 4 løst · 1 påbegynt · 35 ikke startet · 0 mestret
+**Oppsummert:** 4 løst · 2 påbegynt · 34 ikke startet · 0 mestret
 
 ## Forsøkshistorikk
 
@@ -78,6 +78,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 2026-08-04 | 26 | 1 | case-26-forsoek-1 | 9.2 | Alle seks funksjoner er refaktorert til lesbar, idiomatisk Kotlin. Den siste revisjonen innfører en typesikker `Seniority`-enum, en beregnet `Consultant.seniority`-property og én sentral klassifiserings- og valideringsregel i `Seniority.from()`. Sterk bruk av collections-API, null-safety, expression bodies, `when` og `joinToString`. Trekk fordi refaktoreringen endrer den opprinnelige offentlige kontrakten fra tekstetikett til `Seniority`, den case-insensitive byregelen ikke testes med ulik casing, overgangsgrensene er ufullstendig testet, og det gjenstår små formateringsdetaljer. |
 | 2026-08-04 | 31 | 1 | case-31-forsoek-1 | 3.0 | Påbegynt. `fullName` og `isActiveOn` er korrekt og idiomatisk implementert som extension property/function med expression body; de to tilhørende testene passerer. Hele modulen er rød: 2 av 13 tester passerer, mens 11 feiler fordi TODO 3–6 fortsatt er uløst. Muntlig debrief er ikke vurdert. |
 | 2026-08-07 | 27 | 1 | case-27-forsoek-1 | 7.8 | Løst med parallell profil- og CV-henting, CV-timeout med degradering til tom ferdighetsliste og deterministisk test av structured-concurrency-kansellering. Tre tester og modulens `verify` er grønne. Trekk for manglende test av timeout-kontrakten og mindre kodehygiene; muntlig debrief og tidsbruk er ikke vurdert. |
+| 2026-08-07 | 32 | 1 | case-32-forsoek-1 | 8.2 | Påbegynt. TODO 1–6 er korrekt og idiomatisk implementert med uttømmende `when`, gjenbrukte kanalregler, smart casts og collections-operasjoner. 10 av 11 tester passerer; eneste feil er uløst TODO 7, som ble holdt utenfor delscoren. Muntlig debrief og tidsbruk er ikke vurdert. |
 
 ## Slik registrerer du et nytt forsøk
 
