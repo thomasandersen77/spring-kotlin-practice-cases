@@ -1,3 +1,8 @@
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.time.withTimeout
+import kotlinx.coroutines.withTimeoutOrNull
+
 /**
  * COROUTINES / STRUCTURED CONCURRENCY
  *
@@ -33,13 +38,26 @@ class ConsultantSummaryService(
 ) {
 
     // TODO: parallelliser med coroutineScope + async, og legg på timeout for CV-kallet
-    suspend fun fetchSummary(id: ConsultantId): ConsultantSummary {
-        val profile = profileClient.fetchProfile(id)
-        val cv = cvClient.fetchCv(id)
-        return ConsultantSummary(
+    suspend fun fetchSummary(id: ConsultantId): ConsultantSummary = coroutineScope {
+        val profileDeferred =
+            async {
+                profileClient.fetchProfile(id)
+            }
+
+        val cvDeferred = async {
+            withTimeoutOrNull(timeMillis = 2000L) {
+                cvClient.fetchCv(id)
+            }
+        }
+
+        val profile = profileDeferred.await()
+        val cv = cvDeferred.await()
+
+        ConsultantSummary(
             name = profile.name,
             role = profile.role,
-            skills = cv.skills
+            skills = cv?.skills ?: emptyList()
         )
     }
+
 }
