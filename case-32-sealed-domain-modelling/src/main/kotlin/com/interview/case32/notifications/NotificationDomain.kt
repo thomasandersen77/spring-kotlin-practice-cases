@@ -1,5 +1,8 @@
 package com.interview.case32.notifications
 
+import com.interview.case32.notifications.Channel.*
+import com.interview.case32.notifications.RejectionReason.MARKETING_CONSENT_MISSING
+import com.interview.case32.notifications.RejectionReason.MISSING_CONTACT_INFO
 import java.time.Duration
 import java.time.Instant
 
@@ -108,7 +111,19 @@ data class DeliveryReport(
  * Kontrakt: Email -> "e-post", Sms -> "SMS", InApp -> "app".
  */
 val Channel.label: String
-    get() = TODO("Implementer label som when-uttrykk over Channel-hierarkiet")
+    get() = when (this) {
+        is Email -> {
+            "e-post"
+        }
+
+        is Sms -> {
+            "SMS"
+        }
+
+        InApp -> {
+            "app"
+        }
+    }
 
 object NotificationPolicy {
 
@@ -120,15 +135,66 @@ object NotificationPolicy {
      * - OrderShipped   -> [Email, InApp] — Email bare hvis den finnes, InApp alltid
      * - MarketingCampaign -> [Email] bare hvis mottakeren har både samtykke og e-post, ellers tom liste
      */
-    fun channelsFor(notification: Notification, recipient: Recipient): List<Channel> =
-        TODO("Implementer kanalvalg som when-uttrykk over Notification")
+    fun channelsFor(
+        notification: Notification,
+        recipient: Recipient
+    ): List<Channel> =
+        when (notification) {
+            is Notification.PasswordReset ->
+                recipient.email
+                    ?.let { email -> listOf(Email(email)) }
+                    ?: emptyList()
+
+            is Notification.PaymentFailed ->
+                buildList {
+                    recipient.msisdn?.let { msisdn ->
+                        add(Sms(msisdn))
+                    }
+                    recipient.email?.let { email ->
+                        add(Email(email))
+                    }
+                    add(InApp)
+                }
+
+            is Notification.OrderShipped ->
+                buildList {
+                    recipient.email?.let { email ->
+                        add(Email(email))
+                    }
+                    add(InApp)
+                }
+
+            is Notification.MarketingCampaign ->
+                if (recipient.marketingConsent) {
+                    recipient.email
+                        ?.let { email -> listOf(Email(email)) }
+                        ?: emptyList()
+                } else {
+                    emptyList()
+                }
+        }
 
     /**
      * TODO 3: Prioritet som `when`-uttrykk.
      * Kontrakt: PasswordReset og PaymentFailed -> HIGH, OrderShipped -> NORMAL, MarketingCampaign -> LOW.
      */
-    fun priorityOf(notification: Notification): Priority =
-        TODO("Implementer prioritet som when-uttrykk")
+    fun priorityOf(notification: Notification): Priority = when (notification) {
+        is Notification.PaymentFailed -> {
+            Priority.HIGH
+        }
+
+        is Notification.PasswordReset -> {
+            Priority.HIGH
+        }
+
+        is Notification.OrderShipped -> {
+            Priority.NORMAL
+        }
+
+        is Notification.MarketingCampaign -> {
+            Priority.LOW
+        }
+    }
 
     /**
      * TODO 4: Hvorfor ble ingenting sendt?
@@ -137,8 +203,17 @@ object NotificationPolicy {
      * - MARKETING_CONSENT_MISSING hvis det er en MarketingCampaign uten samtykke
      * - MISSING_CONTACT_INFO ellers
      */
-    fun rejectionReasonFor(notification: Notification, recipient: Recipient): RejectionReason? =
-        TODO("Implementer avvisningsårsak uten å duplisere kanalreglene")
+    fun rejectionReasonFor(notification: Notification, recipient: Recipient): RejectionReason? {
+        if (channelsFor(notification, recipient).isNotEmpty()) return null
+
+        if (notification is Notification.MarketingCampaign &&
+            !recipient.marketingConsent
+        ) {
+            return MARKETING_CONSENT_MISSING
+        }
+
+        return MISSING_CONTACT_INFO
+    }
 }
 
 /**
@@ -148,8 +223,20 @@ object NotificationPolicy {
  * - Rejected  -> "Avvist via <label>: <reason>"
  * - Retryable -> "Nytt forsøk via <label> om <sekunder> s"
  */
-fun describe(result: DeliveryResult): String =
-    TODO("Implementer beskrivelse som when-uttrykk over DeliveryResult")
+fun describe(result: DeliveryResult): String {
+    when (result) {
+        is DeliveryResult.Delivered -> {
+            return "Levert via ${result.channel.label} (ref=${result.providerReference})"
+        }
+        is DeliveryResult.Rejected -> {
+
+            return "Avvist via ${result.channel.label}: ${result.reason}"
+        }
+        is DeliveryResult.Retryable -> {
+            return "Nytt forsøk via ${result.channel.label} om ${result.retryAfter.seconds} s"
+        }
+    }
+}
 
 /**
  * TODO 6: Oppsummer en batch med resultater.
