@@ -1,3 +1,4 @@
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runTest
@@ -37,6 +38,7 @@ class ConsultantSummaryServiceTest {
      * Denne testen FEILER med den sekvensielle implementasjonen (2000 ms virtuell tid).
      * Den skal bli grønn når du parallelliserer med coroutineScope + async.
      */
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `fetches profile and cv in parallel`() = runTest {
         val service = ConsultantSummaryService(slowProfileClient, slowCvClient)
