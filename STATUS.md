@@ -52,7 +52,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 24 domain-events-outbox | Samtidighet | Ikke startet | – | – | – |
 | 25 idempotent-command-processing | Samtidighet | Ikke startet | – | – | – |
 | 26 kotlin-idioms-drill | Kotlin | Løst | 9.2 | 2026-08-04 | case-26-forsoek-1 |
-| 27 coroutines-structured-concurrency | Kotlin / Samtidighet | Ikke startet | – | – | – |
+| 27 coroutines-structured-concurrency | Kotlin / Samtidighet | Løst | 7.8 | 2026-08-07 | case-27-forsoek-1 |
 | 28 oauth2-jwt-resource-server | Sikkerhet | Ikke startet | – | – | – |
 | 29 llm-port-adapter-fallback | Integrasjon | Ikke startet | – | – | – |
 | 30 bank-account-crud-jpa | Full stack / JPA | Ikke startet | – | – | – |
@@ -67,7 +67,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 39 wiremock-external-integration | Integrasjon | Ikke startet | – | – | – |
 | 40 security-request-context | Sikkerhet | Ikke startet | – | – | – |
 
-**Oppsummert:** 3 løst · 1 påbegynt · 36 ikke startet · 0 mestret
+**Oppsummert:** 4 løst · 1 påbegynt · 35 ikke startet · 0 mestret
 
 ## Forsøkshistorikk
 
@@ -77,6 +77,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 2026-08-01 | 02 | 1 | case-02-forsoek-1 | 8.9 | Løst med eksplisitt [from, to)-kontrakt, avvisning av from > to, lesbar datesUntil-implementasjon og ni grønne tester. Trekk for generelle testnavn, overflødig Java 9-konfigurasjon og mindre kodehygiene rundt isInWeekend()/whitespace. |
 | 2026-08-04 | 26 | 1 | case-26-forsoek-1 | 9.2 | Alle seks funksjoner er refaktorert til lesbar, idiomatisk Kotlin. Den siste revisjonen innfører en typesikker `Seniority`-enum, en beregnet `Consultant.seniority`-property og én sentral klassifiserings- og valideringsregel i `Seniority.from()`. Sterk bruk av collections-API, null-safety, expression bodies, `when` og `joinToString`. Trekk fordi refaktoreringen endrer den opprinnelige offentlige kontrakten fra tekstetikett til `Seniority`, den case-insensitive byregelen ikke testes med ulik casing, overgangsgrensene er ufullstendig testet, og det gjenstår små formateringsdetaljer. |
 | 2026-08-04 | 31 | 1 | case-31-forsoek-1 | 3.0 | Påbegynt. `fullName` og `isActiveOn` er korrekt og idiomatisk implementert som extension property/function med expression body; de to tilhørende testene passerer. Hele modulen er rød: 2 av 13 tester passerer, mens 11 feiler fordi TODO 3–6 fortsatt er uløst. Muntlig debrief er ikke vurdert. |
+| 2026-08-07 | 27 | 1 | case-27-forsoek-1 | 7.8 | Løst med parallell profil- og CV-henting, CV-timeout med degradering til tom ferdighetsliste og deterministisk test av structured-concurrency-kansellering. Tre tester og modulens `verify` er grønne. Trekk for manglende test av timeout-kontrakten og mindre kodehygiene; muntlig debrief og tidsbruk er ikke vurdert. |
 
 ## Slik registrerer du et nytt forsøk
 
