@@ -245,8 +245,12 @@ fun describe(result: DeliveryResult): String {
  * - nextRetryAfter = korteste `retryAfter` blant Retryable, eller null hvis ingen kan prøves igjen
  * Hint: `filterIsInstance`, `count { }`, `minOfOrNull`.
  */
-fun List<DeliveryResult>.toReport(): DeliveryReport =
-    TODO("Implementer oppsummering av leveringsresultater")
+fun List<DeliveryResult>.toReport(): DeliveryReport = DeliveryReport(
+    deliveredCount = count { it is DeliveryResult.Delivered },
+    rejectedCount = count { it is DeliveryResult.Rejected },
+    retryableCount = count { it is DeliveryResult.Retryable },
+    nextRetryAfter = filterIsInstance<DeliveryResult.Retryable>().minOfOrNull { it.retryAfter }
+)
 
 /**
  * TODO 7: Sorter varsler slik at de viktigste kommer først, og bevar innbyrdes rekkefølge
