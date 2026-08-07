@@ -223,20 +223,20 @@ object NotificationPolicy {
  * - Rejected  -> "Avvist via <label>: <reason>"
  * - Retryable -> "Nytt forsøk via <label> om <sekunder> s"
  */
-fun describe(result: DeliveryResult): String {
+fun describe(result: DeliveryResult): String =
     when (result) {
         is DeliveryResult.Delivered -> {
-            return "Levert via ${result.channel.label} (ref=${result.providerReference})"
+            "Levert via ${result.channel.label} (ref=${result.providerReference})"
         }
         is DeliveryResult.Rejected -> {
 
-            return "Avvist via ${result.channel.label}: ${result.reason}"
+            "Avvist via ${result.channel.label}: ${result.reason}"
         }
         is DeliveryResult.Retryable -> {
-            return "Nytt forsøk via ${result.channel.label} om ${result.retryAfter.seconds} s"
+            "Nytt forsøk via ${result.channel.label} om ${result.retryAfter.seconds} s"
         }
     }
-}
+
 
 /**
  * TODO 6: Oppsummer en batch med resultater.
