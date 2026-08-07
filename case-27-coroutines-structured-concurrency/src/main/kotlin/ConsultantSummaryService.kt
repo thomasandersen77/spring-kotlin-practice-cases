@@ -1,7 +1,7 @@
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.time.withTimeout
 import kotlinx.coroutines.withTimeoutOrNull
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * COROUTINES / STRUCTURED CONCURRENCY
@@ -45,7 +45,7 @@ class ConsultantSummaryService(
             }
 
         val cvDeferred = async {
-            withTimeoutOrNull(timeMillis = 2000L) {
+            withTimeoutOrNull(timeMillis = 2_000) {
                 cvClient.fetchCv(id)
             }
         }
@@ -56,8 +56,7 @@ class ConsultantSummaryService(
         ConsultantSummary(
             name = profile.name,
             role = profile.role,
-            skills = cv?.skills ?: emptyList()
+            skills = cv?.skills.orEmpty() // can also use Elvis operator after skills // ?: emptyList()
         )
     }
-
 }
