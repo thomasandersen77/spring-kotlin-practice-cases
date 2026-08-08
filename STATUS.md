@@ -66,8 +66,9 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 38 basic-spring-h2-rest | Full stack / JPA | Ikke startet | – | – | – |
 | 39 wiremock-external-integration | Integrasjon | Ikke startet | – | – | – |
 | 40 security-request-context | Sikkerhet | Ikke startet | – | – | – |
+| 41 unit-testing-mocks-tdd | Testing / TDD | Ikke startet | – | – | – |
 
-**Oppsummert:** 4 løst · 2 påbegynt · 34 ikke startet · 0 mestret
+**Oppsummert:** 4 løst · 2 påbegynt · 35 ikke startet · 0 mestret
 
 ## Forsøkshistorikk
 

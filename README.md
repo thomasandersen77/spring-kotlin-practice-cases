@@ -1,6 +1,6 @@
 # Kotlin/Spring Boot Interview Cases
 
-Dette er et treningsrepositorium for teknisk intervju og parprogrammering i Kotlin, Spring Boot, JPA/Hibernate, DDD, SOLID og testbarhet. Repoet inneholder 40 små, uavhengige case-prosjekter — alle med vilje uferdige.
+Dette er et treningsrepositorium for teknisk intervju og parprogrammering i Kotlin, Spring Boot, JPA/Hibernate, DDD, SOLID og testbarhet. Repoet inneholder 41 små, uavhengige case-prosjekter — alle med vilje uferdige.
 
 **Målet er ikke å pugge løsninger.** Målet er å kunne:
 - oversette krav til tydelige domenevalg under tidspress
@@ -62,6 +62,11 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 | `case-35-kotlin-dsl-higher-order-functions` | Lambda with receiver-DSL, `infix`/operatorer, `by lazy`, `buildString` |
 | `case-37-kotlin-mapping-sealed-collections` | Mapping, sealed typer og sammensatt sortering |
 
+### Testing og TDD
+| Case | Tema |
+|---|---|
+| `case-41-unit-testing-mocks-tdd` | Unit testing fra scratch med JUnit Jupiter, AssertJ, Mockito, MockK og TDD |
+
 ### Domenemodellering / DDD
 | Case | Tema |
 |---|---|
@@ -116,7 +121,7 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 
 | Runde | Caser | Fokus |
 |---|---|---|
-| 1 | 01, 02, 26, 33 | Varm opp: ren Kotlin, TDD, idiomatisk syntaks og collections |
+| 1 | 01, 02, 41, 26, 33 | Varm opp: ren Kotlin, unit testing/TDD, idiomatisk syntaks og collections |
 | 1b | 31, 32, 34, 35, 37 | Språkfeatures i dybden: mapping, sealed, null-safety og DSL — avslutt med 37 som Kotlin-konsolidering |
 | 2 | 03, 04, 05, 11, 12 | Domeneregler, value objects og enkle services |
 | 3 | 13, 14, 16, 18, 10, 19, 15 | Aggregater, statusoverganger og presisjon |
