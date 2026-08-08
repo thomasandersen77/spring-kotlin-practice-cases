@@ -45,6 +45,7 @@ class LoyaltyPointsServiceMockitoTest {
         assertThat(pointsAward.basePoints).isEqualTo(1)
 
         verify(pointsLedger).credit(customer.id, pointsAward.totalPoints)
+        verify(pointsLedger).credit(customer.id, pointsAward.basePoints)
     }
 
     @Test
@@ -92,10 +93,10 @@ class LoyaltyPointsServiceMockitoTest {
 
     @Test
     fun `negative purchase amount throws IllegalArgumentException`() {
-        val amountOre = -1_000L
+        val amountOre = -500L
         val customer = Customer(
             id = UUID.randomUUID().toString(),
-            tier = CustomerTier.PLUS
+            tier = CustomerTier.STANDARD
         )
 
         assertThatExceptionOfType(IllegalArgumentException::class.java)
@@ -122,13 +123,11 @@ class LoyaltyPointsServiceMockitoTest {
         assertThat(pointsAward.tierBonusPoints).isEqualTo(0)
 
         verifyNoInteractions(pointsLedger)
-        verify(pointsLedger, never()).credit(customer.id, pointsAward.totalPoints)
     }
-
 
     @Test
     fun `missing customerId throws IllegalArgumentException`() {
-        val amountOre = -1_000L
+        val amountOre = 1_000L
         val customer = Customer(
             id = "  ", // blank customer id
             tier = CustomerTier.PLUS
