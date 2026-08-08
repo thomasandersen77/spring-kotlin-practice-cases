@@ -11,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension
 import java.util.*
 
 @ExtendWith(MockitoExtension::class)
-class LoyaltyPointsServiceTest {
+class LoyaltyPointsServiceMockitoTest {
 
     @Mock
     lateinit var customerRepository: CustomerRepository
@@ -23,7 +23,7 @@ class LoyaltyPointsServiceTest {
     lateinit var loyaltyPointsService: LoyaltyPointsService
 
     @Test
-    fun `TODO 1 - standard customer only gets basic points without bonus points`() {
+    fun `standard customer only gets basic points without bonus points`() {
         // arrange
         val amountOre = 1_000L
 
@@ -48,7 +48,7 @@ class LoyaltyPointsServiceTest {
     }
 
     @Test
-    fun `TODO 2 - plus customer gets base points and equal bonus points`() {
+    fun `plus customer gets base points and equal bonus points`() {
         // arrange
         val amountOre = 2_000L
 
@@ -72,7 +72,7 @@ class LoyaltyPointsServiceTest {
     }
 
     @Test
-    fun `TODO 2 - unknown customer throws CustomerNotFoundException`() {
+    fun `unknown customer throws CustomerNotFoundException`() {
         // arrange
         val amountOre = 1_000L
 
@@ -91,7 +91,7 @@ class LoyaltyPointsServiceTest {
     }
 
     @Test
-    fun `TODO 2 - negative purchase amount throws IllegalArgumentException`() {
+    fun `negative purchase amount throws IllegalArgumentException`() {
         val amountOre = -1_000L
         val customer = Customer(
             id = UUID.randomUUID().toString(),
@@ -105,7 +105,7 @@ class LoyaltyPointsServiceTest {
     }
 
     @Test
-    fun `TODO 2 - purchase below point threshold is not credited`() {
+    fun `purchase below point threshold is not credited`() {
         val amountOre = 500L
         val customer = Customer(
             id = UUID.randomUUID().toString(),
@@ -121,8 +121,22 @@ class LoyaltyPointsServiceTest {
         assertThat(pointsAward.basePoints).isEqualTo(0)
         assertThat(pointsAward.tierBonusPoints).isEqualTo(0)
 
+        verifyNoInteractions(pointsLedger)
         verify(pointsLedger, never()).credit(customer.id, pointsAward.totalPoints)
+    }
 
+
+    @Test
+    fun `missing customerId throws IllegalArgumentException`() {
+        val amountOre = -1_000L
+        val customer = Customer(
+            id = "  ", // blank customer id
+            tier = CustomerTier.PLUS
+        )
+
+        assertThatExceptionOfType(IllegalArgumentException::class.java)
+            .isThrownBy { loyaltyPointsService.awardForPurchase(customer.id, amountOre) }
+            .withMessage("customerId kan ikke være blank")
     }
 
 }
