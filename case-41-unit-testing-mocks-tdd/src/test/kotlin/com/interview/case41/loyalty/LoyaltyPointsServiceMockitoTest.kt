@@ -103,6 +103,8 @@ class LoyaltyPointsServiceMockitoTest {
             .isThrownBy {
                 loyaltyPointsService.awardForPurchase(customer.id, amountOre)
             }.withMessage("amountOre må være større enn 0")
+
+        verifyNoInteractions(pointsLedger)
     }
 
     @Test
@@ -136,6 +138,9 @@ class LoyaltyPointsServiceMockitoTest {
         assertThatExceptionOfType(IllegalArgumentException::class.java)
             .isThrownBy { loyaltyPointsService.awardForPurchase(customer.id, amountOre) }
             .withMessage("customerId kan ikke være blank")
+
+
+        verifyNoInteractions(pointsLedger)
     }
 
 }
