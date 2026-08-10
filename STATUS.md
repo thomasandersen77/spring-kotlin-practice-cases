@@ -66,7 +66,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 38 basic-spring-h2-rest | Full stack / JPA | Ikke startet | – | – | – |
 | 39 wiremock-external-integration | Integrasjon | Ikke startet | – | – | – |
 | 40 security-request-context | Sikkerhet | Ikke startet | – | – | – |
-| 41 unit-testing-mocks-tdd | Testing / TDD | Påbegynt | 7.8 | 2026-08-10 | case-41-forsoek-1 |
+| 41 unit-testing-mocks-tdd | Testing / TDD | Påbegynt | 8.8 | 2026-08-10 | case-41-forsoek-1 |
 
 **Oppsummert:** 4 løst · 3 påbegynt · 34 ikke startet · 0 mestret
 
@@ -80,7 +80,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 2026-08-04 | 31 | 1 | case-31-forsoek-1 | 3.0 | Påbegynt. `fullName` og `isActiveOn` er korrekt og idiomatisk implementert som extension property/function med expression body; de to tilhørende testene passerer. Hele modulen er rød: 2 av 13 tester passerer, mens 11 feiler fordi TODO 3–6 fortsatt er uløst. Muntlig debrief er ikke vurdert. |
 | 2026-08-07 | 27 | 1 | case-27-forsoek-1 | 7.8 | Løst med parallell profil- og CV-henting, CV-timeout med degradering til tom ferdighetsliste og deterministisk test av structured-concurrency-kansellering. Tre tester og modulens `verify` er grønne. Trekk for manglende test av timeout-kontrakten og mindre kodehygiene; muntlig debrief og tidsbruk er ikke vurdert. |
 | 2026-08-07 | 32 | 1 | case-32-forsoek-1 | 8.2 | Påbegynt. TODO 1–6 er korrekt og idiomatisk implementert med uttømmende `when`, gjenbrukte kanalregler, smart casts og collections-operasjoner. 10 av 11 tester passerer; eneste feil er uløst TODO 7, som ble holdt utenfor delscoren. Muntlig debrief og tidsbruk er ikke vurdert. |
-| 2026-08-10 | 41 | 1 | case-41-forsoek-1 | 7.8 | Påbegynt. TODO 1–2 er sterkt løst med JUnit Jupiter, AssertJ og Mockito; alle seks Mockito-testene er grønne. TODO 3 bruker nå en separat suite med riktig MockK-API, og fire av seks MockK-tester er grønne. PLUS-testen mangler stubbing av den strikte `pointsLedger`-mocken og verifiserer grunnpoeng i stedet for totalpoeng, mens testen under poenggrensen mangler stubbing av `customerRepository`. Modulresultatet er derfor 10 av 12 bestått. TODO 4–7 er utelatt fra delscoren. Muntlig debrief og tidsbruk er ikke vurdert. |
+| 2026-08-10 | 41 | 1 | case-41-forsoek-1 | 8.8 | Påbegynt. TODO 1–3 er løst med separate suiter for Mockito og MockK, tydelige testnavn, AssertJ, stubbing og interaksjonsverifisering. Alle 12 testene er grønne: seks med Mockito og seks med MockK. Commit-historikken dokumenterer at den eksplisitte `eq()`-verifiseringen og kommentarene i nullpoengtesten er et bevisst læringsvalg og gir ikke trekk. Mindre trekk kun i implementert omfang for for bred `any()`-verifisering i MockK-testen for PLUS og redundant verifisering av samme ledger-kall i Mockito-testen for STANDARD. TODO 4–7 er utelatt fra delscoren. Muntlig debrief og tidsbruk er ikke vurdert. |
 
 ## Slik registrerer du et nytt forsøk
 
