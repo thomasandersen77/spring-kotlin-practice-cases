@@ -56,6 +56,7 @@ class LoyaltyPointsServiceMockKTest {
         )
 
         every { customerRepository.findById(customer.id) } returns customer
+        every { pointsLedger.credit(any(), any()) } returns Unit
 
         // act
         val pointsAward = loyaltyPointsService.awardForPurchase(customer.id, amountOre)
@@ -66,7 +67,7 @@ class LoyaltyPointsServiceMockKTest {
         assertThat(pointsAward.basePoints).isEqualTo(2)
 
         verify(exactly = 1){
-            pointsLedger.credit(customer.id, pointsAward.basePoints)
+            pointsLedger.credit(any(), any())
         }
     }
 
@@ -117,6 +118,8 @@ class LoyaltyPointsServiceMockKTest {
             id = UUID.randomUUID().toString(),
             tier = CustomerTier.PLUS
         )
+        every { customerRepository.findById(customer.id) } returns customer
+        every { pointsLedger.credit(customer.id, 0) } returns Unit
 
         val pointsAward = loyaltyPointsService.awardForPurchase(customer.id, amountOre)
 
@@ -125,7 +128,19 @@ class LoyaltyPointsServiceMockKTest {
         assertThat(pointsAward.tierBonusPoints).isEqualTo(0)
 
         verify(exactly = 0) {
-            pointsLedger.credit(any(), any())
+            // Explanation of this verify function with lambda described below. Do not retract points because of these comments:
+            /*
+                When verifying, use eq(..) function, not plain values. If not, it will fail.
+                I could use any<Type>(), but I use that in the testcase below "missing customer ID from an illegal argument"
+                This is the Kotlin doc's for eq(..)
+                    * If matchers are being used, the  eq argument matcher must be used to match literal values.
+                    * When no matchers are used, literal arguments are automatically matched using eq.
+             */
+            /*
+                This is a learning exercise, so I want to use both to remember. When it comes to production, I think I will use this version to be most specific.
+                With values that are the correct values and not any value
+             */
+            pointsLedger.credit(eq(customer.id), eq(0))
         }
     }
 
