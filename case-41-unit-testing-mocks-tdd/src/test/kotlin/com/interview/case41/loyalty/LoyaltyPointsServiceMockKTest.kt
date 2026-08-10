@@ -3,11 +3,11 @@ package com.interview.case41.loyalty
 import io.mockk.every
 import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
+import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.Mockito.*
 import java.util.*
 
 @ExtendWith(MockKExtension::class)
@@ -39,6 +39,10 @@ class LoyaltyPointsServiceMockKTest {
         assertThat(pointsAward.tierBonusPoints).isEqualTo(0)
         assertThat(pointsAward.basePoints).isEqualTo(1)
 
+        verify(exactly = 1) {
+            pointsLedger.credit(customer.id, 1)
+        }
+
     }
 
     @Test
@@ -51,8 +55,7 @@ class LoyaltyPointsServiceMockKTest {
             tier = CustomerTier.PLUS
         )
 
-        `when`(customerRepository.findById(customer.id))
-            .thenReturn(customer)
+        every { customerRepository.findById(customer.id) } returns customer
 
         // act
         val pointsAward = loyaltyPointsService.awardForPurchase(customer.id, amountOre)
@@ -62,7 +65,9 @@ class LoyaltyPointsServiceMockKTest {
         assertThat(pointsAward.tierBonusPoints).isEqualTo(2)
         assertThat(pointsAward.basePoints).isEqualTo(2)
 
-        verify(pointsLedger).credit(customer.id, pointsAward.totalPoints)
+        verify(exactly = 1){
+            pointsLedger.credit(customer.id, pointsAward.basePoints)
+        }
     }
 
     @Test
@@ -75,13 +80,16 @@ class LoyaltyPointsServiceMockKTest {
             tier = CustomerTier.STANDARD
         )
 
-        `when`(customerRepository.findById(customer.id))
-            .thenReturn(null)
+        every { customerRepository.findById(customer.id) } returns null
 
         // act + assert
         assertThatExceptionOfType(CustomerNotFoundException::class.java)
             .isThrownBy { loyaltyPointsService.awardForPurchase(customer.id, amountOre) }
             .withMessage("Fant ikke kunde ${customer.id}")
+
+        verify(exactly = 0) {
+            pointsLedger.credit(any<String>(), any<Int>())
+        }
     }
 
     @Test
@@ -97,7 +105,9 @@ class LoyaltyPointsServiceMockKTest {
                 loyaltyPointsService.awardForPurchase(customer.id, amountOre)
             }.withMessage("amountOre må være større enn 0")
 
-        verifyNoInteractions(pointsLedger)
+        verify(exactly = 0) {
+            pointsLedger.credit(any<String>(), any<Int>())
+        }
     }
 
     @Test
@@ -108,16 +118,15 @@ class LoyaltyPointsServiceMockKTest {
             tier = CustomerTier.PLUS
         )
 
-        `when`(customerRepository.findById(customer.id))
-            .thenReturn(customer)
-
         val pointsAward = loyaltyPointsService.awardForPurchase(customer.id, amountOre)
 
         assertThat(pointsAward.totalPoints).isEqualTo(0)
         assertThat(pointsAward.basePoints).isEqualTo(0)
         assertThat(pointsAward.tierBonusPoints).isEqualTo(0)
 
-        verifyNoInteractions(pointsLedger)
+        verify(exactly = 0) {
+            pointsLedger.credit(any(), any())
+        }
     }
 
     @Test
@@ -133,7 +142,9 @@ class LoyaltyPointsServiceMockKTest {
             .withMessage("customerId kan ikke være blank")
 
 
-        verifyNoInteractions(pointsLedger)
+        verify( exactly = 0) {
+            pointsLedger.credit(any(), any())
+        }
     }
 
 }
