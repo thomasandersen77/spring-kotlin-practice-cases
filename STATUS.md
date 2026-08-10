@@ -67,8 +67,18 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 39 wiremock-external-integration | Integrasjon | Ikke startet | – | – | – |
 | 40 security-request-context | Sikkerhet | Ikke startet | – | – | – |
 | 41 unit-testing-mocks-tdd | Testing / TDD | Påbegynt | 8.8 | 2026-08-10 | case-41-forsoek-1 |
+| 42 spring-mvc-validation | API / SOLID | Ikke startet | – | – | – |
+| 43 current-user-argument-resolver | Sikkerhet / Spring MVC | Ikke startet | – | – | – |
+| 44 jwt-claims-authorities | Sikkerhet / JWT | Ikke startet | – | – | – |
+| 45 method-security-authorization | Sikkerhet / Authorization | Ikke startet | – | – | – |
+| 46 spring-security-mockmvc | Testing / Security | Ikke startet | – | – | – |
+| 47 transaction-boundary-jpa | Persistens / Transaksjoner | Ikke startet | – | – | – |
+| 48 controller-advice-errors | API / Feilhåndtering | Ikke startet | – | – | – |
+| 49 http4k-functional-http | Kotlin / http4k | Ikke startet | – | – | – |
+| 50 ktor-rest-api | Kotlin / Ktor | Ikke startet | – | – | – |
+| 51 kotlin-web-framework-comparison | Arkitektur / Web | Ikke startet | – | – | – |
 
-**Oppsummert:** 4 løst · 3 påbegynt · 34 ikke startet · 0 mestret
+**Oppsummert:** 4 løst · 3 påbegynt · 44 ikke startet · 0 mestret
 
 ## Forsøkshistorikk
 

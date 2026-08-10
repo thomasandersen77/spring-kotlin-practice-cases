@@ -19,6 +19,8 @@
         <assertj.version>3.25.3</assertj.version>
         <mockito.version>5.11.0</mockito.version>
         <mockk.version>1.13.12</mockk.version>
+        <http4k.version>5.12.0.0</http4k.version>
+        <ktor.version>2.3.12</ktor.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.enforcer.plugin.version>3.5.0</maven.enforcer.plugin.version>
     </properties>
@@ -108,5 +110,15 @@
         <module>case-39-wiremock-external-integration</module>
         <module>case-40-security-request-context</module>
         <module>case-41-unit-testing-mocks-tdd</module>
+        <module>case-42-spring-mvc-validation</module>
+        <module>case-43-current-user-argument-resolver</module>
+        <module>case-44-jwt-claims-authorities</module>
+        <module>case-45-method-security-authorization</module>
+        <module>case-46-spring-security-mockmvc</module>
+        <module>case-47-transaction-boundary-jpa</module>
+        <module>case-48-controller-advice-errors</module>
+        <module>case-49-http4k-functional-http</module>
+        <module>case-50-ktor-rest-api</module>
+        <module>case-51-kotlin-web-framework-comparison</module>
     </modules>
 </project>
