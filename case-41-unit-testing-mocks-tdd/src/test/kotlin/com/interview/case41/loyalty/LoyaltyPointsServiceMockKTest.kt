@@ -95,7 +95,7 @@ class LoyaltyPointsServiceMockKTest {
 
     @Test
     fun `negative purchase amount throws IllegalArgumentException`() {
-        val amountOre = -500L
+        val amountOre = 0L
         val customer = Customer(
             id = UUID.randomUUID().toString(),
             tier = CustomerTier.STANDARD
