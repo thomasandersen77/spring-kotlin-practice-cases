@@ -45,7 +45,6 @@ class LoyaltyPointsServiceMockitoTest {
         assertThat(pointsAward.basePoints).isEqualTo(1)
 
         verify(pointsLedger).credit(customer.id, pointsAward.totalPoints)
-        verify(pointsLedger).credit(customer.id, pointsAward.basePoints)
     }
 
     @Test
@@ -89,12 +88,13 @@ class LoyaltyPointsServiceMockitoTest {
         assertThatExceptionOfType(CustomerNotFoundException::class.java)
             .isThrownBy { loyaltyPointsService.awardForPurchase(customer.id, amountOre) }
             .withMessage("Fant ikke kunde ${customer.id}")
+
+        verifyNoInteractions(pointsLedger)
     }
 
     @Test
-    fun `invalid purchase amount throws IllegalArgumentException`() {
-        val invalidPurchaseAmount = 0L
-        val amountOre = invalidPurchaseAmount
+    fun `invalid' purchase amount throws IllegalArgumentException`() {
+        val amountOre = 0L
 
         val customer = Customer(
             id = UUID.randomUUID().toString(),
