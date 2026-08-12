@@ -77,8 +77,9 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 49 http4k-functional-http | Kotlin / http4k | Ikke startet | – | – | – |
 | 50 ktor-rest-api | Kotlin / Ktor | Ikke startet | – | – | – |
 | 51 kotlin-web-framework-comparison | Arkitektur / Web | Ikke startet | – | – | – |
+| 52 spring-boot-integration-test | Testing / Spring Boot | Ikke startet | – | – | – |
 
-**Oppsummert:** 4 løst · 3 påbegynt · 44 ikke startet · 0 mestret
+**Oppsummert:** 4 løst · 3 påbegynt · 45 ikke startet · 0 mestret
 
 ## Forsøkshistorikk
 
