@@ -29,6 +29,8 @@ fun interface PointsLedger {
 class CustomerNotFoundException(customerId: String) :
     RuntimeException("Fant ikke kunde $customerId")
 
+private const val TRIPLE_POINTS_THRESHOLD_ORE = 50_000L
+
 class LoyaltyPointsService(
     private val customerRepository: CustomerRepository,
     private val pointsLedger: PointsLedger
@@ -42,7 +44,9 @@ class LoyaltyPointsService(
         val basePoints = (amountOre / ORE_PER_POINT).toInt()
         val tierBonusPoints = when (customer.tier) {
             CustomerTier.STANDARD -> 0
-            CustomerTier.PLUS -> basePoints
+            CustomerTier.PLUS -> {
+                if(amountOre >= TRIPLE_POINTS_THRESHOLD_ORE) basePoints * 2 else basePoints
+            }
         }
         val award = PointsAward(customer.id, basePoints, tierBonusPoints)
 

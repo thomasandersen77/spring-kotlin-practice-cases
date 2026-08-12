@@ -145,4 +145,47 @@ class LoyaltyPointsServiceMockitoTest {
         verifyNoInteractions(pointsLedger)
     }
 
+    @Test
+    fun `PLUS purchase of 49_999 ore should still give double total points`() {
+        val amountOre = 49_999L
+        val customer = Customer(
+            id = "123",
+            tier = CustomerTier.PLUS
+        )
+
+        `when`(customerRepository.findById(customer.id))
+            .thenReturn(customer)
+
+        val pointsAward = loyaltyPointsService.awardForPurchase(customer.id, amountOre)
+
+        assertThat(pointsAward.basePoints).isEqualTo(49)
+        assertThat(pointsAward.tierBonusPoints).isEqualTo(49)
+        assertThat(pointsAward.totalPoints).isEqualTo(98)
+
+        verify(pointsLedger)
+            .credit(customer.id, pointsAward.totalPoints)
+
+    }
+
+    @Test
+    fun `PLUS purchase of at least 50 000 ore should give three times the total points instead of double`() {
+        val amountOre = 50_000L // 500 kr
+        val customer = Customer(
+            id = "1234",
+            tier = CustomerTier.PLUS
+        )
+
+        `when`(customerRepository.findById(customer.id))
+            .thenReturn(customer)
+
+        val pointsAward = loyaltyPointsService.awardForPurchase(customer.id, amountOre)
+
+        assertThat(pointsAward.totalPoints).isEqualTo(150)
+        assertThat(pointsAward.basePoints).isEqualTo(50)
+        assertThat(pointsAward.tierBonusPoints).isEqualTo(100)
+
+        verify(pointsLedger)
+            .credit(customer.id, pointsAward.totalPoints)
+    }
+
 }
