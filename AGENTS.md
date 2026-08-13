@@ -5,16 +5,25 @@
 Gjentakbare arbeidsflyter er definert i `docs/AGENTS-WORKFLOW.md`.
 
 - Ved eksplisitt bestilling av fasit: bruk `FASIT_CODEX`.
-- Ved Git-, branch- eller worktree-kontroll i Warp: bruk `KONTROLL_WARP`.
+- Ved Git- eller branchkontroll i Warp: bruk `KONTROLL_WARP`.
 - Ved sammenligning mellom forsøk og fasit: bruk `SAMMENLIGN`.
 - Ved review og score: følg `docs/TRENINGSGUIDE.md`.
 
 Arbeidsflytfilen gir aldri permanent tillatelse til å redigere, committe eller
 pushe. Slike tillatelser må fortsatt gis eksplisitt i den aktuelle samtalen.
 
-Codex-fasit og brukerens IntelliJ-forsøk skal alltid arbeide i separate
-worktrees. En fasitbranch skal opprettes fra verifisert `origin/main` og aldri
-merges til `main`.
+## Branch-basert arbeidsflyt
+
+Arbeid i én primær checkout. Bruk brancher, ikke separate worktrees.
+
+- `main` inneholder originale caser med TODO-er og uten løsning.
+- Nye forsøk opprettes fra oppdatert `main` som `case-NN-forsoek-M`.
+- Fasit opprettes fra verifisert `origin/main` som `case-NN-fasit`.
+- Forsøks- og fasitbrancher merges aldri tilbake til `main`.
+- Bytt branch i samme checkout for å se oppgaven (`main`) eller løsningen
+  (`case-NN-forsoek-M` / `case-NN-fasit`).
+- Sammenlign forsøk mot oppgaven med `git diff main...case-NN-forsoek-M`,
+  avgrenset til aktuell case-modul når det er relevant.
 
 ## Formål og rolle
 
@@ -66,8 +75,8 @@ scoring eller implementering skal agenten normalt kontrollere:
 1. nærmeste `AGENTS.md`
 2. relevant case-README
 3. eksisterende produksjonskode og tester i case-modulen
-4. gjeldende branch og working tree
-5. branchens faktiske utgangspunkt og relevant diff
+4. gjeldende branch og working tree-status
+5. branchens faktiske utgangspunkt og relevant diff mot `main` eller fasit
 6. `STATUS.md` på `main` når progresjon eller score er relevant
 7. den valgte arbeidsflyten og `docs/TRENINGSGUIDE.md` når de gjelder
 
@@ -108,7 +117,7 @@ Brukes når brukeren ber om vurdering, sammenligning, review eller score.
 
 Brukes bare når brukeren uttrykkelig ber om konkrete endringer.
 
-- Verifiser branch, worktree, case-modul og omfang før redigering.
+- Verifiser branch, case-modul og omfang før redigering.
 - Hold endringen innenfor bestilt omfang.
 - Bevar lokale og urelaterte endringer.
 - Kjør relevante tester etter endringen.
@@ -119,8 +128,7 @@ Brukes bare når brukeren uttrykkelig ber om konkrete endringer.
 
 Brukes bare når brukeren eksplisitt bestiller fasit og viser til `FASIT_CODEX`.
 
-- Arbeid i en separat Codex-worktree.
-- Opprett `case-NN-fasit` fra verifisert `origin/main`.
+- Opprett `case-NN-fasit` fra verifisert `origin/main` i samme checkout.
 - Endre bare den aktuelle case-modulen.
 - Implementer en korrekt, lesbar og pragmatisk referanseløsning.
 - Følg case-kontrakten og tidsboksen; ikke overimplementer et hypotetisk
@@ -167,29 +175,29 @@ Arbeidsflytfiler og tidligere tillatelser gir ikke varig autorisasjon.
 `STATUS.md`, repo-oppsett, CI, dokumentasjon og agentregler. Dette gir aldri
 automatisk tillatelse til commit eller push.
 
-## Git-, branch- og worktree-sikkerhet
+## Git- og branch-sikkerhet
 
 ### Branchkonvensjoner
 
+- Oppgavebaseline: `main` (originale caser med TODO-er, uten løsning)
 - Brukerens forsøk: `case-NN-forsoek-M`
 - Referanseløsning: `case-NN-fasit`
 - `NN` er tosifret casenummer.
 - `M` er forsøksnummer.
 
 Nye forsøk og fasitbrancher skal starte fra en ren, oppdatert og verifisert
-baseline. Ikke opprett branch fra en annen forsøks- eller fasitbranch.
+`main`/`origin/main`. Ikke opprett branch fra en annen forsøks- eller
+fasitbranch.
 
-### Separate worktrees
+Typisk flyt:
 
-- IntelliJ-forsøk og Codex-fasit skal bruke separate worktrees.
-- Hver samtidig agentjobb skal ha sin egen worktree.
-- Samme branch skal ikke være aktiv i flere worktrees.
-- Ikke bytt branch eller endre filer i en worktree som brukes av en annen
-  aktiv agent eller av IntelliJ.
-- Ikke fjern eller rydde en worktree før relevant arbeid er bevart i en commit
-  og eventuelt pushet når dette er bestilt.
-- Warp brukes som standard som rent lesende kontrollør gjennom
-  `KONTROLL_WARP`.
+```bash
+git switch main
+git pull --ff-only origin main
+git switch -c case-NN-forsoek-M
+# implementer forsøket
+git diff main...HEAD -- <case-modul>
+```
 
 ### Kontroller før Git-handlinger
 
@@ -198,7 +206,6 @@ Før opprettelse av branch, commit, push eller sammenligning:
 ```bash
 git status --short
 git branch --show-current
-git worktree list
 git fetch origin
 ```
 
@@ -208,14 +215,21 @@ bevares.
 
 ### Diff ved review
 
-Vurder forsøket mot branchens faktiske utgangspunkt:
+Sammenlign forsøket først mot oppgaven på `main`, deretter eventuelt mot fasit:
 
 ```bash
-BASE=$(git merge-base origin/main HEAD)
-git diff "$BASE"..HEAD
+git diff main...HEAD
+git diff main...case-NN-forsoek-M -- <case-modul>
 git status --short
 git diff
 git diff --cached
+```
+
+Ved behov for branchens faktiske utgangspunkt:
+
+```bash
+BASE=$(git merge-base main HEAD)
+git diff "$BASE"..HEAD
 ```
 
 Bruk ikke ukritisk en diff som trekker inn nyere, uvedkommende endringer fra
@@ -375,7 +389,7 @@ hjelp brukeren til en kort og korrekt formulering uten å overta resonnementet.
 
 Når en agent har gjort endringer, rapporter kort og etterprøvbart:
 
-- branch og worktree
+- branch
 - case-modul og endrede filer
 - implementerte regler eller TODO-er
 - viktige designvalg
