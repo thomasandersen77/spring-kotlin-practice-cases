@@ -121,5 +121,6 @@
         <module>case-50-ktor-rest-api</module>
         <module>case-51-kotlin-web-framework-comparison</module>
         <module>case-52-spring-boot-integration-test</module>
+        <module>case-53-openai-legal-contract-review</module>
     </modules>
 </project>
