@@ -77,9 +77,9 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 49 http4k-functional-http | Kotlin / http4k | Ikke startet | – | – | – |
 | 50 ktor-rest-api | Kotlin / Ktor | Ikke startet | – | – | – |
 | 51 kotlin-web-framework-comparison | Arkitektur / Web | Ikke startet | – | – | – |
-| 52 spring-boot-integration-test | Testing / Spring Boot | Ikke startet | – | – | – |
+| 52 spring-boot-integration-test | Testing / Spring Boot | Påbegynt | 8.4 | 2026-08-14 | case-52-forsoek-2 |
 
-**Oppsummert:** 4 løst · 3 påbegynt · 45 ikke startet · 0 mestret
+**Oppsummert:** 4 løst · 4 påbegynt · 44 ikke startet · 0 mestret
 
 ## Forsøkshistorikk
 
@@ -92,6 +92,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 2026-08-07 | 27 | 1 | case-27-forsoek-1 | 7.8 | Løst med parallell profil- og CV-henting, CV-timeout med degradering til tom ferdighetsliste og deterministisk test av structured-concurrency-kansellering. Tre tester og modulens `verify` er grønne. Trekk for manglende test av timeout-kontrakten og mindre kodehygiene; muntlig debrief og tidsbruk er ikke vurdert. |
 | 2026-08-07 | 32 | 1 | case-32-forsoek-1 | 8.2 | Påbegynt. TODO 1–6 er korrekt og idiomatisk implementert med uttømmende `when`, gjenbrukte kanalregler, smart casts og collections-operasjoner. 10 av 11 tester passerer; eneste feil er uløst TODO 7, som ble holdt utenfor delscoren. Muntlig debrief og tidsbruk er ikke vurdert. |
 | 2026-08-10 | 41 | 1 | case-41-forsoek-1 | 8.9 | Påbegynt. TODO 1–4 er løst med separate suiter for Mockito og MockK, AssertJ, stubbing og interaksjonsverifisering. Validering av blank `customerId` og nullbeløpsgrensen testes i begge suiter med riktig exception-type og eksakt melding. Alle 12 testene er verifisert grønne: seks med Mockito og seks med MockK. Commit-historikken dokumenterer at den eksplisitte `eq()`-verifiseringen og kommentarene i nullpoengtesten er et bevisst læringsvalg og gir ikke trekk. Mindre trekk kun i implementert omfang fordi testen med `amountOre = 0` fortsatt heter «negative purchase amount», for bred `any()`-verifisering i MockK-testen for PLUS og redundant verifisering av samme ledger-kall i Mockito-testen for STANDARD. TODO 5–7 er utelatt fra delscoren. Muntlig debrief og tidsbruk er ikke vurdert. |
+| 2026-08-14 | 52 | 2 | case-52-forsoek-2 | 8.4 | Påbegynt. Statisk review viser full Spring Boot-stack med MockMvc, ObjectMapper, ekte repositories, eksplisitt rydding og dekning av README-scenarioene 201/409/400 med persistert tilstand. Trekk for at response-id ikke verifiseres, noe repetisjon/kommentarstøy og at muntlig debrief/tidsbruk ikke er vurdert. Lokal `test` kompilerte og startet konteksten, men alle tre testene ble blokkert før testkropp av Mockito/Byte Buddy-agent i JVM-en; grønn verifisering gjenstår. |
 
 ## Slik registrerer du et nytt forsøk
 
