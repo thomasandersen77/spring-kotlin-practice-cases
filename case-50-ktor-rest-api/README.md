@@ -58,10 +58,10 @@ Implementer GET- og POST-routene i `taskApi`, valider input og returner korrekte
 ## Ikke gjør det for lett
 Ikke hardkod responses i testfixturet, bruk global service-locator eller blokker coroutine-tråden for å kalle suspending kode.
 
-## Formål i intervjuet
+## Formål i treningen
 Caset gir praktisk erfaring med en Kotlin-native serverstack og gjør det lettere å diskutere coroutines, plugins og eksplisitt wiring mot Spring.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvorfor er route handlers naturlig suspending i Ktor?
 2. Hva tilsvarer Spring-konfigurasjon i en Ktor application module?
 3. Hvordan fungerer Content Negotiation?

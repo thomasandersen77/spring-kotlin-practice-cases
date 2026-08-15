@@ -55,10 +55,10 @@ Implementer `OrderErrorHandler` for 404, 409 og 400. Feilmodellen skal være sta
 ## Ikke gjør det for lett
 Ikke returner `Map<String, Any>` overalt, svar 500 på forventede domeneutfall eller legg `try/catch` i hver controller-metode.
 
-## Formål i intervjuet
+## Formål i treningen
 Caset trener oversettelsesgrensen mellom domene/applikasjon og HTTP, med konkrete statuskode- og kontraktvalg som er lette å diskutere.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvorfor bør API-et ha en stabil feilmodell?
 2. Hva skiller 400, 404, 409 og 500?
 3. Hvorfor er `ControllerAdvice` bedre enn lokale `try/catch`?

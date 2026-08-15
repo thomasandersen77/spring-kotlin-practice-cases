@@ -16,7 +16,7 @@ Betaling / oppgjør
 Ulike betalingsmetoder har ulike oppgjørsgebyrer. `SettlementCalculator` skal bruke strategier i stedet for å kjenne alle gebyrreglene direkte.
 
 ## Oppgave
-Bygg en liten strategi-basert løsning for gebyrberegning. Den skal være enkel å utvide med nye betalingsmetoder, men fortsatt lett å lese i et intervju.
+Bygg en liten strategi-basert løsning for gebyrberegning. Den skal være enkel å utvide med nye betalingsmetoder, men fortsatt lett å lese i en trening.
 
 ## TODO / fokusområder
 - TODO: Lag konkrete strategier for relevante betalingsmetoder, inkludert minst kortbetaling som testene starter med.
@@ -31,14 +31,14 @@ Bygg en liten strategi-basert løsning for gebyrberegning. Den skal være enkel 
 - Manglende/ukjent betalingsmetode håndteres bevisst.
 - Money-beregninger bruker `BigDecimal` på en forutsigbar måte.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke hardkod alle gebyrer direkte i `calculateFee`. Poenget er å vise hvordan en strategi-grense kan se ut i liten skala.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvordan legger du til en ny betalingsmetode uten å endre calculatoren?
 2. Strategy Pattern vs. sealed class + `when` — når velger du hva?
 3. Hva skjer ved ukjent betalingsmetode, og hvorfor valgte du det?

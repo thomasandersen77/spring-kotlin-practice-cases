@@ -32,14 +32,14 @@ Fullfør og forbedre løsningen slik at ordre kan opprettes, hentes, bekreftes o
 - Repository-adapteren skjuler Spring Data/JPA fra resten av applikasjonen.
 - Tester dekker minst én positiv flyt og én viktig negativ domeneregel.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke løs alt med annotations i controlleren. Noe inputvalidering hører hjemme i API-laget, men forretningsreglene skal være testbare uten HTTP, JSON eller database.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvorfor er `Order` aggregatroten og ikke `OrderLine`?
 2. Hva er forskjellen på repository-porten og Spring Data-interfacet som implementerer den?
 3. Hvor går transaksjonsgrensen, og hvorfor akkurat der?

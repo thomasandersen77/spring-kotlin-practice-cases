@@ -1,23 +1,23 @@
 # Treningsguide
 
-Hvordan få mest mulig ut av dette repoet før teknisk intervju.
+Hvordan få mest mulig ut av dette repoet før teknisk trening.
 
 ## Treningsprotokoll per økt
 
 1. **Velg case** fra root-README sin progresjon, eller et svakt case fra STATUS.md.
 2. **Lag branch:** `git switch -c case-NN-forsoek-M main`.
-3. **Sett tidsboks** etter casets `## Tid`. Stopp når tiden er ute — intervjuer har også tidsboks.
+3. **Sett tidsboks** etter casets `## Tid`. Stopp når tiden er ute — trening har også tidsboks.
 4. **Les README-en grundig** før du åpner koden. Formuler oppgaven med egne ord, høyt.
 5. **Kjør testene** (`./mvnw test -pl <modul>`) og les hva som er rødt. Røde tester er kontrakten, ikke fienden.
 6. **Skriv kontrakttester først** der caset ber om det (TDD). Navngi tester slik at de dokumenterer regelen.
 7. **Implementer stegvis.** Tenk høyt hele veien: "Nå legger jeg invarianten her fordi ..."
 8. **Refaktorer til slutt** — ikke optimaliser for tidlig.
-9. **Debrief høyt:** svar på casets `## Intervjuspørsmål / debrief` som om intervjueren sitter ved siden av deg. Bruk maks 2 minutter per spørsmål.
+9. **Debrief høyt:** svar på casets `## Treningsspørsmål / debrief` som om coachen sitter ved siden av deg. Bruk maks 2 minutter per spørsmål.
 10. **Score og registrer** i STATUS.md før du går videre.
 
 ## Tenk-høyt-regelen
 
-I intervjuet vurderes resonneringen din like mye som koden. Øv derfor alltid på å si høyt:
+I treningen vurderes resonneringen din like mye som koden. Øv derfor alltid på å si høyt:
 
 - hva du gjør nå og hvorfor
 - hvilke alternativer du vurderer
@@ -49,7 +49,7 @@ Andre og tredje gjennomkjøring av samme case er der læringen sitter. Første g
 
 - Forsøk 1: få det til å virke. Score typisk 5–7.
 - Forsøk 2 (dager/uker senere, fra `main`): fokus på testdekning og idiomatikk. Mål: slå forrige score.
-- Forsøk 3: simulér intervju — tidsboks, tenk høyt, debrief. Mål: 9+.
+- Forsøk 3: simulér trening — tidsboks, tenk høyt, debrief. Mål: 9+.
 
 Sammenlign alltid med `git diff main...HEAD` for å se hva du faktisk endret, og med forrige branch for å se fremgang.
 
@@ -57,7 +57,7 @@ Sammenlign alltid med `git diff main...HEAD` for å se hva du faktisk endret, og
 
 1. **Originaloppgaven på `main` skal alltid kompilere.** Røde tester er OK når de beskriver kontrakten — kompileringsfeil, manglende dependencies og config-feil er ikke OK. Friksjon skal være domenet, ikke verktøyet.
 2. **Ingen ferdige løsninger på `main`.** Løsninger lever på `case-NN-forsoek-M`-branches.
-3. **README-malen er hellig:** Domene, Tid, Hva dette trener, Scenario, Oppgave, TODO / fokusområder, Akseptansekriterier, Formål i intervjuet, Ikke gjør det for lett, Intervjuspørsmål / debrief, Kommandoer. Nye caser følger samme mal.
+3. **README-malen er hellig:** Domene, Tid, Hva dette trener, Scenario, Oppgave, TODO / fokusområder, Akseptansekriterier, Formål i treningen, Ikke gjør det for lett, Treningsspørsmål / debrief, Kommandoer. Nye caser følger samme mal.
 4. **Tester skal beskrive kontrakten** med beskrivende navn. Ingen `test1`, ingen tomme testmetoder uten assertions.
 5. **"Ikke gjør det for lett"-seksjonen skal respekteres.** Den beskriver snarveien som ødelegger læringsutbyttet.
 6. **STATUS.md er sanningen** om fremgangen. Oppdater den etter hvert forsøk, ikke i slutten av uken.

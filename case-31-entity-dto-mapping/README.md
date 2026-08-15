@@ -39,13 +39,13 @@ Implementer mappingen fra entitet til DTO som extension functions, og få testen
 - Mappingen er samlet på ett sted; entitetene har ingen kunnskap om DTO-ene ut over extension-funksjonene.
 - Tomme lister gir tomme resultater — ikke null og ingen exception.
 
-## Formål i intervjuet
-Entitet-til-DTO-mapping er noe av det mest hverdagslige du gjør i Kotlin/Spring — og derfor et takknemlig sted for intervjueren å se om du *tenker* i Kotlin. Gjør du det med extension functions og collections-API, eller med en `MapperUtil`-klasse full av statiske metoder og for-løkker? Kan du forklare hvorfor DTO-en ikke bare er en kopi av entiteten, og hvem som eier reglene for hva som eksponeres?
+## Formål i treningen
+Entitet-til-DTO-mapping er noe av det mest hverdagslige du gjør i Kotlin/Spring — og derfor et takknemlig sted for coachen å se om du *tenker* i Kotlin. Gjør du det med extension functions og collections-API, eller med en `MapperUtil`-klasse full av statiske metoder og for-løkker? Kan du forklare hvorfor DTO-en ikke bare er en kopi av entiteten, og hvem som eier reglene for hva som eksponeres?
 
 ## Ikke gjør det for lett
 Ikke lag én `toDto()` per audience med copy-paste-kode, og ikke løs feltmaskeringen ved å sende hele entiteten ut og filtrere i controlleren. Ikke bruk refleksjon eller et mapping-bibliotek — poenget er språket, ikke rammeverket.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvorfor extension function fremfor en metode på entiteten eller en egen `Mapper`-klasse? Hva er trade-offen?
 2. Når velger du `mapNotNull` fremfor `filter { }.map { }` — og hva skjer med lesbarheten?
 3. Hvor bør regelen "lønn er bare for ledere" ligge: i mapperen, i domenet eller i API-laget?

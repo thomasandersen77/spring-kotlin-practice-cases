@@ -32,13 +32,13 @@ Skriv om Java-aktig Kotlin til idiomatisk Kotlin uten å endre oppførsel. Bruk 
 - Ingen `!!`.
 - Koden er kortere og mer lesbar — ikke bare "smartere".
 
-## Formål i intervjuet
-I live-koding er overgangen Java → Kotlin det intervjueren ser etter. En vanlig felle for erfarne Java-utviklere er å skrive "Java med Kotlin-syntaks": `for`-løkker med mutable lister, null-sjekk-pyramider og manuelle map-oppbygginger. Det som skiller "kan Kotlin" fra "tenker i Kotlin" er hvor naturlig du bruker collections-API-et, null-safety og uttrykksbasert kode.
+## Formål i treningen
+I live-koding er overgangen Java → Kotlin det coachen ser etter. En vanlig felle for erfarne Java-utviklere er å skrive "Java med Kotlin-syntaks": `for`-løkker med mutable lister, null-sjekk-pyramider og manuelle map-oppbygginger. Det som skiller "kan Kotlin" fra "tenker i Kotlin" er hvor naturlig du bruker collections-API-et, null-safety og uttrykksbasert kode.
 
 ## Ikke gjør det for lett
 Ikke skriv om til én kjede av femten operasjoner ingen forstår. Idiomatisk betyr lesbart — ikke maksimalt kompakt.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Når velger du en `for`-løkke fremfor en kjede av collection-operasjoner (ytelse/lesbarhet)?
 2. Hva er forskjellen på `let` og `run`, og når skaper scope functions mer forvirring enn verdi?
 3. Hvorfor er `List` i Kotlin read-only, men ikke immutable — og når betyr forskjellen noe?

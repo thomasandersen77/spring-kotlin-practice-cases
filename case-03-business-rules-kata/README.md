@@ -29,16 +29,16 @@ Utvid regellogikken på en måte som fortsatt er lett å lese, lett å teste og 
 - Subtotal, rabatt og total er tydelige begreper i koden.
 - Nye rabattregler kan legges til uten stor risiko for regressjon.
 - Testene viser både regelkombinasjoner og minst ett avklart feiltilfelle.
-- Løsningen er liten nok til et intervju, men strukturert nok til å diskutere videre.
+- Løsningen er liten nok til en trening, men strukturert nok til å diskutere videre.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke gjør rabattreglene maksimalt generiske med en gang. Vis først en enkel, bevisst struktur som kan vokse.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Når ville du byttet fra `when`-logikk til regel- eller strategi-objekter?
 2. Hvordan dokumenterer du rabatt-stabling og prioritet i tester?
 3. Hvor hører validering av ukjent rabattkode hjemme — domene eller API?
