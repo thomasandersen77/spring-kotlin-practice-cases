@@ -57,7 +57,7 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 29 llm-port-adapter-fallback | Integrasjon | Ikke startet | – | – | – |
 | 30 bank-account-crud-jpa | Full stack / JPA | Ikke startet | – | – | – |
 | 31 entity-dto-mapping | Kotlin / Mapping | Påbegynt | 3.0 | 2026-08-04 | case-31-forsoek-1 |
-| 32 sealed-domain-modelling | Kotlin / DDD | Ikke startet | – | – | – |
+| 32 sealed-domain-modelling | Kotlin / DDD | Påbegynt | 8.2 | 2026-08-07 | case-32-forsoek-1 |
 | 33 collections-aggregation-report | Kotlin | Ikke startet | – | – | – |
 | 34 null-safety-validation | Kotlin | Ikke startet | – | – | – |
 | 35 kotlin-dsl-higher-order-functions | Kotlin | Ikke startet | – | – | – |
@@ -66,8 +66,20 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 38 basic-spring-h2-rest | Full stack / JPA | Ikke startet | – | – | – |
 | 39 wiremock-external-integration | Integrasjon | Ikke startet | – | – | – |
 | 40 security-request-context | Sikkerhet | Ikke startet | – | – | – |
+| 41 unit-testing-mocks-tdd | Testing / TDD | Påbegynt | 8.9 | 2026-08-10 | case-41-forsoek-1 |
+| 42 spring-mvc-validation | API / SOLID | Ikke startet | – | – | – |
+| 43 current-user-argument-resolver | Sikkerhet / Spring MVC | Ikke startet | – | – | – |
+| 44 jwt-claims-authorities | Sikkerhet / JWT | Ikke startet | – | – | – |
+| 45 method-security-authorization | Sikkerhet / Authorization | Ikke startet | – | – | – |
+| 46 spring-security-mockmvc | Testing / Security | Ikke startet | – | – | – |
+| 47 transaction-boundary-jpa | Persistens / Transaksjoner | Ikke startet | – | – | – |
+| 48 controller-advice-errors | API / Feilhåndtering | Ikke startet | – | – | – |
+| 49 http4k-functional-http | Kotlin / http4k | Ikke startet | – | – | – |
+| 50 ktor-rest-api | Kotlin / Ktor | Ikke startet | – | – | – |
+| 51 kotlin-web-framework-comparison | Arkitektur / Web | Ikke startet | – | – | – |
+| 52 spring-boot-integration-test | Testing / Spring Boot | Løst | 8.8 | 2026-08-14 | case-52-forsoek-2 |
 
-**Oppsummert:** 4 løst · 1 påbegynt · 35 ikke startet · 0 mestret
+**Oppsummert:** 5 løst · 3 påbegynt · 44 ikke startet · 0 mestret
 
 ## Forsøkshistorikk
 
@@ -78,6 +90,9 @@ Tips til score: trekk fra for manglende edge-tester, for valg du ikke kan begrun
 | 2026-08-04 | 26 | 1 | case-26-forsoek-1 | 9.2 | Alle seks funksjoner er refaktorert til lesbar, idiomatisk Kotlin. Den siste revisjonen innfører en typesikker `Seniority`-enum, en beregnet `Consultant.seniority`-property og én sentral klassifiserings- og valideringsregel i `Seniority.from()`. Sterk bruk av collections-API, null-safety, expression bodies, `when` og `joinToString`. Trekk fordi refaktoreringen endrer den opprinnelige offentlige kontrakten fra tekstetikett til `Seniority`, den case-insensitive byregelen ikke testes med ulik casing, overgangsgrensene er ufullstendig testet, og det gjenstår små formateringsdetaljer. |
 | 2026-08-04 | 31 | 1 | case-31-forsoek-1 | 3.0 | Påbegynt. `fullName` og `isActiveOn` er korrekt og idiomatisk implementert som extension property/function med expression body; de to tilhørende testene passerer. Hele modulen er rød: 2 av 13 tester passerer, mens 11 feiler fordi TODO 3–6 fortsatt er uløst. Muntlig debrief er ikke vurdert. |
 | 2026-08-07 | 27 | 1 | case-27-forsoek-1 | 7.8 | Løst med parallell profil- og CV-henting, CV-timeout med degradering til tom ferdighetsliste og deterministisk test av structured-concurrency-kansellering. Tre tester og modulens `verify` er grønne. Trekk for manglende test av timeout-kontrakten og mindre kodehygiene; muntlig debrief og tidsbruk er ikke vurdert. |
+| 2026-08-07 | 32 | 1 | case-32-forsoek-1 | 8.2 | Påbegynt. TODO 1–6 er korrekt og idiomatisk implementert med uttømmende `when`, gjenbrukte kanalregler, smart casts og collections-operasjoner. 10 av 11 tester passerer; eneste feil er uløst TODO 7, som ble holdt utenfor delscoren. Muntlig debrief og tidsbruk er ikke vurdert. |
+| 2026-08-10 | 41 | 1 | case-41-forsoek-1 | 8.9 | Påbegynt. TODO 1–4 er løst med separate suiter for Mockito og MockK, AssertJ, stubbing og interaksjonsverifisering. Validering av blank `customerId` og nullbeløpsgrensen testes i begge suiter med riktig exception-type og eksakt melding. Alle 12 testene er verifisert grønne: seks med Mockito og seks med MockK. Commit-historikken dokumenterer at den eksplisitte `eq()`-verifiseringen og kommentarene i nullpoengtesten er et bevisst læringsvalg og gir ikke trekk. Mindre trekk kun i implementert omfang fordi testen med `amountOre = 0` fortsatt heter «negative purchase amount», for bred `any()`-verifisering i MockK-testen for PLUS og redundant verifisering av samme ledger-kall i Mockito-testen for STANDARD. TODO 5–7 er utelatt fra delscoren. Muntlig debrief og tidsbruk er ikke vurdert. |
+| 2026-08-14 | 52 | 2 | case-52-forsoek-2 | 8.8 | Løst. Sterk full-stack-integrasjonstest med `@SpringBootTest`, `@AutoConfigureMockMvc`, MockMvc Kotlin DSL, ObjectMapper og ekte Spring Data-repositories uten mockede beans eller testtransaksjon. Alle tre README-scenarioene er dekket gjennom HTTP-grensen: 201 med sentrale responsefelt og lagret reservasjon/beholdningsreduksjon, 409 uten delvis databaseeffekt og 400 med uendret database. Testene er isolert med eksplisitt rydding og har tydelige, observerbare assertions på både API og persistens. `./mvnw install -pl case-52-spring-boot-integration-test/` er verifisert grønn: 3 tester, 0 feil. Mindre trekk fordi response-id ikke verifiseres, kommentarene gjentar mye av README, og muntlig debrief/tidsbruk ikke er vurdert. |
 
 ## Slik registrerer du et nytt forsøk
 

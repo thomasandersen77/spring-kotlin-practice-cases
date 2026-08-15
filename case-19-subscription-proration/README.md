@@ -31,14 +31,14 @@ Implementer proratering på en måte som tydelig håndterer inkluderende datoer,
 - Negative eller null charges er bevisst håndtert.
 - Dato- og money-regler er lesbare uten å kjenne hele SaaS-domenet.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke bare returner et positivt tall. Proration-caset handler om inkluderende datoer og presisjon.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Er `changeDate` inklusiv eller eksklusiv — og hvordan viser testene valget?
 2. Hvordan håndterer du nedgradering (negativ differanse)?
 3. Hvorfor er en ikke-heltallig dagssats en viktig test?

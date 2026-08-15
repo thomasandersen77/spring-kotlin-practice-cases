@@ -2,9 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>    <parent>
-        <groupId>com.interview</groupId>
-        <artifactId>kotlin-interview-cases</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.training</groupId>
+        <artifactId>kotlin-training-cases</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -22,7 +23,6 @@
             <artifactId>kotlinx-coroutines-core</artifactId>
             <version>1.8.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.jetbrains.kotlinx</groupId>
             <artifactId>kotlinx-coroutines-test</artifactId>
@@ -46,7 +46,6 @@
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
-
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>

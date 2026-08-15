@@ -31,14 +31,14 @@ Modeller `Flight` som eier setereservasjonene sine. Implementer reservasjon og k
 - Eventet er konsekvens av en godkjent handling, ikke bare et returnert DTO.
 - Aggregatgrensen kan forklares.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke returner `SeatReserved` uten å lagre noe. Da viser ikke caset konsistensgrensen som oppgaven trener på.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hva er konsistensgrensen til `Flight`-aggregatet?
 2. Hvorfor er `SeatReserved` et domain event og ikke bare en DTO?
 3. Hvor fanges dobbelbooking — domene, service eller database?

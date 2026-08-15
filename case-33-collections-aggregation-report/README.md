@@ -46,13 +46,13 @@ Implementer aggregeringene med collections-API-et. Ingen `for`-løkker, ingen `v
 - Tom liste gir tomme rapporter, og `null` (ikke `0` eller `NaN`) der et tall ikke finnes.
 - Ingen kjede er så lang at du ikke kan forklare den linje for linje — del opp med navngitte hjelpefunksjoner der det trengs.
 
-## Formål i intervjuet
-Aggregering over lister er den vanligste live-koding-oppgaven som finnes, og den avslører raskt om du kan collections-API-et eller om du faller tilbake på løkker og `HashMap`. Intervjueren ser også etter om du tenker på determinisme (sorteringsrekkefølge), kanttilfeller (tom liste) og presisjon (øre som `Long`).
+## Formål i treningen
+Aggregering over lister er den vanligste live-koding-oppgaven som finnes, og den avslører raskt om du kan collections-API-et eller om du faller tilbake på løkker og `HashMap`. Coachen ser også etter om du tenker på determinisme (sorteringsrekkefølge), kanttilfeller (tom liste) og presisjon (øre som `Long`).
 
 ## Ikke gjør det for lett
 Ikke skriv én uleselig kjede på femten operasjoner per funksjon — del opp med navngitte hjelpefunksjoner eller extension functions. Og ikke jukse deg unna `null`-kontrakten ved å returnere `0` for tom liste; det skjuler informasjon fra den som kaller.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hva er forskjellen på `groupBy` og `groupingBy`, og når betyr den noe i praksis?
 2. Når bytter du til `asSequence()`, og hva koster det i lesbarhet?
 3. `fold` vs. `runningFold` vs. `reduce` — når bruker du hva?
