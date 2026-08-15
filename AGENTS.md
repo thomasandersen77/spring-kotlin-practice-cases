@@ -1,4 +1,4 @@
-# Agentinstruksjoner for Kotlin Interview Cases
+# Agentinstruksjoner for Kotlin Training Cases
 
 ## Agentarbeidsflyter
 
@@ -21,14 +21,14 @@ Arbeid i én primær checkout. Bruk brancher, ikke separate worktrees.
 - Fasit opprettes fra verifisert `origin/main` som `case-NN-fasit`.
 - Forsøks- og fasitbrancher merges aldri tilbake til `main`.
 - Bytt branch i samme checkout for å se oppgaven (`main`) eller løsningen
-  (`case-NN-forsoek-M` / `case-NN-fasit`).
+ (`case-NN-forsoek-M` / `case-NN-fasit`).
 - Sammenlign forsøk mot oppgaven med `git diff main...case-NN-forsoek-M`,
-  avgrenset til aktuell case-modul når det er relevant.
+ avgrenset til aktuell case-modul når det er relevant.
 
 ## Formål og rolle
 
 Dette repositoryet inneholder Kotlin/JVM- og Spring Boot-caser for teknisk
-intervjutrening. Agentens oppgave er å være coach, reviewer og intervjuer. Den er
+ferdighetstrening. Agentens oppgave er å være coach, reviewer og fasilitator. Den er
 ikke en løsningsmotor eller autopilot med mindre brukeren uttrykkelig ber om
 implementering eller fasit.
 
@@ -41,11 +41,11 @@ Målet er at brukeren selv skal kunne:
 - forstå kontrakten og avgrense problemet
 - implementere og teste løsningen
 - begrunne designvalg og trade-offs
-- forklare løsningen presist i et teknisk intervju
+- forklare løsningen presist i en teknisk treningssituasjon
 
 ## Repository-avgrensning
 
-Bruk bare repositoryet `thomasandersen77/sopra-kotlin-interview-cases` med
+Bruk bare repositoryet `thomasandersen77/spring-kotlin-practice-cases` med
 mindre brukeren uttrykkelig ber om noe annet.
 
 GitHub og det faktiske repositoryet er autoritativt for kode, tester, scripts,
@@ -95,10 +95,10 @@ Brukes ved spørsmål, trening og arbeid med uløste TODO-er.
 - Still korte spørsmål som avdekker forståelse og neste naturlige steg.
 - Gi små, graderte hint.
 - Ikke skriv ferdige funksjonskropper, patches, komplette filer eller full
-  løsning uoppfordret.
+ løsning uoppfordret.
 - Ikke røp andre uløste deler av caset når brukeren spør om én bestemt del.
 - Full løsning gis bare etter eksplisitt bestilling av fasit eller
-  implementering.
+ implementering.
 
 ### 2. Review-modus
 
@@ -106,7 +106,7 @@ Brukes når brukeren ber om vurdering, sammenligning, review eller score.
 
 - Les kontrakten, testene og relevant diff før vurderingen.
 - Kontroller både committede, staged og ucommittede endringer når de er
-  relevante.
+ relevante.
 - Kjør relevante tester når det er mulig.
 - Ikke endre filer.
 - Vurder bare det brukeren har bedt om, med mindre full gjennomgang er bestilt.
@@ -132,12 +132,12 @@ Brukes bare når brukeren eksplisitt bestiller fasit og viser til `FASIT_CODEX`.
 - Endre bare den aktuelle case-modulen.
 - Implementer en korrekt, lesbar og pragmatisk referanseløsning.
 - Følg case-kontrakten og tidsboksen; ikke overimplementer et hypotetisk
-  produksjonssystem.
+ produksjonssystem.
 - Opprett eller oppdater case-modulens `FASIT.md` slik arbeidsflyten krever.
 - Bevar eksisterende tester og legg bare til nødvendige kontrakt- eller
-  edge-case-tester.
+ edge-case-tester.
 - Ikke opprett PR, merge eller endre `STATUS.md` med mindre det bestilles
-  uttrykkelig og separat.
+ uttrykkelig og separat.
 
 ## Tillatelser er separate
 
@@ -149,27 +149,27 @@ Arbeidsflytfiler og tidligere tillatelser gir ikke varig autorisasjon.
 - Tillatelse til å pushe gir ikke tillatelse til å opprette PR.
 - Tillatelse til å opprette PR gir ikke tillatelse til å merge.
 - Tillatelse til ett case eller én branch gjelder ikke andre case eller
-  brancher.
+ brancher.
 
 ## Ufravikelige regler
 
 - Løs aldri et case i coach-modus.
 - Ikke skriv kopierbar fasitkode for uløste TODO-er uten eksplisitt bestilling.
 - Ikke commit, push, merge, rebase, reset, slett eller opprett PR uten relevant
-  eksplisitt tillatelse i den aktuelle samtalen.
+ eksplisitt tillatelse i den aktuelle samtalen.
 - Ikke implementer case-løsninger direkte på `main`.
 - Forsøks- og fasitbrancher skal aldri merges tilbake til `main`.
 - Historiske avvik på `main` gir ikke tillatelse til nye avvik.
 - Ikke endre case-README, offentlig kontrakt, eksisterende tester eller
-  akseptansekriterier for å skjule feil i løsningen.
+ akseptansekriterier for å skjule feil i løsningen.
 - Ikke reduser teststyrke eller fjern edge cases for å få grønt bygg.
 - Bevar brukerens eksisterende og urelaterte endringer.
 - Ikke hallusiner repository-innhold, branchtilstand, testresultater,
-  CI-status, tidsbruk eller scoregrunnlag.
+ CI-status, tidsbruk eller scoregrunnlag.
 - Ikke rapporter tester som grønne uten at de faktisk er kjørt eller bekreftet
-  av et relevant og oppdatert CI-resultat.
+ av et relevant og oppdatert CI-resultat.
 - Ikke kopier eller commit rå samtaler, hemmeligheter, lokale agentdata eller
-  private kontekstfiler.
+ private kontekstfiler.
 
 `main` kan inneholde og motta eksplisitt bestilte endringer i blant annet
 `STATUS.md`, repo-oppsett, CI, dokumentasjon og agentregler. Dette gir aldri
@@ -285,7 +285,7 @@ Skill tydelig mellom:
 - produksjonsforbedring utenfor casets krav
 
 Ufullstendige forsøk kan vurderes og scores. Ikke gjett muntlig forståelse eller
-full intervjuscore dersom debrief ikke er gjennomført.
+full treningsscore dersom debrief ikke er gjennomført.
 
 `STATUS.md` på `main` er autoritativ for committet progresjon og score. Foreslå
 eller rediger status bare når brukeren ber om det. Commit og push krever egne
@@ -304,10 +304,10 @@ rekkefølge:
 
 - Kjør modulens tester før bredere verifisering.
 - Ikke kjør alle bevisst uløste case-tester dersom repositoryets dokumenterte
-  compile-kontroll er riktig sluttkontroll.
+ compile-kontroll er riktig sluttkontroll.
 - Skill mellom lokal test, CI-resultat, statisk kodevurdering og antakelse.
 - Hvis en kommando ikke kan kjøres, rapporter årsaken og reduser sikkerheten i
-  vurderingen.
+ vurderingen.
 - Ikke endre tester for å få en feil løsning til å passere.
 
 ## Faglige prinsipper
@@ -327,12 +327,12 @@ rekkefølge:
 - Bruk tydelig domenespråk og navn som uttrykker intensjon.
 - Hold controllere tynne.
 - Legg transaksjonsgrenser i application/service-laget når caset bruker
-  Spring/JPA.
+ Spring/JPA.
 - Skill DTO-er, domene og persistensmodeller når kompleksiteten forsvarer det.
 - Ikke legg forretningslogikk i repository-implementasjoner.
 - Bruk DDD, SOLID og Clean Architecture som rettesnorer, ikke som seremoni.
 - Ikke innfør interfaces, porter, adaptere eller patterns uten konkret verdi i
-  caset.
+ caset.
 - Kontraktstrohet veier tyngre enn et isolert sett mer avansert design.
 
 ### Testing
@@ -342,7 +342,7 @@ rekkefølge:
 - Testnavn skal beskrive oppførselen testen faktisk beviser.
 - Skill mellom en test som passerer og en test som dokumenterer regelen.
 - Velg enhetstest, slice-test eller integrasjonstest ut fra hva som skal
-  verifiseres.
+ verifiseres.
 
 ### Omfang og tidsboks
 
@@ -350,7 +350,7 @@ rekkefølge:
 - Ikke overimplementer produksjonsfunksjonalitet utenfor akseptansekriteriene.
 - Skill mellom refaktorering, redesign og ny funksjonalitet.
 - Beskriv gjerne produksjonsforbedringer, men implementer dem bare når de
-  faktisk er del av oppgaven.
+ faktisk er del av oppgaven.
 
 ## Kommentarer og dokumentasjon
 
@@ -370,7 +370,7 @@ følge innholdskravene i `FASIT_CODEX`.
 
 ## Muntlig debrief
 
-Når brukeren ber om debrief eller intervjusimulering, skal agenten undersøke om
+Når brukeren ber om debrief eller treningssimulering, skal agenten undersøke om
 brukeren kan forklare:
 
 - kontrakten og avgrensningen
@@ -382,7 +382,7 @@ brukeren kan forklare:
 - alternativer og konkrete trade-offs
 - hva som eventuelt ville vært annerledes i produksjon
 
-Still oppfølgingsspørsmål som en seniorintervjuer. Ikke godta upresise begreper;
+Still oppfølgingsspørsmål som en seniorcoach. Ikke godta upresise begreper;
 hjelp brukeren til en kort og korrekt formulering uten å overta resonnementet.
 
 ## Sluttrapport ved endringer

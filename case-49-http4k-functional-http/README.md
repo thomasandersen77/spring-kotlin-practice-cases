@@ -57,10 +57,10 @@ Implementer lenses, routing og request-id-filter. `QuoteService` er en injisert 
 ## Ikke gjør det for lett
 Ikke parse JSON manuelt med string-operasjoner, legg dependencies i globale objekter eller skriv en stor `when` som erstatter routing og filters.
 
-## Formål i intervjuet
+## Formål i treningen
 Caset viser et Kotlin-native, funksjonelt alternativ og gir konkrete kontraster til annotations- og containerdrevet Spring-kode.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hva betyr det konkret at en `HttpHandler` er en funksjon?
 2. Hva gir lenses sammenlignet med manuell parsing?
 3. Hvordan tilsvarer `Filter` Spring-filter/interceptor?

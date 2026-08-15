@@ -27,10 +27,10 @@ Implementer reglene som `when`-uttrykk over de sealed hierarkiene, og få testen
 ## TODO / fokusområder
 - TODO 1: `Channel.label` som extension property: `Email` → `"e-post"`, `Sms` → `"SMS"`, `InApp` → `"app"`.
 - TODO 2: `NotificationPolicy.channelsFor(notification, recipient)` — rekkefølgen i listen er en del av kontrakten:
-  - `PasswordReset` → `[Email]` hvis e-post finnes, ellers tom liste (ingen `InApp`)
-  - `PaymentFailed` → `[Sms, Email, InApp]` av det mottakeren faktisk har; `InApp` alltid
-  - `OrderShipped` → `[Email, InApp]`; `Email` bare hvis den finnes; aldri SMS
-  - `MarketingCampaign` → `[Email]` bare med både samtykke og e-post, ellers tom liste
+ - `PasswordReset` → `[Email]` hvis e-post finnes, ellers tom liste (ingen `InApp`)
+ - `PaymentFailed` → `[Sms, Email, InApp]` av det mottakeren faktisk har; `InApp` alltid
+ - `OrderShipped` → `[Email, InApp]`; `Email` bare hvis den finnes; aldri SMS
+ - `MarketingCampaign` → `[Email]` bare med både samtykke og e-post, ellers tom liste
 - TODO 3: `priorityOf(notification)` — `PasswordReset`/`PaymentFailed` → `HIGH`, `OrderShipped` → `NORMAL`, `MarketingCampaign` → `LOW`.
 - TODO 4: `rejectionReasonFor(notification, recipient)` — `null` når minst én kanal finnes, `MARKETING_CONSENT_MISSING` ved manglende samtykke, ellers `MISSING_CONTACT_INFO`. Ikke dupliser kanalreglene.
 - TODO 5: `describe(result)` — uttømmende `when` over `DeliveryResult` med smart casts og string templates.
@@ -45,13 +45,13 @@ Implementer reglene som `when`-uttrykk over de sealed hierarkiene, og få testen
 - Ingen `IllegalStateException("ukjent type")`-fallback noe sted.
 - Kanalreglene finnes på ett sted; `rejectionReasonFor` gjenbruker dem i stedet for å kopiere dem.
 
-## Formål i intervjuet
+## Formål i treningen
 "Når bruker du sealed class fremfor enum?" er et av de vanligste Kotlin-spørsmålene for seniorutviklere. Poenget er ikke definisjonen, men hva du får: lukket variantsett, data per variant, og en kompilator som finner alle stedene du må oppdatere når domenet vokser. Dette caset lar deg vise det i praksis — og forklare hvorfor `else` i et `when` over et sealed hierarki ofte er en fremtidig bug.
 
 ## Ikke gjør det for lett
 Ikke gjør hierarkiet flatt ved å legge alt i én `data class` med en `type`-enum og nullable felter. Ikke legg inn `else -> throw` for å slippe unna kompilatoren, og ikke gjør `channelsFor` til en `if`-kjede over `is`-sjekker når `when` er riktig verktøy.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. `sealed class` vs. `sealed interface` vs. `enum class` — når velger du hva?
 2. Hva er den konkrete gevinsten ved at `when` er uttømmende, og hva mister du med `else`?
 3. Hvorfor `data object` i stedet for `object` eller `data class` uten felter?

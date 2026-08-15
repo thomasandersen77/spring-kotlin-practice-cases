@@ -31,13 +31,13 @@ Alle sentrale funksjoner er markert med nummererte `TODO()`-er. Produksjonskoden
 ## Arkitektur og flyt
 ```
 web-adapter → application → domain
-                       ↓
-                 repository-port
-                       ↑
-              persistence-adapter
+ ↓
+ repository-port
+ ↑
+ persistence-adapter
 ```
 
-Pakkestruktur under `com.interview.case36.bank`:
+Pakkestruktur under `com.training.case36.bank`:
 - `domain` - `AccountId`, `Money`, `AccountStatus`, `BankAccount`, `TransferId`, `BankTransfer`, domeneunntak. Ingen avhengighet til Spring, JPA, Jackson eller web-DTO-er.
 - `application` + `application.port` - `BankingService` (use cases) og portene `AccountRepository`/`TransferRepository`.
 - `adapter.persistence` - JPA-entiteter, Spring Data-grensesnitt, adaptere som implementerer portene, og mapping domene ↔ JPA.
@@ -64,7 +64,7 @@ Løs TODO-ene i den nummererte rekkefølgen under. Rekkefølgen er ikke tilfeldi
 12. **Intern overføring og atomisk transaksjonsgrense** (`BankingService.transfer`) - casets viktigste use case. Skriv ned *hvor* transaksjonsgrensen ligger og *hvorfor*, før du implementerer.
 13. **Tynn REST-controller** (`adapter/web/BankingController.kt`) - koble endepunktene til riktig use case og mapping.
 14. **Exception mapping i `@RestControllerAdvice`** (`adapter/web/BankingExceptionHandler.kt`) - map `BankingException.code` til riktig HTTP-status.
-15. **Kort debrief om DDD, SOLID og transaksjoner** - se `## DDD og SOLID i caset` og `## Intervjuspørsmål / debrief` under. Dette er ikke kode, men en muntlig/skriftlig oppsummering du bør kunne gi etter at du er ferdig.
+15. **Kort debrief om DDD, SOLID og transaksjoner** - se `## DDD og SOLID i caset` og `## Treningsspørsmål / debrief` under. Dette er ikke kode, men en muntlig/skriftlig oppsummering du bør kunne gi etter at du er ferdig.
 
 ## Akseptansekriterier
 - Alle domene-, JPA-, service- og webtester er grønne på løsningsbranchen.
@@ -118,8 +118,8 @@ To klassiske Spring-fallgruver som IKKE fungerer:
 
 **Utfordre deg selv:** Er to repository-porter faktisk verdt det i et så lite case? Ville det vært et pragmatisk nok valg å la `BankingService` bruke `AccountJpaRepository`/`TransferJpaRepository` (Spring Data) direkte, uten port og adapter? Det finnes ikke ett fasitsvar - men du bør kunne begrunne hvilken side du lander på, og hva som ville fått deg til å endre mening (flere persistensteknologier? behov for å teste servicen uten Spring i det hele tatt? et team som stadig bytter database?).
 
-## Formål i intervjuet
-Dette er det mest komplette caset i repoet ved siden av case 30: det trener hele stacken fra HTTP til database, med et use case (intern overføring) som tvinger frem et ekte spørsmål om transaksjonsgrenser og atomisitet - noe som er svært vanlig i backend-intervjuer for erfarne utviklere. Kan du forklare *hvorfor* `@Transactional` ligger der den ligger, *hva* som faktisk beskytter mot en halvferdig overføring, og *hvordan* du beviser det med en test - uten at testen selv jukser ved å være `@Transactional` - er det et sterkt signal.
+## Formål i treningen
+Dette er det mest komplette caset i repoet ved siden av case 30: det trener hele stacken fra HTTP til database, med et use case (intern overføring) som tvinger frem et ekte spørsmål om transaksjonsgrenser og atomisitet - noe som er svært vanlig i backend-treninger for erfarne utviklere. Kan du forklare *hvorfor* `@Transactional` ligger der den ligger, *hva* som faktisk beskytter mot en halvferdig overføring, og *hvordan* du beviser det med en test - uten at testen selv jukser ved å være `@Transactional` - er det et sterkt signal.
 
 ## Ikke gjør det for lett
 - Ikke flytt reglene til controlleren for å få testene grønne.
@@ -132,7 +132,7 @@ Dette er det mest komplette caset i repoet ved siden av case 30: det trener hele
 - Ikke bruk mocks i fullstack-/webtestene - de skal gå gjennom ekte Spring, ekte JPA og ekte H2.
 - Ikke implementer idempotens, pessimistisk låsing eller distribuert saga i første forsøk - det er bevisst utenfor scope her.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvorfor ligger `@Transactional` på applikasjonsservicen og ikke controlleren eller repository-adapteren?
 2. Hva skjer dersom mottakeren ikke finnes etter at avsenderen allerede er lest eller endret?
 3. Hvordan beviser testen at rollback faktisk skjedde i databasen - og ikke bare i et in-memory-objekt?
@@ -160,7 +160,7 @@ Dette er det mest komplette caset i repoet ved siden av case 30: det trener hele
 5. Løs TODO 9-12 (use cases i `BankingService`) og få `BankingServiceTransactionIntegrationTest` grønn - dette er kjernen i caset. Bruk ekstra tid på TODO 12.
 6. Løs TODO 7-8, 13-14 (web-mapping, controller, exception handler) og få `BankingControllerIntegrationTest` grønn.
 7. Se på `HibernateSchemaLifecycleIntegrationTest` og forklar høyt hva den demonstrerer.
-8. Avslutt med TODO 15: gå gjennom `## DDD og SOLID i caset` og `## Intervjuspørsmål / debrief` og svar høyt, som om intervjueren satt ved siden av deg.
+8. Avslutt med TODO 15: gå gjennom `## DDD og SOLID i caset` og `## Treningsspørsmål / debrief` og svar høyt, som om coachen satt ved siden av deg.
 
 ## Kommandoer
 

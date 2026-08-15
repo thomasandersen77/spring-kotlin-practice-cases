@@ -55,10 +55,10 @@ Implementer resolveren som injiserer `AuthenticatedUser` i parametre merket med 
 ## Ikke gjør det for lett
 Ikke les `SecurityContextHolder` direkte i domenet, injiser `Jwt` i alle controller-metoder eller bruk en global singleton for current user.
 
-## Formål i intervjuet
+## Formål i treningen
 Caset svarer konkret på spørsmålet «hvordan får jeg nåværende bruker elegant inn i controlleren?» og gir et godt utgangspunkt for å diskutere rammeverksgrenser.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvorfor er argument resolver bedre enn gjentatt mapping i hver controller?
 2. Hva er forskjellen på principal, JWT og intern current-user-modell?
 3. Hvor bør ugyldige claims oversettes til HTTP-feil?

@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.interview</groupId>
-    <artifactId>kotlin-interview-cases</artifactId>
+    <groupId>com.training</groupId>
+    <artifactId>kotlin-training-cases</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Kotlin/Spring Boot Interview Cases (Aggregator)</name>
+    <name>Kotlin/Spring Boot Training Cases (Aggregator)</name>
 
     <properties>
         <java.version>21</java.version>
@@ -40,9 +40,9 @@
     <build>
         <plugins>
             <!--
-              Kotlin 1.9.25 klarer ikke lese Java-versjoner nyere enn 21 og feiler med
-              "java.lang.IllegalArgumentException: 25". Enforcer gir en lesbar feilmelding
-              i stedet, slik at man raskt ser at man må bytte til JDK 21.
+                Kotlin 1.9.25 klarer ikke lese Java-versjoner nyere enn 21 og feiler med
+                "java.lang.IllegalArgumentException: 25". Enforcer gir en lesbar feilmelding
+                i stedet, slik at man raskt ser at man må bytte til JDK 21.
             -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

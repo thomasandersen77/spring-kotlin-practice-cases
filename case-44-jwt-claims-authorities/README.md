@@ -56,10 +56,10 @@ Implementer `JwtAuthorityMapper`, koble den til resource-server-konfigurasjonen 
 ## Ikke gjør det for lett
 Ikke legg inn ferdige authorities direkte i produksjonskoden, bruk `permitAll`, skriv egen JWT-parser eller bland roller og scopes uten eksplisitt navnekonvensjon.
 
-## Formål i intervjuet
+## Formål i treningen
 Caset lar deg forklare hele kjeden fra IdP-claim til autorisasjonsbeslutning uten å drukne i OAuth-provider-oppsett.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hva er forskjellen på authentication og authorization?
 2. Når returnerer API-et 401, og når 403?
 3. Hvorfor bruker Spring prefiksene `SCOPE_` og `ROLE_`?

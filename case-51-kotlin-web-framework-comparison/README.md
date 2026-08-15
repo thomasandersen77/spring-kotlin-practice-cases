@@ -58,10 +58,10 @@ Fullfør sammenligningsmatrisen og `recommend`. Hver anbefaling skal inneholde p
 ## Ikke gjør det for lett
 Ikke velg Spring fordi «alle bruker det», Ktor fordi «det er Kotlin» eller http4k fordi «funksjonelt er renere». Ikke lag tre komplette adaptere; dette er et beslutnings- og debrief-case.
 
-## Formål i intervjuet
+## Formål i treningen
 Caset trener seniorferdigheten å velge et tilstrekkelig verktøy for konteksten og forklare valget presist uten rammeverkslojalitet.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Når er Spring Boot det mest pragmatiske valget?
 2. Hva vinner og taper du med http4ks eksplisitte funksjonskomposisjon?
 3. Når betyr Ktors coroutine-first-modell noe i praksis?

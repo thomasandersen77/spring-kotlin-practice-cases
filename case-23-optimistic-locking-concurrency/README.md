@@ -31,13 +31,13 @@ Implementer et lite reserve-use-case med versjonskontroll. Skill domenevaliderin
 - Domeneregel for ugyldig quantity håndteres tydelig.
 - Koden kan forklares med aggregate + application service + port.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er å vise at du kan modellere konsistens under samtidighet uten å overdesigne infrastrukturen. Du skal kunne forklare hvilke feil som er domenefeil, hvilke som er konkurransefeil, og hvordan resultatene bør eksponeres oppover i lagene.
 
 ## Ikke gjør det for lett
 Ikke “løs” konflikten ved å hente og overskrive på nytt uten diskusjon. Caset handler om bevisst konfliktstrategi.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Når er optimistic locking bedre enn pessimistic locking i dette domenet?
 2. Hva er forskjellen på domenefeil (`REJECTED`) og konkurransefeil (`CONFLICT`)?
 3. Hvorfor har repository-porten `expectedVersion` i save-kallet?

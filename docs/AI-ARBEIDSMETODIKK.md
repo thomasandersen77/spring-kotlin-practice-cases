@@ -1,8 +1,8 @@
-# AI-arbeidsmetodikk for Kotlin-intervjutrening
+# AI-arbeidsmetodikk for Kotlin-ferdighetstrening
 
 Dette dokumentet beskriver anbefalt bruk av AI-verktøy i repositoryet
-`sopra-kotlin-interview-cases`. Målet er maksimal egen læring og
-intervjuberedskap i Kotlin, Spring Boot og Java under tidspress — ikke
+`spring-kotlin-practice-cases`. Målet er maksimal egen læring og
+treningsberedskap i Kotlin, Spring Boot og Java under tidspress — ikke
 maksimal AI-automasjon.
 
 Dokumentet er personlig metodikk. Ved motstrid gjelder `AGENTS.md` og nærmeste
@@ -11,23 +11,23 @@ case-kontrakt foran denne filen.
 ## 1. Grunnprinsipp
 
 ```text
-                    THOMAS
-                       │
-                 IntelliJ IDEA
-                       │
-             skriver og løser selv
-                       │
-          ┌────────────┴────────────┐
-          │                         │
- ChatGPT + GitHub                 Warp
- coach / review / score     lokal Git/test/diff
- debrief / intervju         worktree/kontroll
-          │
-          │ eksplisitt behov for
-          │ agentisk utførelse/fasit
-          ▼
-        Codex
-   separat worktree
+ THOMAS
+ │
+ IntelliJ IDEA
+ │
+ skriver og løser selv
+ │
+ ┌────────────┴────────────┐
+ │ │
+ ChatGPT + GitHub Warp
+ coach / review / score lokal Git/test/diff
+ debrief / trening worktree/kontroll
+ │
+ │ eksplisitt behov for
+ │ agentisk utførelse/fasit
+ ▼
+ Codex
+ separat worktree
 
 Claude Code = reserve
 JetBrains AI = selektiv inline-hjelp
@@ -35,11 +35,11 @@ JetBrains AI = selektiv inline-hjelp
 
 Kort sagt:
 
-> **Thomas tenker og skriver i IntelliJ.  
-> ChatGPT + GitHub er faglig coach/reviewer.  
-> Warp er lokal sannhetskontroll.  
-> Codex er den normale agentiske utføreren ved eksplisitt bestilling.  
-> Claude Code er reserve.  
+> **Thomas tenker og skriver i IntelliJ. 
+> ChatGPT + GitHub er faglig coach/reviewer. 
+> Warp er lokal sannhetskontroll. 
+> Codex er den normale agentiske utføreren ved eksplisitt bestilling. 
+> Claude Code er reserve. 
 > JetBrains AI er selektiv inline-hjelp.**
 
 Du trener på å:
@@ -47,20 +47,20 @@ Du trener på å:
 - forstå kontrakten og avgrense problemet
 - implementere og teste selv
 - begrunne designvalg og trade-offs
-- forklare løsningen presist i et teknisk intervju
+- forklare løsningen presist i en teknisk treningssituasjon
 
 AI skal støtte denne loopen, ikke erstatte den.
 
 ### 1.1 Trening vs produksjonsarbeid
 
-Optimal bruk av AI i produksjon og optimal bruk av AI i intervjutrening er to
+Optimal bruk av AI i produksjon og optimal bruk av AI i ferdighetstrening er to
 forskjellige problemer.
 
 **I ekte kunde-/produksjonsarbeid** kan AI brukes aggressivt når det øker
 kvalitet, sparer tid, reduserer feil, forbedrer dokumentasjon eller
 effektiviserer analyse.
 
-**I intervjutreningen** brukes AI mer restriktivt fordi målet er:
+**I ferdighetstreningen** brukes AI mer restriktivt fordi målet er:
 
 - egen problemløsning
 - Kotlin-/Java-/Spring-retrieval
@@ -68,14 +68,14 @@ effektiviserer analyse.
 - designresonnement
 - muntlig forklaring
 
-Dette dokumentet gjelder **intervjutreningen**.
+Dette dokumentet gjelder **ferdighetstreningen**.
 
 ## 2. Verktøykart
 
 | Verktøy | Primær rolle | Brukes til | Brukes ikke til |
 |---|---|---|---|
 | **Thomas + IntelliJ** | Implementasjon og problemløsning | Forstå kontrakt, skrive case-kode, feilsøke, refaktorere, forklare | Å overlate hele caset til AI |
-| **ChatGPT + GitHub** | Coach, review, score, debrief | Hint, vurdering, scoring, intervjusimulering, kontinuitet mellom økter | Lokal git-sannhet for upush-ede endringer; uoppfordret fasit |
+| **ChatGPT + GitHub** | Coach, review, score, debrief | Hint, vurdering, scoring, treningssimulering, kontinuitet mellom økter | Lokal git-sannhet for upush-ede endringer; uoppfordret fasit |
 | **Warp** | Lokal kontrollør og terminalpartner | `git status`, branch/worktree, lokal diff, tester, faktiske testfeil, Git-sikkerhet | Primær scorer; uoppfordret fasit; erstatning for egen koding |
 | **Codex** | Normal agentisk utfører ved bestilling | `FASIT_CODEX`, `case-NN-fasit`, flerfilsjobber, docs, eksplisitte GitHub-leveranser | Første forsøk på uløste TODO-er; små syntaxproblemer; «treningsløsning» |
 | **JetBrains AI** | Selektiv inline editorhjelp | Autocomplete, imports, API-hint, rename/extract, syntax, små forklaringer | Full funksjonsgenerering, hele testklasser, TODO-løsning, multi-file-agent |
@@ -96,7 +96,7 @@ Primær arena for implementasjon. Thomas skal selv:
 
 #### ChatGPT + GitHub
 
-Primær **coach, reviewer, scorer og intervjuer** for prosjektet.
+Primær **coach, reviewer, scorer og fasilitator** for prosjektet.
 
 Begrunnelse:
 
@@ -134,7 +134,7 @@ Warp kan fortsatt brukes som coach/debrief-verktøy, men det er **sekundært**.
 
 Prinsipp:
 
-> ChatGPT = faglig coach/reviewer  
+> ChatGPT = faglig coach/reviewer 
 > Warp = lokal sannhetskontroll
 
 #### Codex
@@ -193,7 +193,7 @@ Unngå:
 - løsning av TODO-er
 - agentiske multi-file-endringer
 
-**Under realistisk intervjusimulering** skal AI-hjelp kunne slås helt av:
+**Under realistisk treningssimulering** skal AI-hjelp kunne slås helt av:
 
 - JetBrains AI av
 - ChatGPT av
@@ -208,16 +208,16 @@ Tillatt da:
 - compiler
 - tester
 - debugger
-- eventuell dokumentasjon dersom intervjuformatet tillater det
+- eventuell dokumentasjon dersom treningsformatet tillater det
 
 Poenget er å teste egen retrieval og problemløsning.
 
 ### 2.2 Warp-app vs Warp Agent CLI
 
 - **Warp-appen** er den fulle GUI-terminalen med innebygd agent. Dette er
-  primærflaten for lokal kontroll.
+ primærflaten for lokal kontroll.
 - **Warp Agent CLI** er et lett CLI for agentsamtaler uten appen. Gir liten
-  merverdi når Warp allerede er favorittterminalen.
+ merverdi når Warp allerede er favorittterminalen.
 
 ## 3. Én primær scorer — ingen score-shopping
 
@@ -363,7 +363,7 @@ Maks **2–3 AI-avbrudd**.
 - Foretrekk ChatGPT for faglige hint
 - Bruk Warp hvis spørsmålet egentlig er lokal tilstand, testfeil eller git
 - JetBrains AI-autocomplete teller ikke som eget «avbrudd», men full
-  funksjonsgenerering gjør det — og skal unngås
+ funksjonsgenerering gjør det — og skal unngås
 
 ### Først etter tidsboksen
 
@@ -375,7 +375,7 @@ Tillat:
 - eventuell fasit
 
 Målet er ikke å gjøre utvikling kunstig vanskelig, men å bygge evnen til å
-løse problemer uten agentisk støtte i intervjuet.
+løse problemer uten agentisk støtte i treningen.
 
 ## 7. Anbefalt øktmal (1–2 timer)
 
@@ -437,7 +437,7 @@ Ikke endre filer.
 Én primær score — ikke score-shopping.
 ```
 
-### Steg 5 — Debrief (10–15 min) · ChatGPT som seniorintervjuer
+### Steg 5 — Debrief (10–15 min) · ChatGPT som seniorcoach
 
 Øv på å forklare uten å lese opp kode:
 
@@ -449,7 +449,7 @@ Ikke endre filer.
 - trade-offs og hva som ville vært annerledes i produksjon
 
 Warp kan brukes sekundært til lokal debrief hvis GitHub-tilstand ikke er
-oppdatert, men ChatGPT er primær intervjuer.
+oppdatert, men ChatGPT er primær coach.
 
 ### Steg 6 — Fasit (sjeldent) · Codex
 
@@ -460,7 +460,7 @@ Bare når du eksplisitt vil ha referanseløsning:
 - branch `case-NN-fasit` fra verifisert `origin/main`
 - ikke merge til `main`
 - etterpå: sammenlign forsøk vs fasit (`SAMMENLIGN`), gjerne med ChatGPT på
-  push-et underlag og Warp på lokal diff
+ push-et underlag og Warp på lokal diff
 
 Claude Code bare hvis du bevisst vil ha en alternativ implementasjon/reserve.
 
@@ -475,7 +475,7 @@ Claude Code bare hvis du bevisst vil ha en alternativ implementasjon/reserve.
 | Kjøre tester / tolke lokale feil | Thomas + Warp | — | Rapporter faktiske resultat |
 | Git / worktree / branch-kontroll | Warp (`KONTROLL_WARP`) | Thomas | Eksplisitt tillatelse før endring |
 | Review og score | ChatGPT + GitHub | Warp-evidens | Én primær scorer |
-| Muntlig debrief | ChatGPT | Warp sekundært | Intervjusimulering |
+| Muntlig debrief | ChatGPT | Warp sekundært | Treningssimulering |
 | Full fasit | Codex (`FASIT_CODEX`) | Claude Code reserve | Etter eksplisitt bestilling |
 | PR / GitHub-leveranse | Codex (eller manuell `gh`) | — | Egne tillatelser |
 | Oppdatere `STATUS.md` | Thomas, evt. agent på bestilling | — | Commit/push er separate steg |
@@ -487,17 +487,17 @@ Claude Code bare hvis du bevisst vil ha en alternativ implementasjon/reserve.
 | 4–5 økter | Nytt forsøk eller forbedring i coach-modus | Thomas + IntelliJ; begrenset JetBrains AI; ChatGPT-hint; Warp for lokal kontroll |
 | 1 økt | Review, score, debrief | ChatGPT + GitHub; Warp-evidens ved behov |
 | 0–1 økt | Fasit + sammenligning | Codex; deretter ChatGPT/Warp for sammenligning |
-| Periodisk | Realistisk intervjusimulering uten AI | Bare IntelliJ + terminal/tester/debugger |
+| Periodisk | Realistisk treningssimulering uten AI | Bare IntelliJ + terminal/tester/debugger |
 | Løpende | STATUS og progresjon | Manuelt eller bestilt oppdatering |
 
 ### Prioritering ut fra progresjon
 
 - **Høy score, påbegynt:** bruk AI til å presse forklaring og edge cases, ikke
-  til å kosmetisk jage poeng eller shoppe ny score.
+ til å kosmetisk jage poeng eller shoppe ny score.
 - **Lav score / tidlig forsøk:** mer egen implementasjon + coach-hint; fasit
-  først etter nytt reelt forsøk.
+ først etter nytt reelt forsøk.
 - **Ikke startet:** start med egen kontraktavgrensning i IntelliJ; ChatGPT bare
-  etter første eget forsøk på å formulere problemet.
+ etter første eget forsøk på å formulere problemet.
 
 ## 10. Prompter du kan gjenbruke
 
@@ -535,8 +535,8 @@ Ikke endre filer.
 ### 10.4 Debrief (ChatGPT)
 
 ```text
-Intervju-debrief for case <NN>.
-Still oppfølgingsspørsmål som en seniorintervjuer.
+Trenings-debrief for case <NN>.
+Still oppfølgingsspørsmål som en seniorcoach.
 Ikke godta upresise begreper.
 Hjelp meg å formulere korte, korrekte svar uten å overta resonnementet.
 ```
@@ -619,6 +619,6 @@ Warp er svakest brukt som:
 
 ---
 
-*Personlig metodikk for intervjutrening. Ikke fasit for repoets offisielle
+*Personlig metodikk for ferdighetstrening. Ikke fasit for repoets offisielle
 regler. Ved motstrid gjelder `AGENTS.md` og nærmeste case-kontrakt foran denne
 filen.*
