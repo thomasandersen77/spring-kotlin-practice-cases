@@ -31,14 +31,14 @@ Skriv tester som beskriver ønsket oppførsel før du endrer implementasjonen. R
 - Helg og fravær behandles konsekvent.
 - Refaktoreringen gjør koden lettere å lese, ikke bare kortere.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke endre forventede tall tilfeldig til testene passer. Start med å formulere kontrakten, og gjør deretter koden konsistent med den.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvilken semantikk valgte du for `to` – inklusiv eller eksklusiv – og hvorfor?
 2. Hva er forskjellen mellom datokontrakten og implementasjonsdetaljene som realiserer den?
 3. Hva skal skje når `from > to` – exception, `0` eller et eksplisitt resultat – og hvorfor?

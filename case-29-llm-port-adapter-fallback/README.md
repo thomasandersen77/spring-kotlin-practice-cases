@@ -35,13 +35,13 @@ Integrer en upålitelig LLM-leverandør bak en ren domeneport: fallback fra prim
 - Ugyldig score fra LLM stoppes ved konstruksjon av `Score`.
 - Du kan tegne opp lagdelingen (domene → port → adapter) og forklare hva som byttes ut når leverandøren endres fra Gemini til OpenAI.
 
-## Formål i intervjuet
-Intervjuere elsker å bore i det kandidaten fremhever selv: "Du sier du bygde LLM-integrasjon med Clean Architecture — vis meg hvordan du holder OpenAI/Gemini-detaljene ute av domenet." Poenget her er ikke AI — det er arkitektur: ports & adapters, feilhåndtering som domenebeslutning, og at alt kan testes med fakes uten API-nøkler. Klarer du å forklare hvorfor `LlmClient`-porten ikke vet noe om HTTP eller modellnavn, viser du nøyaktig den lagdelingsforståelsen som ettersøkes.
+## Formål i treningen
+Dette er et godt case for å trene på å forklare arkitekturvalg høyt: "Jeg bygde LLM-integrasjon med Clean Architecture — slik holder jeg OpenAI/Gemini-detaljene ute av domenet." Poenget her er ikke AI — det er arkitektur: ports & adapters, feilhåndtering som domenebeslutning, og at alt kan testes med fakes uten API-nøkler. Klarer du å forklare hvorfor `LlmClient`-porten ikke vet noe om HTTP eller modellnavn, viser du nettopp den lagdelingsforståelsen treningen sikter mot.
 
 ## Ikke gjør det for lett
 Ikke fang alle exceptions og prøv fallback uansett. Forskjellen på kapasitetsfeil (503) og vår egen parsefeil er selve poenget i caset.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvorfor er dette en port/adapter og ikke bare "et interface"? Hva er forskjellen på ACL (case-21) og en port?
 2. Hvor ville du lagt inn circuit breaker, og hvorfor er det en adapter-/infrastrukturbekymring?
 3. Hvordan holder du LLM-svar deterministiske nok til å teste (temperatur, structured output, validering)?

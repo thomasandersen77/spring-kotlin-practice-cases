@@ -31,14 +31,14 @@ Implementer use case-et slik at terskler per sensortype er isolert fra publiseri
 - Use case-et skiller beslutning om alert fra selve publiseringen.
 - Både alert og no-alert-flyt er dekket av tester.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke skriv én `if` som bare tilfredsstiller temperaturtesten. Caset skal vise utvidbar regelstruktur for flere sensortyper.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Strategy-objekter vs. regeltabell — hva valgte du, og hvorfor?
 2. Hvordan viser en test double at alert publiseres kun når den skal?
 3. Hva er porten her, og hva kunne adapteren vært i produksjon?

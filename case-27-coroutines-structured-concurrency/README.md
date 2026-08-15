@@ -31,13 +31,13 @@ Parallelliser I/O-kallene med `coroutineScope { async { ... } }`, legg på timeo
 - Feil i ett kall gir veldefinert oppførsel (kansellering eller degradering) — dokumentert i en test.
 - Testene bruker virtuell tid (`runTest`) og kjører på millisekunder.
 
-## Formål i intervjuet
-Coroutines er et klassisk intervjutema for senior Kotlin-utviklere: "Hvordan henter du data fra to tjenester samtidig? Hva skjer hvis den ene feiler? Hva er structured concurrency?" Kan du forklare forskjellen på `launch` og `async`, og hvorfor `GlobalScope` er en code smell, står du støtt — spesielt med bakgrunn fra integrasjonstunge systemer.
+## Formål i treningen
+Coroutines er et klassisk treningstema for senior Kotlin-utviklere: "Hvordan henter du data fra to tjenester samtidig? Hva skjer hvis den ene feiler? Hva er structured concurrency?" Kan du forklare forskjellen på `launch` og `async`, og hvorfor `GlobalScope` er en code smell, står du støtt — spesielt med bakgrunn fra integrasjonstunge systemer.
 
 ## Ikke gjør det for lett
 Ikke bruk `GlobalScope` eller `runBlocking` for å "få det til å virke". Poenget er structured concurrency — ikke bare parallellisering.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hva er structured concurrency, og hva går galt uten det?
 2. `launch` vs `async` — når bruker du hva?
 3. Hva gjør `SupervisorJob`, og når trenger du det?

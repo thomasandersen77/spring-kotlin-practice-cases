@@ -1,11 +1,11 @@
-# Kotlin/Spring Boot Interview Cases
+# Kotlin/Spring Boot Training Cases
 
-Dette er et treningsrepositorium for teknisk intervju og parprogrammering i Kotlin, Spring Boot, JPA/Hibernate, DDD, SOLID og testbarhet. Repoet inneholder 40 små, uavhengige case-prosjekter — alle med vilje uferdige.
+Dette er et treningsrepositorium for teknisk trening og parprogrammering i Kotlin, Spring Boot, JPA/Hibernate, DDD, SOLID og testbarhet. Repoet inneholder 51 små, uavhengige case-prosjekter — alle med vilje uferdige.
 
 **Målet er ikke å pugge løsninger.** Målet er å kunne:
 - oversette krav til tydelige domenevalg under tidspress
 - skrive idiomatisk Kotlin — ikke "Java med Kotlin-syntaks"
-- begrunne trade-offs muntlig, som i en intervju-debrief
+- begrunne trade-offs muntlig, som i en trenings-debrief
 
 ## Slik jobber du iterativt med casene
 
@@ -41,7 +41,7 @@ git switch -c case-05-forsoek-2 main
 3. Kjør `./mvnw test -pl <modul>` og se hva som er rødt.
 4. Skriv kontrakttester først der det er naturlig (TDD).
 5. Fullfør TODO-ene stegvis — tenk høyt som i parprogrammering.
-6. Avslutt med debrief: svar på casets `## Intervjuspørsmål / debrief` **høyt**, som om intervjueren sitter ved siden av deg.
+6. Avslutt med debrief: svar på casets `## Treningsspørsmål / debrief` **høyt**, som om coachen sitter ved siden av deg.
 7. Registrer score og notater i [STATUS.md](STATUS.md).
 
 Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, scoringsveiledning og regler for repoet.
@@ -61,6 +61,12 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 | `case-34-null-safety-validation` | Null-safety, `runCatching` og feilakkumulering med `ValidationResult` |
 | `case-35-kotlin-dsl-higher-order-functions` | Lambda with receiver-DSL, `infix`/operatorer, `by lazy`, `buildString` |
 | `case-37-kotlin-mapping-sealed-collections` | Mapping, sealed typer og sammensatt sortering |
+
+### Testing og TDD
+| Case | Tema |
+|---|---|
+| `case-41-unit-testing-mocks-tdd` | Unit testing fra scratch med JUnit Jupiter, AssertJ, Mockito, MockK og TDD |
+| `case-46-spring-security-mockmvc` | Security-testing med MockMvc, mock JWT og presis 200/201/401/403-kontrakt |
 
 ### Domenemodellering / DDD
 | Case | Tema |
@@ -85,6 +91,8 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 | `case-08-refactor-fat-controller` | Refaktorer controller med blandede ansvarsområder |
 | `case-09-current-user-rbac` | Testbar RBAC uten å blande inn Spring Security direkte |
 | `case-17-feature-flag-rbac` | Access policy-regelmatrise for roller, miljø og produktområde |
+| `case-42-spring-mvc-validation` | Tynn Spring MVC-controller, Bean Validation, DTO-er og application service |
+| `case-48-controller-advice-errors` | ControllerAdvice, stabil API-feilmodell og valideringsfeil |
 
 ### Integrasjon og porter/adaptere
 | Case | Tema |
@@ -105,27 +113,40 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 | `case-30-bank-account-crud-jpa` | Full stack: CRUD, JPA-relasjoner, transaksjoner, domeneoperasjoner |
 | `case-36-bank-transfer-fullstack-jpa` | Full stack: controller → service → domene → JPA → H2, atomisk overføring med rollback |
 | `case-38-basic-spring-h2-rest` | REST-flyt med service, JPA, H2 og feiloversettelse |
+| `case-47-transaction-boundary-jpa` | Liten atomisk arrangementsregistrering med rollback og unik constraint |
 
 ### Sikkerhet
 | Case | Tema |
 |---|---|
 | `case-28-oauth2-jwt-resource-server` | SecurityFilterChain, scopes og rollemapping fra custom claim |
 | `case-40-security-request-context` | JWT, metodeautorisasjon, interceptor og trygg request-kontekst |
+| `case-43-current-user-argument-resolver` | Egen CurrentUser-annotasjon og argument resolver uten sikkerhetslekkasje til domenet |
+| `case-44-jwt-claims-authorities` | Custom JWT claims mappet til scopes/roller med 401/403-tester |
+| `case-45-method-security-authorization` | PreAuthorize og ressursbasert access policy for eierskap og roller |
+
+### Kotlin web frameworks
+| Case | Tema |
+|---|---|
+| `case-49-http4k-functional-http` | Funksjonell HTTP, lenses, filters og eksplisitt komposisjon med http4k |
+| `case-50-ktor-rest-api` | Ktor routing, serialisering, suspending service og testApplication |
+| `case-51-kotlin-web-framework-comparison` | Spring Boot vs. http4k vs. Ktor: pragmatiske trade-offs og teknologivalg |
 
 ## Anbefalt progresjon
 
 | Runde | Caser | Fokus |
 |---|---|---|
-| 1 | 01, 02, 26, 33 | Varm opp: ren Kotlin, TDD, idiomatisk syntaks og collections |
+| 1 | 01, 02, 41, 26, 33 | Varm opp: ren Kotlin, unit testing/TDD, idiomatisk syntaks og collections |
 | 1b | 31, 32, 34, 35, 37 | Språkfeatures i dybden: mapping, sealed, null-safety og DSL — avslutt med 37 som Kotlin-konsolidering |
 | 2 | 03, 04, 05, 11, 12 | Domeneregler, value objects og enkle services |
 | 3 | 13, 14, 16, 18, 10, 19, 15 | Aggregater, statusoverganger og presisjon |
-| 4 | 06, 08, 09, 17, 38, 07 | API, lagdeling og SOLID — bygg en grunnleggende Spring/H2-flyt i 38 før full Spring-flyt i 07 |
+| 4 | 06, 08, 42, 48, 09, 17, 38, 07 | API, Bean Validation, feilmodell, lagdeling og SOLID — bygg deretter en grunnleggende Spring/H2-flyt i 38 før full Spring-flyt i 07 |
 | 5 | 20, 21, 22, 39, 29, 12 (repetisjon i integrasjonskontekst) | Porter og ACL før ekte HTTP-integrasjon med WireMock, deretter fallback og repetisjon |
-| 6 | 23, 24, 25, 27, 28 | Samtidighet, coroutines og sikkerhet |
-| 7 | 30, 36 | Full stack (JPA, transaksjoner, REST, domene) — "mesterprøvene" |
-| 8 | 40 | Avsluttende seniorcase: JWT, autorisasjon, request-livssyklus, ThreadLocal, H2 og audit |
-| 9+ | Gjenta svake caser fra STATUS.md på nye branches | Slå din egen score |
+| 6 | 28, 43, 44, 45, 46 | Security-grunnlag → elegant current user → JWT-authorities → method security → målrettet MockMvc-testing |
+| 7 | 23, 24, 25, 27 | Konsistens, samtidighet og coroutines |
+| 8 | 47, 30, 36 | Transaksjonsgrense i liten skala før full stack (JPA, REST og domene) |
+| 9 | 49, 50 | http4k og Ktor som Kotlin-native variasjon etter Spring-grunnlaget |
+| 10 | 40, 51 | Seniorkonsolidering: request-livssyklus, audit og begrunnet valg mellom Spring/http4k/Ktor |
+| 11+ | Gjenta svake caser fra STATUS.md på nye branches | Slå din egen score |
 
 ## Kjøring
 
@@ -154,8 +175,8 @@ Bruk **Maven-wrapperen** (`./mvnw`, `.\mvnw.cmd` på Windows) — den henter Mav
 
 ## Regler for repoet
 
-- **Originaloppgaven på `main` skal alltid kompilere.** Røde tester er OK når de beskriver kontrakten kandidaten skal implementere — kompileringsfeil er ikke OK.
+- **Originaloppgaven på `main` skal alltid kompilere.** Røde tester er OK når de beskriver kontrakten deltakeren skal implementere — kompileringsfeil er ikke OK.
 - **Ingen ferdige løsninger committes på `main`.** Løsninger lever på `case-NN-forsoek-M`-branches.
-- **Hvert case følger samme README-mal:** Domene, Tid, Hva dette trener, Scenario, Oppgave, TODO / fokusområder, Akseptansekriterier, Formål i intervjuet, Ikke gjør det for lett, Intervjuspørsmål / debrief, Kommandoer.
+- **Hvert case følger samme README-mal:** Domene, Tid, Hva dette trener, Scenario, Oppgave, TODO / fokusområder, Akseptansekriterier, Formål i treningen, Ikke gjør det for lett, Treningsspørsmål / debrief, Kommandoer.
 - **Tester skal beskrive kontrakten**, ikke bare verifisere tall. Beskrivende backtick-navn på norsk/engelsk, JUnit 5 + AssertJ.
 - Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for detaljer.

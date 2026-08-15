@@ -22,12 +22,12 @@ Bemanningsavdelingen søker i konsulentdatabasen med stadig nye kombinasjoner av
 
 ```kotlin
 val treff = consultants.search {
-    skill("Kotlin")
-    availableOnly()
-    anyOf {
-        inCity("Oslo")
-        maxHourlyRate(1200)
-    }
+ skill("Kotlin")
+ availableOnly()
+ anyOf {
+ inCity("Oslo")
+ maxHourlyRate(1200)
+ }
 }
 ```
 
@@ -57,13 +57,13 @@ Bygg DSL-en, predikatkomposisjonen, den lazy indeksen og rapportbyggeren. Kriter
 - Ingen `!!`, ingen `for`-løkker, ingen `var` i offentlig API.
 - Rapporten er deterministisk (sortert) og har ikke linjeskift på slutten.
 
-## Formål i intervjuet
+## Formål i treningen
 Kotlin-DSL-er er det tydeligste skillet mellom "kan syntaksen" og "forstår språket": lambda with receiver, funksjonstyper, `infix`, operatoroverlasting og delegering i én liten øvelse. Samtidig er dette et sted man lett overdriver — så caset ber deg også vurdere når et DSL er verdt kompleksiteten, og når en enkel data class med felter er et bedre valg.
 
 ## Ikke gjør det for lett
 Ikke la builderen returnere `this` og bygge en fluent chain — poenget er lambda with receiver. Ikke gjør `anyOf` til en spesialvariabel i builderen; den skal komponere predikater. Og ikke gjør indeksen `lateinit var` med en `init`-blokk — den skal være lazy.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hva er forskjellen på `(T) -> Unit` og `T.() -> Unit`, og hvorfor er den viktig for DSL-er?
 2. Hva gjør `@DslMarker`, og hvilken feil forhindrer den?
 3. `by lazy` vs. `lateinit var` vs. initialisering i konstruktøren — hva velger du når, og hva med trådsikkerhet?

@@ -22,7 +22,7 @@ Gjør reservasjonsflyten tydelig fra request til use case-resultat. Du skal kunn
 - TODO: Valider kundenavn, party size og reservasjonstidspunkt med tydelige feil.
 - TODO: Avklar åpningstider, maks/min party size og om reservasjoner i fortiden skal avvises.
 - TODO: Returner en meningsfull status, men vurder om status bør være enum i stedet for fri tekst.
-- TODO: Legg til en tynn controller eller forklar hvorfor use case-test er nok for intervjuets nivå.
+- TODO: Legg til en tynn controller eller forklar hvorfor use case-test er nok for treningens nivå.
 - TODO: Diskuter hvor kapasitets-/bordtilgjengelighet ville hørt hjemme dersom caset ble utvidet.
 
 ## Akseptansekriterier
@@ -31,14 +31,14 @@ Gjør reservasjonsflyten tydelig fra request til use case-resultat. Du skal kunn
 - Use case-laget eier flyten, ikke controlleren.
 - DTO-er og domenebegreper er ikke unødvendig blandet sammen.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke godta alle reservasjoner bare fordi testen gjør det. Legg inn nok validering til at use case-designet må diskuteres.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hva er forskjellen på API-validering og domeneregel? Gi et eksempel fra løsningen din.
 2. Hvorfor skal controlleren være tynn — og hva tester du da hvor?
 3. Hvor ville kapasitets-/bordtilgjengelighet ligget hvis caset ble utvidet?

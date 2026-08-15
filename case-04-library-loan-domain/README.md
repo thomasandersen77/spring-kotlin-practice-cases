@@ -31,14 +31,14 @@ Gjør `Loan` til et lite domeneobjekt med tydelige regler. Du må selv velge hvo
 - Overdue-beregningen er enkel å lese og testet med kantdatoer.
 - Modellen viser tydelig hva som er entity og value object.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke skjul “forlenget én gang”-regelen i en kommentar. Modellen må bære nok state til at regelen kan håndheves.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hva gjør `Loan` til en entity og ikke et value object?
 2. Hvorfor må “forlenget én gang” ligge i modellen og ikke i en kommentar?
 3. Hvordan tester du dato-logikk uten å hardkode dagens dato?
