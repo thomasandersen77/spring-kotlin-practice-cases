@@ -10,29 +10,29 @@ import java.util.UUID
  */
 @Service
 class OrderService(
-    private val orderRepository: OrderRepository
+ private val orderRepository: OrderRepository
 ) {
-    @Transactional
-    fun createOrder(order: Order): Order {
-        require(order.lines.isNotEmpty()) { "Order must have at least one order line" }
-        return orderRepository.save(order)
-    }
+ @Transactional
+ fun createOrder(order: Order): Order {
+ require(order.lines.isNotEmpty()) { "Order must have at least one order line" }
+ return orderRepository.save(order)
+ }
 
-    @Transactional(readOnly = true)
-    fun getOrder(id: UUID): Order =
-        orderRepository.findById(id) ?: throw NoSuchElementException("Order $id not found")
+ @Transactional(readOnly = true)
+ fun getOrder(id: UUID): Order =
+ orderRepository.findById(id) ?: throw NoSuchElementException("Order $id not found")
 
-    @Transactional
-    fun cancelOrder(id: UUID): Order {
-        val order = getOrder(id)
-        return orderRepository.save(order.cancel())
-    }
+ @Transactional
+ fun cancelOrder(id: UUID): Order {
+ val order = getOrder(id)
+ return orderRepository.save(order.cancel())
+ }
 
-    @Transactional
-    fun confirmOrder(id: UUID): Order {
-        val order = getOrder(id)
-        return orderRepository.save(order.confirm())
-    }
+ @Transactional
+ fun confirmOrder(id: UUID): Order {
+ val order = getOrder(id)
+ return orderRepository.save(order.confirm())
+ }
 }
 
 /**
@@ -41,6 +41,6 @@ class OrderService(
  * Core/service avhenger av dette grensesnittet, ikke Spring Data direkte.
  */
 interface OrderRepository {
-    fun save(order: Order): Order
-    fun findById(id: UUID): Order?
+ fun save(order: Order): Order
+ fun findById(id: UUID): Order?
 }

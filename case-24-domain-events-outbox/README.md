@@ -31,13 +31,13 @@ Lag en tydelig use case der ordre blir lagret og `OrderPlaced` blir lagt i outbo
 - Use case viser hvor atomisitet er nødvendig.
 - Koden er liten, men tydelig nok til å diskutere drift/robusthet.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er å vise at du kan beskytte konsistens på tvers av intern modell og ekstern integrasjon uten å dra inn full infrastruktur. Du skal kunne forklare hvorfor outbox finnes, og hva som går galt uten den.
 
 ## Ikke gjør det for lett
 Ikke publiser event direkte i use case uten mellomlag. Caset handler om kontrollert overgang fra domeneevent til leveringsmekanisme.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hva går galt uten outbox? Beskriv et konkret scenario.
 2. Hvorfor er `OutboxMessage` en teknisk representasjon og ikke domeneeventet selv?
 3. Hvor er atomisiteten, og hva skjer hvis outbox-write feiler?

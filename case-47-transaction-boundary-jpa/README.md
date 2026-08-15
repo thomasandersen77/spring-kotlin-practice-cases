@@ -58,10 +58,10 @@ Implementer kapasitetsinvarianten og `RegistrationService.register` som én atom
 ## Ikke gjør det for lett
 Ikke gjør dette til en ny bank-transfer, legg transaksjonen i testen eller repositoryet, fjern unik constraint eller nøye deg med å verifisere at en exception kastes uten å sjekke rollback.
 
-## Formål i intervjuet
+## Formål i treningen
 Caset gir et lite og forklarbart eksempel på hvorfor transaksjonsgrensen tilhører use caset og hvordan man beviser atomisitet.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvorfor ligger `@Transactional` på service-metoden?
 2. Hva skjer med JPA dirty checking i denne flyten?
 3. Hvordan beviser testen rollback og ikke bare exception?

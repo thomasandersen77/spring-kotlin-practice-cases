@@ -55,10 +55,10 @@ Implementer `DocumentAccessPolicy`, koble den til metodeautorisasjonen og test b
 ## Ikke gjør det for lett
 Ikke hardkod `true`, legg alle reglene i en lang SpEL-streng eller test bare policyklassen uten å bevise at method security faktisk er aktiv.
 
-## Formål i intervjuet
+## Formål i treningen
 Caset viser hvordan enkel rolleautorisasjon utvikler seg til en ressursbasert policy, og hvor Spring bør slutte og domenespråket begynne.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvorfor er `@PreAuthorize` på service nyttig selv om controlleren er sikret?
 2. Når blir SpEL-uttrykket for komplekst?
 3. Hvordan skiller du 404 fra 403 uten å lekke ressursinformasjon?

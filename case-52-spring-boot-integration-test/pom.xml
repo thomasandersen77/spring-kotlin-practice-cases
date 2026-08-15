@@ -4,11 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.interview</groupId>
-        <artifactId>kotlin-interview-cases</artifactId>
+        <groupId>com.training</groupId>
+        <artifactId>kotlin-training-cases</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+
     <artifactId>case-52-spring-boot-integration-test</artifactId>
 
     <dependencies>
@@ -99,4 +100,3 @@
         </plugins>
     </build>
 </project>
-

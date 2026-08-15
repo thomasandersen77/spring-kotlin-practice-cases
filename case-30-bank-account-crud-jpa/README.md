@@ -50,13 +50,13 @@ Løs i prioritert rekkefølge:
 - `open-in-view` er slått av.
 - Testene dekker domene, repository, application service og REST-integrasjon.
 
-## Formål i intervjuet
+## Formål i treningen
 Dette er det mest komplette caset i repoet: det trener hele stacken fra HTTP via application service og domene til JPA. Målet er å vise at du kan holde mange plater i lufta uten å miste lagdelingen — og at du kan forklare hvorfor saldo er en domeneoperasjon, ikke et felt som settes.
 
 ## Ikke gjør det for lett
 Ikke implementer saldoendring via `PUT` for å "få CRUD komplett". Caset handler om skillet mellom CRUD og domeneoperasjoner. Hard sletting av bankkontoer er en bevisst forenkling for CRUD-trening — i produksjon ville stenging, arkivering og revisjonsspor vært mer aktuelt.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvorfor bør ikke saldo oppdateres gjennom vanlig `PUT`?
 2. Hvor bør regelen om utilstrekkelig saldo ligge?
 3. Hvorfor er domenemodellen skilt fra JPA-entitetene?

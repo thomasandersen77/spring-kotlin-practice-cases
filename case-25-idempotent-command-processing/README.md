@@ -31,13 +31,13 @@ Implementer en use case som bruker idempotency key til å skille nye kall fra du
 - Flowen er testbar med enkle test doubles.
 - Koden viser tydelig grense mellom use case og gateway-port.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er å vise modenhet rundt robusthet: du skal kunne forklare hvordan systemet oppfører seg når nettverk, klienter eller retries ikke er perfekte, uten å bryte domenekonsistens.
 
 ## Ikke gjør det for lett
 Ikke bruk bare “if exists return” uten å tenke på race conditions og lagringsrekkefølge. Caset handler om kontrollert atferd under feil og retry.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hva er en idempotency key, og hvem genererer den?
 2. Hvorfor returnere tidligere resultat i stedet for å prosessere på nytt?
 3. Hva skjer hvis lagring av idempotency-resultat feiler etter vellykket charge?

@@ -31,17 +31,17 @@ Implementer en prisberegner som håndterer varighet, avrunding, rabatt/makspris 
 - `Money` håndteres med `BigDecimal` og forutsigbar skala.
 - Løsningen er strukturert, men ikke et komplett parkeringssystem.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke implementer bare “under 15 minutter = 0”. Legg til nok regler til at avrunding og kjøretøytype må vurderes.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvilket avrundingsvalg tok du, og hvorfor hører det hjemme i domenet?
 2. Hva skiller en Domain Service fra en vanlig utility-klasse?
-3. Hvorfor er magiske tall for kjøretøytyper et problem i en intervjusituasjon?
+3. Hvorfor er magiske tall for kjøretøytyper et problem i en treningssituasjon?
 
 ## Kommandoer
 

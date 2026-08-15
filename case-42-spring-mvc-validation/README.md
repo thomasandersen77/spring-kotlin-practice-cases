@@ -55,10 +55,10 @@ Fullfør serviceflyten og utvid testene slik at API-kontrakten dokumenteres. Hol
 ## Ikke gjør det for lett
 Ikke returner konstante svar fra controlleren, legg all validering i `if`-blokker i web-laget eller gjør servicen til en tom pass-through bare for å få MockMvc-testene grønne.
 
-## Formål i intervjuet
+## Formål i treningen
 Caset demonstrerer den vanligste Spring-flyten i liten skala og lar deg forklare hvorfor validering, HTTP og applikasjonslogikk har ulike eiere.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvorfor bør controlleren være tynn?
 2. Hva gjør `@field:` foran en Bean Validation-annotasjon i Kotlin?
 3. Når tester du med MockMvc, og når holder en ren enhetstest?

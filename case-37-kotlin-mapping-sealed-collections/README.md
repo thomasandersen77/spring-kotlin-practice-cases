@@ -30,7 +30,7 @@ Et importformat beskriver konsulenter med løse statuskoder og nullable felt. Ov
 ## Ikke gjør det for lett
 Ikke la inputmodellen lekke til DTO-en, og ikke bruk to uavhengige sorteringer når kontrakten krever én sammensatt comparator.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Når velger du `mapNotNull` fremfor `filter` + `map`?
 2. Hvorfor passer sealed bedre enn løse strenger?
 3. Når trenger du `sortedWith`?
