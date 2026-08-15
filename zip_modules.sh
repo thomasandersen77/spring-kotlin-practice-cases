@@ -14,28 +14,28 @@ TMP_LIST="$(mktemp)"
 mkdir -p "$OUT_DIR"
 
 find "$ROOT_DIR" -type f \
-  \( -iname "readme*" \
-  -o -iname "*.yaml" \
-  -o -iname "*.yml" \
-  -o -iname "*.conf" \
-  -o -name ".env.example" \) \
-  -not -path "*/.git/*" \
-  -not -path "*/Export for AI/*" \
-  -print > "$TMP_LIST"
+ \( -iname "readme*" \
+ -o -iname "*.yaml" \
+ -o -iname "*.yml" \
+ -o -iname "*.conf" \
+ -o -name ".env.example" \) \
+ -not -path "*/.git/*" \
+ -not -path "*/Export for AI/*" \
+ -print > "$TMP_LIST"
 
 if [ ! -s "$TMP_LIST" ]; then
-  rm -f "$TMP_LIST"
-  echo "No files matched default patterns in $ROOT_DIR"
-  exit 1
+ rm -f "$TMP_LIST"
+ echo "No files matched default patterns in $ROOT_DIR"
+ exit 1
 fi
 
 if [ -f "$ZIP_PATH" ]; then
-  rm -f "$ZIP_PATH"
+ rm -f "$ZIP_PATH"
 fi
 
 (
-  cd "$ROOT_DIR"
-  sed "s|^$ROOT_DIR/||" "$TMP_LIST" | zip -q "$ZIP_PATH" -@
+ cd "$ROOT_DIR"
+ sed "s|^$ROOT_DIR/||" "$TMP_LIST" | zip -q "$ZIP_PATH" -@
 )
 
 rm -f "$TMP_LIST"

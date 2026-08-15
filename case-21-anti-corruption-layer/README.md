@@ -31,14 +31,14 @@ Fullfør anti-corruption layeret og domenepolicyen. Hold ekstern mapping adskilt
 - Service-laget orkestrerer provider, translator og policy uten å eie selve forretningsreglene.
 - README, kode og tester bruker samme domenespråk.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke hardkod hele beslutningen direkte i controller/service. Skill mellom oversettelse av ekstern data og intern kredittpolicy.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hva er forskjellen på oversettelse (translator) og beslutning (policy)?
 2. Hvorfor skal `CreditPolicy` ikke kjenne `source_system`?
 3. Hvorfor er høy risiko ikke en teknisk feil?
