@@ -31,14 +31,14 @@ Design `PickList` som et lite aggregate med interne linjer og status. Vis hvorda
 - Feiltilfeller er bevisst modellert.
 - Koden kan forklares som et aggregate, ikke bare som en datastruktur.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
-Ikke la metodene være tomme “commands” uten observerbar state. Kandidaten må kunne vise hvordan invariants faktisk holdes.
+Ikke la metodene være tomme “commands” uten observerbar state. Du må kunne vise hvordan invariants faktisk holdes.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvilken state må `PickList` eie for å håndheve reglene sine?
 2. Hvordan modellerer du ugyldige overganger — exception eller resultatobjekt?
 3. Hvorfor er spørsmålet om samme SKU skal merges eller avvises et domenevalg?

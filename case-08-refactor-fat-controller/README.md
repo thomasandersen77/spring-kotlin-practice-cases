@@ -17,7 +17,7 @@ Abonnement
 Koden er delvis ryddet, men den er fortsatt ikke ferdig refaktorert. Controlleren er tynnere, mens service-laget håndterer parsing, prisregler, persistence-detaljer og response-shape på én gang.
 
 ## Oppgave
-Gjør designet mer uttrykksfullt uten å overdesigne. Kandidaten skal kunne forklare hva som er domenemodell, hva som er application service, og hvor DTO-er/repository-grenser bør ligge.
+Gjør designet mer uttrykksfullt uten å overdesigne. Du skal kunne forklare hva som er domenemodell, hva som er application service, og hvor DTO-er/repository-grenser bør ligge.
 
 ## TODO / fokusområder
 - TODO: Erstatt utydelige `Map<String, String>`-request/response med små DTO-er eller commands der det gir mening.
@@ -30,16 +30,16 @@ Gjør designet mer uttrykksfullt uten å overdesigne. Kandidaten skal kunne fork
 - Prisregler kan testes uten Spring Boot-kontekst.
 - Controlleren inneholder ikke forretningslogikk.
 - Feiltilfeller er bevisst modellert, ikke bare tilfeldige exceptions fra parsing.
-- Refaktoreringen er liten nok til å forklare i intervju, men tydelig nok til å vise retning.
+- Refaktoreringen er liten nok til å forklare i trening, men tydelig nok til å vise retning.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke bare flytt eksisterende kode én fil ned. Målet er å vise bedre grenser og bedre språk i koden, samtidig som løsningen fortsatt er enkel.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvilke ansvarsområder fant du i den feite controlleren, og hvor flyttet du dem?
 2. Hvordan tester du prisreglene uten Spring?
 3. Hva er igjen i controlleren etter refaktorering — og hvorfor akkurat det?

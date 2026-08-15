@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.interview</groupId>
-    <artifactId>kotlin-interview-cases</artifactId>
+    <groupId>com.training</groupId>
+    <artifactId>kotlin-training-cases</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Kotlin/Spring Boot Interview Cases (Aggregator)</name>
+    <name>Kotlin/Spring Boot Training Cases (Aggregator)</name>
 
     <properties>
         <java.version>21</java.version>
@@ -17,6 +17,10 @@
         <spring.boot.version>3.3.6</spring.boot.version>
         <junit.jupiter.version>5.10.2</junit.jupiter.version>
         <assertj.version>3.25.3</assertj.version>
+        <mockito.version>5.11.0</mockito.version>
+        <mockk.version>1.13.12</mockk.version>
+        <http4k.version>5.12.0.0</http4k.version>
+        <ktor.version>2.3.12</ktor.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.enforcer.plugin.version>3.5.0</maven.enforcer.plugin.version>
     </properties>
@@ -36,9 +40,9 @@
     <build>
         <plugins>
             <!--
-              Kotlin 1.9.25 klarer ikke lese Java-versjoner nyere enn 21 og feiler med
-              "java.lang.IllegalArgumentException: 25". Enforcer gir en lesbar feilmelding
-              i stedet, slik at man raskt ser at man må bytte til JDK 21.
+                Kotlin 1.9.25 klarer ikke lese Java-versjoner nyere enn 21 og feiler med
+                "java.lang.IllegalArgumentException: 25". Enforcer gir en lesbar feilmelding
+                i stedet, slik at man raskt ser at man må bytte til JDK 21.
             -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -105,5 +109,18 @@
         <module>case-38-basic-spring-h2-rest</module>
         <module>case-39-wiremock-external-integration</module>
         <module>case-40-security-request-context</module>
+        <module>case-41-unit-testing-mocks-tdd</module>
+        <module>case-42-spring-mvc-validation</module>
+        <module>case-43-current-user-argument-resolver</module>
+        <module>case-44-jwt-claims-authorities</module>
+        <module>case-45-method-security-authorization</module>
+        <module>case-46-spring-security-mockmvc</module>
+        <module>case-47-transaction-boundary-jpa</module>
+        <module>case-48-controller-advice-errors</module>
+        <module>case-49-http4k-functional-http</module>
+        <module>case-50-ktor-rest-api</module>
+        <module>case-51-kotlin-web-framework-comparison</module>
+        <module>case-52-spring-boot-integration-test</module>
+        <module>case-53-openai-legal-contract-review</module>
     </modules>
 </project>

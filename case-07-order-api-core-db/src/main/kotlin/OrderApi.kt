@@ -16,70 +16,70 @@ import java.util.UUID
 @RestController
 @RequestMapping("/orders")
 class OrderController(
-    private val orderService: OrderService
+ private val orderService: OrderService
 ) {
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    fun createOrder(@Valid @RequestBody request: CreateOrderRequest): OrderResponse =
-        orderService.createOrder(request.toDomain()).toResponse()
+ @PostMapping
+ @ResponseStatus(HttpStatus.CREATED)
+ fun createOrder(@Valid @RequestBody request: CreateOrderRequest): OrderResponse =
+ orderService.createOrder(request.toDomain()).toResponse()
 
-    @GetMapping("/{id}")
-    fun getOrder(@PathVariable id: UUID): OrderResponse =
-        orderService.getOrder(id).toResponse()
+ @GetMapping("/{id}")
+ fun getOrder(@PathVariable id: UUID): OrderResponse =
+ orderService.getOrder(id).toResponse()
 
-    @PostMapping("/{id}/confirm")
-    fun confirmOrder(@PathVariable id: UUID): OrderResponse =
-        orderService.confirmOrder(id).toResponse()
+ @PostMapping("/{id}/confirm")
+ fun confirmOrder(@PathVariable id: UUID): OrderResponse =
+ orderService.confirmOrder(id).toResponse()
 
-    @PostMapping("/{id}/cancel")
-    fun cancelOrder(@PathVariable id: UUID): OrderResponse =
-        orderService.cancelOrder(id).toResponse()
+ @PostMapping("/{id}/cancel")
+ fun cancelOrder(@PathVariable id: UUID): OrderResponse =
+ orderService.cancelOrder(id).toResponse()
 }
 
 data class CreateOrderRequest(
-    @field:NotNull
-    val customerId: UUID?,
+ @field:NotNull
+ val customerId: UUID?,
 
-    @field:NotEmpty
-    val lines: List<CreateOrderLineRequest>
+ @field:NotEmpty
+ val lines: List<CreateOrderLineRequest>
 ) {
-    fun toDomain(): Order =
-        Order(
-            id = UUID.randomUUID(),
-            customerId = requireNotNull(customerId),
-            lines = lines.map { it.toDomain() }
-        )
+ fun toDomain(): Order =
+ Order(
+ id = UUID.randomUUID(),
+ customerId = requireNotNull(customerId),
+ lines = lines.map { it.toDomain() }
+ )
 }
 
 data class CreateOrderLineRequest(
-    @field:NotNull
-    val productId: UUID?,
+ @field:NotNull
+ val productId: UUID?,
 
-    @field:Min(1)
-    val quantity: Int,
+ @field:Min(1)
+ val quantity: Int,
 
-    @field:NotNull
-    val unitPrice: BigDecimal?
+ @field:NotNull
+ val unitPrice: BigDecimal?
 ) {
-    fun toDomain(): OrderLine =
-        OrderLine(
-            productId = requireNotNull(productId),
-            quantity = quantity,
-            unitPrice = requireNotNull(unitPrice)
-        )
+ fun toDomain(): OrderLine =
+ OrderLine(
+ productId = requireNotNull(productId),
+ quantity = quantity,
+ unitPrice = requireNotNull(unitPrice)
+ )
 }
 
 data class OrderResponse(
-    val id: UUID,
-    val customerId: UUID,
-    val status: OrderStatus,
-    val totalAmount: BigDecimal
+ val id: UUID,
+ val customerId: UUID,
+ val status: OrderStatus,
+ val totalAmount: BigDecimal
 )
 
 fun Order.toResponse(): OrderResponse =
-    OrderResponse(
-        id = id,
-        customerId = customerId,
-        status = status,
-        totalAmount = totalAmount()
-    )
+ OrderResponse(
+ id = id,
+ customerId = customerId,
+ status = status,
+ totalAmount = totalAmount()
+ )
