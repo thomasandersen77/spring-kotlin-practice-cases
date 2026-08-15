@@ -31,14 +31,14 @@ Implementer `ClaimTranslator` som et anti-corruption layer. Den skal oversette o
 - Mappingregler er samlet i ACL/translator.
 - Domenet bruker egne begreper, ikke leverandørens felt-navn.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke bare kall `ClaimType.valueOf`. Caset handler om robust oversettelse, validering og tydelige feil.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvorfor returnere `MappingResult` i stedet for å kaste exception?
 2. Hva validerer du i ACL-et, og hva overlater du til domenet?
 3. Hva gjør du med ukjente felter fra leverandøren?

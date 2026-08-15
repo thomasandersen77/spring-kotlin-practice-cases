@@ -1,11 +1,11 @@
-# Kotlin/Spring Boot Interview Cases
+# Kotlin/Spring Boot Training Cases
 
-Dette er et treningsrepositorium for teknisk intervju og parprogrammering i Kotlin, Spring Boot, JPA/Hibernate, DDD, SOLID og testbarhet. Repoet inneholder 51 små, uavhengige case-prosjekter — alle med vilje uferdige.
+Dette er et treningsrepositorium for teknisk trening og parprogrammering i Kotlin, Spring Boot, JPA/Hibernate, DDD, SOLID og testbarhet. Repoet inneholder 51 små, uavhengige case-prosjekter — alle med vilje uferdige.
 
 **Målet er ikke å pugge løsninger.** Målet er å kunne:
 - oversette krav til tydelige domenevalg under tidspress
 - skrive idiomatisk Kotlin — ikke "Java med Kotlin-syntaks"
-- begrunne trade-offs muntlig, som i en intervju-debrief
+- begrunne trade-offs muntlig, som i en trenings-debrief
 
 ## Slik jobber du iterativt med casene
 
@@ -41,7 +41,7 @@ git switch -c case-05-forsoek-2 main
 3. Kjør `./mvnw test -pl <modul>` og se hva som er rødt.
 4. Skriv kontrakttester først der det er naturlig (TDD).
 5. Fullfør TODO-ene stegvis — tenk høyt som i parprogrammering.
-6. Avslutt med debrief: svar på casets `## Intervjuspørsmål / debrief` **høyt**, som om intervjueren sitter ved siden av deg.
+6. Avslutt med debrief: svar på casets `## Treningsspørsmål / debrief` **høyt**, som om coachen sitter ved siden av deg.
 7. Registrer score og notater i [STATUS.md](STATUS.md).
 
 Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, scoringsveiledning og regler for repoet.
@@ -175,8 +175,8 @@ Bruk **Maven-wrapperen** (`./mvnw`, `.\mvnw.cmd` på Windows) — den henter Mav
 
 ## Regler for repoet
 
-- **Originaloppgaven på `main` skal alltid kompilere.** Røde tester er OK når de beskriver kontrakten kandidaten skal implementere — kompileringsfeil er ikke OK.
+- **Originaloppgaven på `main` skal alltid kompilere.** Røde tester er OK når de beskriver kontrakten deltakeren skal implementere — kompileringsfeil er ikke OK.
 - **Ingen ferdige løsninger committes på `main`.** Løsninger lever på `case-NN-forsoek-M`-branches.
-- **Hvert case følger samme README-mal:** Domene, Tid, Hva dette trener, Scenario, Oppgave, TODO / fokusområder, Akseptansekriterier, Formål i intervjuet, Ikke gjør det for lett, Intervjuspørsmål / debrief, Kommandoer.
+- **Hvert case følger samme README-mal:** Domene, Tid, Hva dette trener, Scenario, Oppgave, TODO / fokusområder, Akseptansekriterier, Formål i treningen, Ikke gjør det for lett, Treningsspørsmål / debrief, Kommandoer.
 - **Tester skal beskrive kontrakten**, ikke bare verifisere tall. Beskrivende backtick-navn på norsk/engelsk, JUnit 5 + AssertJ.
 - Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for detaljer.

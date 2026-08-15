@@ -12,7 +12,7 @@ Et enkelt lager-API håndterer reservasjoner:
 
 ```http
 POST /api/reservations
-GET  /api/reservations/{id}
+GET /api/reservations/{id}
 ```
 
 En reservasjon inneholder:
@@ -33,7 +33,7 @@ Forretningsregler:
 Skriv testene i:
 
 ```text
-src/test/kotlin/com/interview/case52/reservations/ReservationIntegrationTest.kt
+src/test/kotlin/com/training/case52/reservations/ReservationIntegrationTest.kt
 ```
 
 Konstruer testklassen selv. Den skal bruke:

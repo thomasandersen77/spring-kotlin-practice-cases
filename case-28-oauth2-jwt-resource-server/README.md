@@ -36,13 +36,13 @@ Sikre API-et som OAuth2 resource server med granulære regler for scopes og roll
 - `DELETE /api/reports/{id}` gir 403 uten ADMIN-rolle og 204 med.
 - Sikkerhetsreglene er dekket av MockMvc-tester — ingen manuell testing nødvendig.
 
-## Formål i intervjuet
-Sikkerhet er et tema intervjuere gjerne drar i når kandidaten nevner OAuth2/JWT/Maskinporten på CV-en: "Vis oss hvordan du ville sikret dette API-et." Da holder det ikke å forklare konseptene; du bør kunne skrive `SecurityFilterChain`-konfigurasjonen og en sikkerhetstest live. Ingen av case 1–25 dekker faktisk Spring Security-konfigurasjon (case-09 og case-17 abstraherer bevisst bort den) — dette caset lukker hullet.
+## Formål i treningen
+Sikkerhet er et tema du bør kunne demonstrere konkret når du trener på OAuth2/JWT/Maskinporten: "Slik ville jeg sikret dette API-et." Da holder det ikke å forklare konseptene; du bør kunne skrive `SecurityFilterChain`-konfigurasjonen og en sikkerhetstest live. Ingen av case 1–25 dekker faktisk Spring Security-konfigurasjon (case-09 og case-17 abstraherer bevisst bort den) — dette caset lukker hullet.
 
 ## Ikke gjør det for lett
 Ikke nøy deg med `anyRequest().authenticated()`. Poenget er granulære regler: scopes, roller og claim-mapping — og at alt er testet.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Forskjellen på autentisering og autorisasjon, og på scope vs. rolle?
 2. Hvordan validerer resource serveren JWT-signaturen i produksjon (issuer-uri/JWKS)?
 3. Hvorfor bør autorisasjonsregler ligge så nær domenet som mulig (jf. case-09), og hva bør ligge i filterkjeden?

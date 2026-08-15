@@ -78,10 +78,10 @@ Ikke erstatt portene med håndskrevne fake-implementasjoner i denne øvelsen; po
 
 Ikke kopier den ferdige Mockito-klassen og bare bytt importene. Skriv MockK-suiten på nytt slik at oppsett, stubbing og verifisering faktisk repeteres.
 
-## Formål i intervjuet
+## Formål i treningen
 Caset lar deg forklare hvordan du isolerer en application service, hva som bør mockes, og hvorfor rene domeneberegninger normalt ikke trenger mocks. Du får også demonstrert at en test ikke bare skal bli grønn, men feile presist når en forretningsregel endres.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hva er forskjellen på stubbing og verifisering?
 2. Når foretrekker du en fake fremfor en mock?
 3. Hvilke forskjeller merket du mellom Mockito og MockK i Kotlin?

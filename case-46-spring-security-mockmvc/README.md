@@ -56,10 +56,10 @@ Fullfør de fire tomme testene i `MessageSecurityTest`. Bruk `spring-security-te
 ## Ikke gjør det for lett
 Ikke deaktiver filterkjeden, bruk `@WithMockUser` når oppgaven spesifikt trener JWT, eller kopier frameworkets egne tester for hver konfigurasjonslinje.
 
-## Formål i intervjuet
+## Formål i treningen
 Caset trener en svært praktisk ferdighet: å bevise sikkerhetskontrakten raskt og presist uten tung ende-til-ende-rigg.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hva er forskjellen på 401 og 403 i disse testene?
 2. Hva gjør MockMvc request postprocessor `jwt()`?
 3. Hva blir ikke testet når JWT-en mockes?

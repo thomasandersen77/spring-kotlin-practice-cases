@@ -1,97 +1,97 @@
-name: Validate interview case
+name: Validate training case
 
 on:
-  pull_request:
-    branches:
-      - main
-  push:
-    branches:
-      - "case-*"
-      - main
+ pull_request:
+ branches:
+ - main
+ push:
+ branches:
+ - "case-*"
+ - main
 
 permissions:
-  contents: read
+ contents: read
 
 concurrency:
-  group: case-validation-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+ group: case-validation-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+ cancel-in-progress: true
 
 jobs:
-  validate:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
+ validate:
+ runs-on: ubuntu-latest
+ timeout-minutes: 20
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+ steps:
+ - name: Checkout repository
+ uses: actions/checkout@v4
+ with:
+ fetch-depth: 0
 
-      - name: Set up Java 21
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "21"
-          cache: maven
+ - name: Set up Java 21
+ uses: actions/setup-java@v4
+ with:
+ distribution: temurin
+ java-version: "21"
+ cache: maven
 
-      - name: Compile all modules
-        run: ./mvnw -B -ntp -DskipTests package
+ - name: Compile all modules
+ run: ./mvnw -B -ntp -DskipTests package
 
-      - name: Resolve modules to test
-        id: modules
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-          BEFORE_SHA: ${{ github.event.before }}
-        run: |
-          set -euo pipefail
+ - name: Resolve modules to test
+ id: modules
+ env:
+ EVENT_NAME: ${{ github.event_name }}
+ BASE_SHA: ${{ github.event.pull_request.base.sha }}
+ HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+ BEFORE_SHA: ${{ github.event.before }}
+ run: |
+ set -euo pipefail
 
-          if [ "$EVENT_NAME" = "pull_request" ]; then
-            range="${BASE_SHA}...${HEAD_SHA}"
-          elif [ -n "${BEFORE_SHA:-}" ] && [ "$BEFORE_SHA" != "0000000000000000000000000000000000000000" ]; then
-            range="${BEFORE_SHA}...${HEAD_SHA}"
-          else
-            range="origin/main...${HEAD_SHA}"
-            git fetch --no-tags --depth=1 origin main || true
-          fi
+ if [ "$EVENT_NAME" = "pull_request" ]; then
+ range="${BASE_SHA}...${HEAD_SHA}"
+ elif [ -n "${BEFORE_SHA:-}" ] && [ "$BEFORE_SHA" != "0000000000000000000000000000000000000000" ]; then
+ range="${BEFORE_SHA}...${HEAD_SHA}"
+ else
+ range="origin/main...${HEAD_SHA}"
+ git fetch --no-tags --depth=1 origin main || true
+ fi
 
-          mapfile -t modules < <(
-            git diff --name-only $range |
-              awk -F/ '/^case-[0-9][0-9]-/ { print $1 }' |
-              sort -u
-          )
+ mapfile -t modules < <(
+ git diff --name-only $range |
+ awk -F/ '/^case-[0-9][0-9]-/ { print $1 }' |
+ sort -u
+ )
 
-          if [ ${#modules[@]} -eq 0 ]; then
-            echo "modules=" >> "$GITHUB_OUTPUT"
-            echo "Ingen case-moduler er endret i $range."
-          else
-            {
-              echo "modules<<EOF"
-              printf '%s\n' "${modules[@]}"
-              echo "EOF"
-            } >> "$GITHUB_OUTPUT"
-            echo "Endrede case-moduler:"
-            printf ' - %s\n' "${modules[@]}"
-          fi
+ if [ ${#modules[@]} -eq 0 ]; then
+ echo "modules=" >> "$GITHUB_OUTPUT"
+ echo "Ingen case-moduler er endret i $range."
+ else
+ {
+ echo "modules<<EOF"
+ printf '%s\n' "${modules[@]}"
+ echo "EOF"
+ } >> "$GITHUB_OUTPUT"
+ echo "Endrede case-moduler:"
+ printf ' - %s\n' "${modules[@]}"
+ fi
 
-      - name: Test changed case modules
-        if: steps.modules.outputs.modules != ''
-        run: |
-          set -euo pipefail
-          while IFS= read -r module; do
-            [ -z "$module" ] && continue
-            echo "::group::Tester $module"
-            ./mvnw -B -ntp test -pl "$module"
-            echo "::endgroup::"
-          done <<< "${{ steps.modules.outputs.modules }}"
+ - name: Test changed case modules
+ if: steps.modules.outputs.modules != ''
+ run: |
+ set -euo pipefail
+ while IFS= read -r module; do
+ [ -z "$module" ] && continue
+ echo "::group::Tester $module"
+ ./mvnw -B -ntp test -pl "$module"
+ echo "::endgroup::"
+ done <<< "${{ steps.modules.outputs.modules }}"
 
-      - name: Publish Surefire reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: surefire-reports-${{ github.run_id }}
-          path: |
-            **/target/surefire-reports/**
-          if-no-files-found: ignore
-          retention-days: 14
+ - name: Publish Surefire reports
+ if: always()
+ uses: actions/upload-artifact@v4
+ with:
+ name: surefire-reports-${{ github.run_id }}
+ path: |
+ **/target/surefire-reports/**
+ if-no-files-found: ignore
+ retention-days: 14

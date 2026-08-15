@@ -30,14 +30,14 @@ Implementer bookinglogikk som beskytter invariants rundt kapasitet, duplikate pa
 - Testene dekker både vellykket booking og minst to negative flyter.
 - Koden er enkel å forklare høyt uten å introdusere unødvendig infrastruktur.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke bare returner en booking fra `book`. Modellen må vise hvordan kapasitet og duplikater håndheves.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvor går aggregatgrensen: route, slot eller booking? Begrunn.
 2. Hvordan håndhever du kapasitet uten database?
 3. Hvorfor er sortering på bookingtidspunkt feil i dette domenet?

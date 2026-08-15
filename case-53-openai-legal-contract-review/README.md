@@ -54,13 +54,13 @@ Modellen foreslår; Kotlin-domenet avgjør hva som er gyldig. Structured Outputs
 
 ```text
 POST /api/legal-reviews
-        ↓
+ ↓
 LegalReviewService
-        ↓
+ ↓
 ContractReviewPort
-        ↓
+ ↓
 OpenAiContractReviewAdapter
-        ↓
+ ↓
 OpenAI Responses API
 ```
 
@@ -84,7 +84,7 @@ Kjør:
 
 ```bash
 ./mvnw test -pl case-53-openai-legal-contract-review \
-  -Dtest=Level1DomainAndServiceTest
+ -Dtest=Level1DomainAndServiceTest
 ```
 
 ### Nivå 2 – OpenAI-adapter mot WireMock
@@ -106,7 +106,7 @@ Kjør:
 
 ```bash
 ./mvnw test -pl case-53-openai-legal-contract-review \
-  -Dtest=Level2OpenAiWireMockTest
+ -Dtest=Level2OpenAiWireMockTest
 ```
 
 ### Nivå 3 – opt-in live-smoketest
@@ -119,7 +119,7 @@ Fra repository-roten:
 SPRINGDOTENV_FILENAME=.env.local \
 RUN_OPENAI_LIVE_TEST=true \
 ./mvnw test -pl case-53-openai-legal-contract-review \
-  -Dtest=Level3OpenAiLiveSmokeTest
+ -Dtest=Level3OpenAiLiveSmokeTest
 ```
 
 Live-testen koster penger og kan påvirkes av nettverk, kontoens saldo, rate limits og modelltilgang. Den skal derfor aldri være en del av standard CI.
@@ -137,12 +137,12 @@ Retningen for requesten er:
 
 ```kotlin
 ResponseCreateParams.builder()
-    .instructions(prompt.instructions)
-    .input(prompt.clauseText)
-    .text(LegalReviewModelResponse::class.java)
-    .model(properties.model)
-    .maxOutputTokens(properties.maxOutputTokens)
-    .build()
+ .instructions(prompt.instructions)
+ .input(prompt.clauseText)
+ .text(LegalReviewModelResponse::class.java)
+ .model(properties.model)
+ .maxOutputTokens(properties.maxOutputTokens)
+ .build()
 ```
 
 Når `text(Class<T>)` brukes, endres builderens generiske type til en strukturert response-builder. Resultatet fra `client.responses().create(...)` kan traverseres gjennom `output`, `message`, `content` og `outputText`. Ikke anta at første element alltid er en vanlig tekstmelding; håndter tom output og refusal eksplisitt.
