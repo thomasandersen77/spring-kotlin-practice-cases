@@ -31,14 +31,14 @@ Gjør lukking av sak til et tydelig use case. Access policy skal kunne testes ut
 - Service-laget viser hvor current user, sak og policy møtes.
 - Uautoriserte flyter er like bevisst håndtert som happy path.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke gjør alle med riktig rolle automatisk autorisert. Caset handler om kombinasjonen rolle, organisasjon og sakstilstand.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvorfor skal `AccessPolicy` kunne testes uten `SecurityContextHolder`?
 2. Hvor hører autorisasjonsreglene hjemme — controller, service eller domene?
 3. Hvordan ville en ekte JWT fylt `User` uten å lekke inn i domenet?

@@ -51,13 +51,13 @@ Implementer validering og normalisering fra `RegistrationForm` til `Customer` me
 - `Customer` har ikke nullable felter utover `phone` og `referralCode`.
 - Ingen `var` eller mutable lister i det offentlige API-et (en lokal `buildList` er greit).
 
-## Formål i intervjuet
-Null-safety er Kotlins mest åpenbare salgsargument, men i intervjuet handler det om noe mer: hvor konverterer du utrygg input til trygge typer, og hvordan rapporterer du feil? Kandidater som strør `!!` og `try/catch` rundt seg avslører seg raskt. Kandidater som viser en tydelig grense — utrygg `RegistrationForm` inn, validert `Customer` ut — og som kan begrunne fail-fast vs. feilakkumulering, ser ut som folk som har vedlikeholdt produksjonskode.
+## Formål i treningen
+Null-safety er Kotlins mest åpenbare salgsargument, men i treningen handler det om noe mer: hvor konverterer du utrygg input til trygge typer, og hvordan rapporterer du feil? Kandidater som strør `!!` og `try/catch` rundt seg avslører seg raskt. Kandidater som viser en tydelig grense — utrygg `RegistrationForm` inn, validert `Customer` ut — og som kan begrunne fail-fast vs. feilakkumulering, ser ut som folk som har vedlikeholdt produksjonskode.
 
 ## Ikke gjør det for lett
 Ikke fail-fast med `require`/`throw` på første feil — hele poenget er at brukeren skal se alt som er galt. Ikke gjør feltene i `Customer` nullable for å slippe validering, og ikke bruk et valideringsrammeverk (Bean Validation); poenget er språket.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Når er fail-fast riktig, og når må du akkumulere feil? Hvordan påvirker det API-design?
 2. `ValidationResult` vs. `Result<T>` vs. exceptions vs. `Either` — hva velger du i en Spring-applikasjon, og hvorfor?
 3. Hvorfor er `Invalid : ValidationResult<Nothing>` mulig og nyttig?

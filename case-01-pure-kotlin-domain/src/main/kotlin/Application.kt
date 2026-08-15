@@ -3,5 +3,5 @@
  * Pom-en er likevel lik de andre for enkelhet.
  */
 fun main() {
-    println("Pure Kotlin domain case")
+ println("Pure Kotlin domain case")
 }

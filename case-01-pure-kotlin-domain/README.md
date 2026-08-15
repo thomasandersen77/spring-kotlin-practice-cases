@@ -32,14 +32,14 @@ Forbedre `PricingDomain.kt` slik at totalsum og rabatter er enkle å forstå, tr
 - Rabattreglene er eksplisitte og enkle å utvide.
 - Koden viser idiomatisk Kotlin uten å bli kunstig kompleks.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke bare få nåværende tester grønne. Legg til minst én test som tvinger deg til å ta et designvalg rundt validering eller avrunding.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvorfor er `Money` et Value Object og ikke en `Double` eller `BigDecimal` som flyter fritt?
 2. Hvorfor valgte du `sealed class` for `Discount` fremfor Strategy Pattern — og når ville du byttet?
 3. Hvorfor ligger valideringen i konstruktøren og ikke i `PricingService`?

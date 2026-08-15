@@ -18,21 +18,21 @@ echo "Output: $OUTPUT_DIR"
 shopt -s globstar nullglob
 
 for dir in "$ROOT_DIR"/*/; do
-  # skip hidden dirs
-  base="$(basename "$dir")"
-  [[ "$base" == .* ]] && continue
+ # skip hidden dirs
+ base="$(basename "$dir")"
+ [[ "$base" == .* ]] && continue
 
-  # determine if directory looks like a case: has README or src
-  if [[ -f "$dir/README.md" || -d "$dir/src" || -d "$dir/main" ]]; then
-    echo "Packaging case: $base"
-    zipname="$OUTPUT_DIR/${base}_source.zip"
+ # determine if directory looks like a case: has README or src
+ if [[ -f "$dir/README.md" || -d "$dir/src" || -d "$dir/main" ]]; then
+ echo "Packaging case: $base"
+ zipname="$OUTPUT_DIR/${base}_source.zip"
 
-    # build include patterns: README*, src/**, pom.xml, build.gradle*, *.kt, *.java, test dirs
-    (cd "$ROOT_DIR" && \
-      zip -r "$zipname" "$base" -i "$base/README*" "$base/src/**" "$base/**/src/**" "$base/**/src/test/**" "$base/**/pom.xml" "$base/**/build.gradle*" "$base/**/*.kt" "$base/**/*.java" "$base/**/*.kts" "$base/**/test/**" -x "*/.*/*" "*/.git/*" "*/build/*" "*/.gradle/*" "*/node_modules/*" "*/out/*" "*/dist/*" "*/.idea/*") >/dev/null
+ # build include patterns: README*, src/**, pom.xml, build.gradle*, *.kt, *.java, test dirs
+ (cd "$ROOT_DIR" && \
+ zip -r "$zipname" "$base" -i "$base/README*" "$base/src/**" "$base/**/src/**" "$base/**/src/test/**" "$base/**/pom.xml" "$base/**/build.gradle*" "$base/**/*.kt" "$base/**/*.java" "$base/**/*.kts" "$base/**/test/**" -x "*/.*/*" "*/.git/*" "*/build/*" "*/.gradle/*" "*/node_modules/*" "*/out/*" "*/dist/*" "*/.idea/*") >/dev/null
 
-    echo " Created: $(ls -lh "$zipname")"
-  fi
+ echo " Created: $(ls -lh "$zipname")"
+ fi
 done
 
 echo "All case zips created in $OUTPUT_DIR"

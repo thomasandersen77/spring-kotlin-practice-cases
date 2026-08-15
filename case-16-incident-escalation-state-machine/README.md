@@ -31,14 +31,14 @@ Implementer en liten state machine som bare tillater gyldige overganger og retur
 - `IncidentTransition` beskriver riktig `from`, `to`, actor og tidspunkt.
 - Koden viser state machine-logikk uten å bli et stort framework.
 
-## Formål i intervjuet
+## Formål i treningen
 Målet er ikke bare å få tester grønne, men å vise hvordan du oversetter krav til tydelige domenevalg, holder lagdelte grenser rene og forklarer trade-offs under tidspress.
-I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste intervjuvalg.
+I debrief bør du kunne begrunne hvilke regler som ble kodet i domenet, hva som ble liggende i application/API-lag, og hvilke forenklinger som var bevisste treningsvalg.
 
 ## Ikke gjør det for lett
 Ikke returner overgangsobjekter uten å endre status. Da testes ikke state machine-delen av caset.
 
-## Intervjuspørsmål / debrief
+## Treningsspørsmål / debrief
 1. Hvordan hindrer du `close` direkte fra `OPEN`?
 2. Skal overgangshistorikken ligge i aggregatet? Hvilke trade-offs har valget?
 3. Hvorfor returnere `IncidentTransition` i stedet for `Unit`?
