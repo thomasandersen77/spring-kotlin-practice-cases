@@ -26,10 +26,9 @@ case-kontrakt foran denne filen.
  │ eksplisitt behov for
  │ agentisk utførelse/fasit
  ▼
- Codex
- separat worktree
+ Codex ELLER Claude Code
+ sidestilt — én utfører per jobb
 
-Claude Code = reserve
 JetBrains AI = selektiv inline-hjelp
 ```
 
@@ -38,8 +37,8 @@ Kort sagt:
 > **Thomas tenker og skriver i IntelliJ. 
 > ChatGPT + GitHub er faglig coach/reviewer. 
 > Warp er lokal sannhetskontroll. 
-> Codex er den normale agentiske utføreren ved eksplisitt bestilling. 
-> Claude Code er reserve. 
+> Codex og Claude Code er sidestilte agentiske utførere ved eksplisitt 
+> bestilling — velg ett av dem per jobb. 
 > JetBrains AI er selektiv inline-hjelp.**
 
 Du trener på å:
@@ -77,9 +76,9 @@ Dette dokumentet gjelder **ferdighetstreningen**.
 | **Thomas + IntelliJ** | Implementasjon og problemløsning | Forstå kontrakt, skrive case-kode, feilsøke, refaktorere, forklare | Å overlate hele caset til AI |
 | **ChatGPT + GitHub** | Coach, review, score, debrief | Hint, vurdering, scoring, treningssimulering, kontinuitet mellom økter | Lokal git-sannhet for upush-ede endringer; uoppfordret fasit |
 | **Warp** | Lokal kontrollør og terminalpartner | `git status`, branch/worktree, lokal diff, tester, faktiske testfeil, Git-sikkerhet | Primær scorer; uoppfordret fasit; erstatning for egen koding |
-| **Codex** | Normal agentisk utfører ved bestilling | `FASIT_CODEX`, `case-NN-fasit`, flerfilsjobber, docs, eksplisitte GitHub-leveranser | Første forsøk på uløste TODO-er; små syntaxproblemer; «treningsløsning» |
+| **Codex** | Agentisk utfører ved bestilling | `FASIT_CODEX`, `case-NN-fasit`, flerfilsjobber, docs, eksplisitte GitHub-leveranser | Første forsøk på uløste TODO-er; små syntaxproblemer; «treningsløsning» |
+| **Claude Code** | Agentisk utfører ved bestilling, sidestilt med Codex | Samme jobber som Codex; i tillegg coach/review lokalt via slash-kommandoene i `.claude/commands/` | Samme grenser som Codex; og aldri parallelt med Codex på samme filsett |
 | **JetBrains AI** | Selektiv inline editorhjelp | Autocomplete, imports, API-hint, rename/extract, syntax, små forklaringer | Full funksjonsgenerering, hele testklasser, TODO-løsning, multi-file-agent |
-| **Claude Code** | Reserve / alternativ kodeagent | Når Claude eksplisitt ønskes, Codex ikke passer, eller separat second implementation har læringsverdi | Normal parallell utfører ved siden av Codex |
 | **Warp Agent CLI** | CLI uten Warp-app | Server/SSH/CI uten GUI | Normal lokal trening (Warp-appen er nok) |
 
 ### 2.1 Hovedroller i klartekst
@@ -137,41 +136,48 @@ Prinsipp:
 > ChatGPT = faglig coach/reviewer 
 > Warp = lokal sannhetskontroll
 
-#### Codex
+#### Codex og Claude Code
 
-Den **normale agentiske utføreren** når AI faktisk skal implementere noe.
+**Sidestilte agentiske utførere.** Begge brukes når AI faktisk skal
+implementere noe etter eksplisitt bestilling. Velg fritt ut fra hva som passer
+jobben, hvilket verktøy du sitter i, og hva du vil lære å bruke godt.
 
-Codex brukes primært til:
+De følger samme regelverk (`AGENTS.md`), samme arbeidsflyter
+(`docs/AGENTS-WORKFLOW.md`) og samme branchmodell. Ingen av dem har utvidede
+tillatelser.
+
+Begge brukes primært til:
 
 - eksplisitt bestilt fasit
-- `case-NN-fasit`
-- separat worktree
+- `case-NN-fasit` på egen branch
 - større flerfilsjobber
 - mekaniske repo-endringer
 - dokumentasjonsarbeid
 - eksplisitt bestilte GitHub-leveranser
 
-Codex brukes normalt **ikke** til:
+Ingen av dem brukes normalt til:
 
 - første forsøk på uløste TODO-er
 - små syntaxproblemer
 - å skrive den første testen
 - å løse case mens Thomas trener
 
-Separate worktrees gjelder alltid for forsøk vs fasit.
+Forsøk og fasit holdes alltid på separate brancher.
 
-#### Claude Code
+**Praktisk forskjell mellom de to:**
 
-**Reserve / alternativ kodeagent.** Brukes bare når:
+- **Codex** har prosjektkontekst fra ChatGPT-prosjektet og
+  `.codex/environments/environment.toml` med ferdige actions som finner riktig
+  modul ut fra branchnavnet.
+- **Claude Code** kjører lokalt mot working tree og ser derfor ucommittede
+  endringer direkte. Slash-kommandoene i `.claude/commands/` dekker coach,
+  kontroll, review, sammenligning, nytt forsøk og fasit.
 
-- Thomas eksplisitt ønsker Claude som modell
-- Codex ikke passer jobben
-- en separat second implementation/reference solution faktisk har læringsverdi
-- en vanskelig arkitektur-/kodeanalyse eksplisitt ønskes fra en annen modell
+Velg ut fra det, ikke ut fra rang.
 
-Ikke bruk Codex og Claude Code parallelt på samme oppgave som standard.
-
-> Én agentisk utfører per jobb.
+> Én agentisk utfører per jobb. Ikke kjør Codex og Claude Code på samme filsett
+> samtidig — ikke fordi det ene er bedre, men fordi to agenter som endrer samme
+> branch gir uklar historikk og uklart eierskap.
 
 #### JetBrains AI
 
@@ -267,18 +273,20 @@ eventuell Warp-evidens for lokale endringer.
 
 ### 4.3 Codex
 
-Standardvalg når noe skal **utføres** agentisk etter eksplisitt bestilling,
-spesielt fasit via `FASIT_CODEX`.
+Fullverdig valg når noe skal **utføres** agentisk etter eksplisitt bestilling,
+inkludert fasit via `FASIT_CODEX`.
 
 ### 4.4 Anthropic / Claude Code
 
+Fullverdig valg på lik linje med Codex. Sterkest når arbeidet er lokalt: du har
+ucommittede endringer, du vil kjøre `./mvnw` og lese faktiske testfeil, eller du
+vil bruke slash-kommandoene til coach/review i samme flate som koden.
+
 | Modellklasse | Når |
 |---|---|
-| **Claude Sonnet** | Hvis Claude Code faktisk brukes: default for kode/analyse |
-| **Claude Opus** | Sjelden: dyp arkitektur der det eksplisitt trengs |
+| **Claude Sonnet** | Default for kode, review og analyse |
+| **Claude Opus** | Dyp arkitektur og vanskelige trade-offs der det trengs |
 | **Claude Haiku** | Sjelden relevant i denne treningen |
-
-Claude Code er reserve, ikke parallel default ved siden av Codex.
 
 ### 4.5 Én utfører
 
@@ -300,8 +308,8 @@ ikke de offisielle reglene.
 |---|---|---|
 | **Coach** (default) | Trening, spørsmål, uløste TODO-er | Hint nivå 1–2, ingen kopierbar fasit. Primært ChatGPT; Warp sekundært |
 | **Review** | «vurder», «score», «review» | Primært ChatGPT + GitHub. Warp leverer lokal evidens. Følg `docs/TRENINGSGUIDE.md`. Ikke endre filer |
-| **Utførelse** | Eksplisitt bestilling om endring | Normalt Codex. Begrenset omfang, bevar urelatert arbeid |
-| **Fasit** | Eksplisitt `FASIT_CODEX` / «gi meg fasit» | Codex i egen worktree, `case-NN-fasit` fra `origin/main` |
+| **Utførelse** | Eksplisitt bestilling om endring | Codex eller Claude Code. Begrenset omfang, bevar urelatert arbeid |
+| **Fasit** | Eksplisitt `FASIT_CODEX` / «gi meg fasit» | Codex eller Claude Code (`/fasit`), `case-NN-fasit` fra `origin/main` |
 
 ### 5.2 Git- og worktree-sikkerhet
 
@@ -451,18 +459,17 @@ Ikke endre filer.
 Warp kan brukes sekundært til lokal debrief hvis GitHub-tilstand ikke er
 oppdatert, men ChatGPT er primær coach.
 
-### Steg 6 — Fasit (sjeldent) · Codex
+### Steg 6 — Fasit (sjeldent) · Codex eller Claude Code
 
 Bare når du eksplisitt vil ha referanseløsning:
 
-- følg `FASIT_CODEX`
-- egen worktree
+- følg `FASIT_CODEX` (i Claude Code: `/fasit <NN>`)
 - branch `case-NN-fasit` fra verifisert `origin/main`
 - ikke merge til `main`
-- etterpå: sammenlign forsøk vs fasit (`SAMMENLIGN`), gjerne med ChatGPT på
- push-et underlag og Warp på lokal diff
+- etterpå: sammenlign forsøk vs fasit (`SAMMENLIGN` / `/sammenlign <NN>`),
+ gjerne med ChatGPT på push-et underlag og Warp eller Claude Code på lokal diff
 
-Claude Code bare hvis du bevisst vil ha en alternativ implementasjon/reserve.
+Velg verktøy fritt, men bruk bare ett per fasitjobb.
 
 ## 8. Hvem eier hvilken jobb?
 
@@ -476,7 +483,7 @@ Claude Code bare hvis du bevisst vil ha en alternativ implementasjon/reserve.
 | Git / worktree / branch-kontroll | Warp (`KONTROLL_WARP`) | Thomas | Eksplisitt tillatelse før endring |
 | Review og score | ChatGPT + GitHub | Warp-evidens | Én primær scorer |
 | Muntlig debrief | ChatGPT | Warp sekundært | Treningssimulering |
-| Full fasit | Codex (`FASIT_CODEX`) | Claude Code reserve | Etter eksplisitt bestilling |
+| Full fasit | Codex eller Claude Code (`FASIT_CODEX`) | — | Etter eksplisitt bestilling; ett verktøy per jobb |
 | PR / GitHub-leveranse | Codex (eller manuell `gh`) | — | Egne tillatelser |
 | Oppdatere `STATUS.md` | Thomas, evt. agent på bestilling | — | Commit/push er separate steg |
 
@@ -486,7 +493,7 @@ Claude Code bare hvis du bevisst vil ha en alternativ implementasjon/reserve.
 |---|---|---|
 | 4–5 økter | Nytt forsøk eller forbedring i coach-modus | Thomas + IntelliJ; begrenset JetBrains AI; ChatGPT-hint; Warp for lokal kontroll |
 | 1 økt | Review, score, debrief | ChatGPT + GitHub; Warp-evidens ved behov |
-| 0–1 økt | Fasit + sammenligning | Codex; deretter ChatGPT/Warp for sammenligning |
+| 0–1 økt | Fasit + sammenligning | Codex eller Claude Code; deretter ChatGPT/Warp for sammenligning |
 | Periodisk | Realistisk treningssimulering uten AI | Bare IntelliJ + terminal/tester/debugger |
 | Løpende | STATUS og progresjon | Manuelt eller bestilt oppdatering |
 
@@ -541,15 +548,17 @@ Ikke godta upresise begreper.
 Hjelp meg å formulere korte, korrekte svar uten å overta resonnementet.
 ```
 
-### 10.5 Fasit (Codex)
+### 10.5 Fasit (Codex eller Claude Code)
 
 ```text
 Fasitmodus for case <NN>.
 Følg FASIT_CODEX / repo-reglene.
-Egen worktree. Branch case-<NN>-fasit fra origin/main.
+Branch case-<NN>-fasit fra origin/main i samme checkout.
 Endre bare case-modulen.
 Ikke merge til main. Ikke PR med mindre jeg ber om det separat.
 ```
+
+I Claude Code er dette `/fasit <NN>`.
 
 ### 10.6 Sammenligning
 
@@ -569,6 +578,22 @@ Primær review er allerede gjort av ChatGPT.
 Ikke gi ny totalscore med mindre jeg eksplisitt ber om re-score av god grunn.
 ```
 
+### 10.8 Slash-kommandoer i Claude Code
+
+Prompene over er kodet som slash-kommandoer i `.claude/commands/`, slik at de
+er identiske hver gang og følger `AGENTS.md` uten at du må gjenta reglene:
+
+| Kommando | Tilsvarer |
+|---|---|
+| `/coach <NN>` | 10.1 Coach |
+| `/kontroll [NN]` | 10.2 Lokal kontroll (`KONTROLL_WARP`) |
+| `/review <NN>` | 10.3 Review / score |
+| `/sammenlign <NN>` | 10.6 Sammenligning (`SAMMENLIGN`) |
+| `/nytt-forsoek <NN> <M>` | Ny forsøksbranch fra ren `main` |
+| `/fasit <NN>` | 10.5 Fasit (`FASIT_CODEX`) |
+
+Kommandoene er committet og gjelder for alle som sjekker ut repoet.
+
 ## 11. Hva «best bruk av Warp» betyr i praksis
 
 Warp er sterkest som:
@@ -584,7 +609,7 @@ Warp er svakest brukt som:
 - autopilot som løser alle TODO-er
 - erstatning for IntelliJ ved linje-for-linje koding hele dagen
 - dyr modell stående på default for små git-spørsmål
-- parallell «tredje koder» ved siden av Codex og Claude på samme filsett
+- parallell «tredje koder» ved siden av Codex eller Claude Code på samme filsett
 
 ## 12. Sjekkliste før du lukker en økt
 
@@ -603,7 +628,8 @@ Warp er svakest brukt som:
 
 1. **Default i Warp:** billig/auto (`cost-efficient`) for lokal kontroll
 2. **Sterk modell i Warp:** bare ved behov for lokal analyse/sekundær debrief
-3. **Fasit/agentisk utførelse:** primært **Codex**; Claude Code er reserve
+3. **Fasit/agentisk utførelse:** **Codex og Claude Code er sidestilte** — velg
+ fritt, men bruk bare ett verktøy per jobb
 4. **Maks AI-avbrudd:** 2–3 i implementasjonsfasen etter 15 min uten AI
 5. **Debrief:** ja etter forsøk som skal scores eller lukkes
 6. **Denne filen:** personlig metodikk; refereres ikke automatisk fra `AGENTS.md`
@@ -613,6 +639,11 @@ Warp er svakest brukt som:
 ## 14. Relaterte filer i repoet
 
 - `AGENTS.md` — overordnede agentregler (autoritative ved konflikt)
+- `CLAUDE.md` — Claude Code-oppsett; importerer `AGENTS.md`, endrer ikke reglene
+- `.claude/settings.json` — delte tillatelser for Claude Code (committet)
+- `.claude/commands/` — slash-kommandoer for coach, kontroll, review,
+ sammenligning, nytt forsøk og fasit
+- `.codex/environments/environment.toml` — Codex-oppsett og actions (autogenerert)
 - `docs/AGENTS-WORKFLOW.md` — `FASIT_CODEX`, `KONTROLL_WARP`, `SAMMENLIGN`
 - `docs/TRENINGSGUIDE.md` — review og scoring
 - `STATUS.md` — committet progresjon

@@ -1,6 +1,6 @@
 # Kotlin/Spring Boot Training Cases
 
-Dette er et treningsrepositorium for teknisk trening og parprogrammering i Kotlin, Spring Boot, JPA/Hibernate, DDD, SOLID og testbarhet. Repoet inneholder 51 små, uavhengige case-prosjekter — alle med vilje uferdige.
+Dette er et treningsrepositorium for teknisk trening og parprogrammering i Kotlin, Spring Boot, JPA/Hibernate, DDD, SOLID og testbarhet. Repoet inneholder 53 små, uavhengige case-prosjekter — alle med vilje uferdige.
 
 **Målet er ikke å pugge løsninger.** Målet er å kunne:
 - oversette krav til tydelige domenevalg under tidspress
@@ -67,6 +67,7 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 |---|---|
 | `case-41-unit-testing-mocks-tdd` | Unit testing fra scratch med JUnit Jupiter, AssertJ, Mockito, MockK og TDD |
 | `case-46-spring-security-mockmvc` | Security-testing med MockMvc, mock JWT og presis 200/201/401/403-kontrakt |
+| `case-52-spring-boot-integration-test` | Integrasjonstest fra blank testfil: HTTP-kontrakt og databaseeffekt gjennom hele stacken |
 
 ### Domenemodellering / DDD
 | Case | Tema |
@@ -103,6 +104,7 @@ Se [docs/TRENINGSGUIDE.md](docs/TRENINGSGUIDE.md) for full treningsprotokoll, sc
 | `case-22-insurance-claim-acl` | DTO-mapping og validering av ekstern skadedata |
 | `case-29-llm-port-adapter-fallback` | LLM bak port/adapter: modell-fallback ved 503, feilsemantikk |
 | `case-39-wiremock-external-integration` | RestClient, outbound port, ACL og WireMock |
+| `case-53-openai-legal-contract-review` | Ekte leverandørintegrasjon: OpenAI Java SDK og Responses API for juridisk triage |
 
 ### Persistens, konsistens og samtidighet
 | Case | Tema |
@@ -172,6 +174,26 @@ Bruk **Maven-wrapperen** (`./mvnw`, `.\mvnw.cmd` på Windows) — den henter Mav
 ```
 
 > `./mvnw test` på `main` gir **BUILD FAILURE** med vilje: casene er uferdige og kaster `NotImplementedError` fra `TODO()`. Bruk `./mvnw clean test-compile -DskipTests` når du vil sjekke at selve repoet er friskt — den skal alltid gi BUILD SUCCESS.
+
+## AI-agenter
+
+Repoet er satt opp for både Codex og Claude Code, med samme regelverk.
+
+- **[AGENTS.md](AGENTS.md) er autoritativ for alle agenter.** Den definerer
+  coach-modus som standard, hintnivåer, branchmodell og at commit, push og PR
+  krever separate eksplisitte tillatelser.
+- **Codex** leser `AGENTS.md` direkte, pluss `.codex/environments/environment.toml`
+  for setup og actions.
+- **Claude Code** leser [CLAUDE.md](CLAUDE.md), som importerer `AGENTS.md` og bare
+  legger til Claude-spesifikt oppsett. `.claude/settings.json` er delt og
+  committet, så det virker rett etter checkout. Slash-kommandoene ligger i
+  `.claude/commands/`: `/coach`, `/kontroll`, `/review`, `/sammenlign`,
+  `/nytt-forsoek`, `/fasit`.
+- Legg maskinspesifikke overstyringer i `.claude/settings.local.json`. Den
+  ignoreres av Git.
+
+Se [docs/AI-ARBEIDSMETODIKK.md](docs/AI-ARBEIDSMETODIKK.md) for hvordan
+verktøyene er ment å spille sammen under trening.
 
 ## Regler for repoet
 

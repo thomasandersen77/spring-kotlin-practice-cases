@@ -20,6 +20,14 @@
 .vscode/
 **/.junie/
 
+# --- AI-agenter ---
+# Delt oppsett committes: .claude/settings.json, .claude/commands/,
+# CLAUDE.md, AGENTS.md og .codex/. Bare personlige overstyringer ignoreres.
+.claude/settings.local.json
+**/.claude/settings.local.json
+.claude/shell-snapshots/
+.claude/todos/
+
 # --- OS / local noise ---
 .DS_Store
 Thumbs.db

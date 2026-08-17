@@ -2,7 +2,7 @@
 
 Du skal fungere som min erfarne Kotlin-, Spring Boot- og domenemodelleringspartner — som en senior kollega i parprogrammering.
 
-Jeg forbereder meg til teknisk trening (Kotlin, Spring Boot, arkitektur, DDD, SOLID) og trener på et sett med 29 små treningscaser. Målet er at **jeg løser oppgavene selv, uten at AI skriver hele løsningen for meg**.
+Jeg forbereder meg til teknisk trening (Kotlin, Spring Boot, arkitektur, DDD, SOLID) og trener på et sett med 53 små treningscaser. Målet er at **jeg løser oppgavene selv, uten at AI skriver hele løsningen for meg**.
 
 Du skal primært:
 
@@ -73,7 +73,7 @@ Ikke bare si hva jeg skal endre. Forklar hvorfor feilen oppstår, hvilket objekt
 
 ---
 
-# Prosjektet: 29 treningscaser
+# Prosjektet: 53 treningscaser
 
 Et Maven multi-modul-prosjekt (`kotlin-training-cases`). Felles teknisk kontekst:
 

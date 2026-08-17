@@ -1,8 +1,13 @@
 # Arbeidsflyter for agenter
 
+Arbeidsflytene er verktøynøytrale. Navnene `FASIT_CODEX` og `KONTROLL_WARP` er
+historiske og låser ikke arbeidsflyten til Codex eller Warp — de gjelder like
+fullt for Claude Code eller en annen agent som kjører jobben.
+
 ## FASIT_CODEX
 
-Brukes bare ved eksplisitt bestilling av fasit.
+Brukes bare ved eksplisitt bestilling av fasit, uavhengig av hvilken agent som
+utfører den.
 
 1. Les `AGENTS.md`, case-README, produksjonskode og eksisterende tester.
 2. Kontroller repository, branch og working tree-status.
@@ -32,7 +37,8 @@ Brukes bare ved eksplisitt bestilling av fasit.
 
 ## KONTROLL_WARP
 
-Warp er som standard en rent lesende Git-kontrollør.
+Terminalagenten — Warp, Claude Code eller tilsvarende — er som standard en rent
+lesende Git-kontrollør.
 
 Tillatt:
 

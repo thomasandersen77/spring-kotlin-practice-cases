@@ -1,11 +1,17 @@
 # Agentinstruksjoner for Kotlin Training Cases
 
+Denne filen er autoritativ for alle agenter i repoet — Codex, Claude Code, Warp
+og ChatGPT. Reglene er verktøynøytrale og gjelder uansett hvilket verktøy som
+kjører. Claude Code leser filen via `CLAUDE.md`, som bare legger til
+Claude-spesifikt oppsett og ikke endrer reglene her.
+
 ## Agentarbeidsflyter
 
-Gjentakbare arbeidsflyter er definert i `docs/AGENTS-WORKFLOW.md`.
+Gjentakbare arbeidsflyter er definert i `docs/AGENTS-WORKFLOW.md`. Navnene er
+historiske; arbeidsflytene gjelder den agenten som faktisk kjører jobben.
 
 - Ved eksplisitt bestilling av fasit: bruk `FASIT_CODEX`.
-- Ved Git- eller branchkontroll i Warp: bruk `KONTROLL_WARP`.
+- Ved Git- eller branchkontroll fra terminal: bruk `KONTROLL_WARP`.
 - Ved sammenligning mellom forsøk og fasit: bruk `SAMMENLIGN`.
 - Ved review og score: følg `docs/TRENINGSGUIDE.md`.
 
