@@ -7,22 +7,22 @@ import java.util.UUID
  * Dette er kjernen. Den skal ikke kjenne til navnene/feltene fra ekstern leverandør.
  */
 data class LoanApplication(
- val id: UUID,
- val applicantId: UUID,
- val requestedAmount: BigDecimal,
- val risk: CreditRisk
+    val id: UUID,
+    val applicantId: UUID,
+    val requestedAmount: BigDecimal,
+    val risk: CreditRisk
 )
 
 enum class CreditRisk {
- LOW,
- MEDIUM,
- HIGH
+    LOW,
+    MEDIUM,
+    HIGH
 }
 
 data class CreditDecision(
- val applicationId: UUID,
- val approved: Boolean,
- val reason: String
+    val applicationId: UUID,
+    val approved: Boolean,
+    val reason: String
 )
 
 /**
@@ -34,7 +34,7 @@ data class CreditDecision(
  * - Forklar i kode/test hvorfor dette er domeneregel og ikke integrasjonsregel.
  */
 class CreditPolicy {
- fun decide(application: LoanApplication): CreditDecision {
- TODO("Implement domain policy with explicit thresholds and readable decision reasons")
- }
+    fun decide(application: LoanApplication): CreditDecision {
+        TODO("Implement domain policy with explicit thresholds and readable decision reasons")
+    }
 }

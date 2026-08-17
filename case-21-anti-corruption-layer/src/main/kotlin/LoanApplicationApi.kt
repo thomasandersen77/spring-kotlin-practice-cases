@@ -5,41 +5,41 @@ import java.util.UUID
 @RestController
 @RequestMapping("/loan-applications")
 class LoanApplicationController(
- private val service: LoanApplicationService
+    private val service: LoanApplicationService
 ) {
- @PostMapping
- fun apply(@RequestBody request: LoanApplicationRequest): CreditDecision {
- return service.apply(request.applicantId, request.amount)
- }
+    @PostMapping
+    fun apply(@RequestBody request: LoanApplicationRequest): CreditDecision {
+        return service.apply(request.applicantId, request.amount)
+    }
 }
 
 data class LoanApplicationRequest(
- val applicantId: UUID,
- val amount: BigDecimal
+    val applicantId: UUID,
+    val amount: BigDecimal
 )
 
 class LoanApplicationService(
- private val externalCreditProviderClient: ExternalCreditProviderClient,
- private val creditRiskTranslator: CreditRiskTranslator
+    private val externalCreditProviderClient: ExternalCreditProviderClient,
+    private val creditRiskTranslator: CreditRiskTranslator
 ) {
- /**
- * Neste steg i caset:
- * - Marker klassen som application service i Spring-laget.
- * - Injektér og bruk CreditPolicy i stedet for å opprette den inline.
- * - Hold API-request adskilt fra intern command-modell ved behov.
- * - Skriv separate tester for ACL-mapping, policy og orkestrering.
- */
- fun apply(applicantId: UUID, amount: BigDecimal): CreditDecision {
- val externalScore = externalCreditProviderClient.fetchCreditScore(applicantId)
- val risk = creditRiskTranslator.toCreditRisk(externalScore)
+    /**
+     * Neste steg i caset:
+     * - Marker klassen som application service i Spring-laget.
+     * - Injektér og bruk CreditPolicy i stedet for å opprette den inline.
+     * - Hold API-request adskilt fra intern command-modell ved behov.
+     * - Skriv separate tester for ACL-mapping, policy og orkestrering.
+     */
+    fun apply(applicantId: UUID, amount: BigDecimal): CreditDecision {
+        val externalScore = externalCreditProviderClient.fetchCreditScore(applicantId)
+        val risk = creditRiskTranslator.toCreditRisk(externalScore)
 
- val application = LoanApplication(
- id = UUID.randomUUID(),
- applicantId = applicantId,
- requestedAmount = amount,
- risk = risk
- )
+        val application = LoanApplication(
+            id = UUID.randomUUID(),
+            applicantId = applicantId,
+            requestedAmount = amount,
+            risk = risk
+        )
 
- return CreditPolicy().decide(application)
- }
+        return CreditPolicy().decide(application)
+    }
 }
