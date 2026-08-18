@@ -6,29 +6,24 @@ import jakarta.validation.constraints.NotBlank
 import java.util.UUID
 
 data class CreateCustomerRequest(
- @field:NotBlank
- val name: String,
- @field:NotBlank
- @field:Email
- val email: String
+	@field:NotBlank val name: String,
+	@field:NotBlank @field:Email val email: String,
 )
 
 data class UpdateCustomerRequest(
- @field:NotBlank
- val name: String,
- @field:NotBlank
- @field:Email
- val email: String
+	@field:NotBlank val name: String,
+	@field:NotBlank @field:Email val email: String,
 )
 
 data class CustomerResponse(
- val id: UUID,
- val name: String,
- val email: String
+	val id: UUID,
+	val name: String,
+	val email: String,
 )
 
-fun Customer.toResponse(): CustomerResponse = CustomerResponse(
- id = id.value,
- name = name,
- email = email
-)
+fun Customer.toResponse(): CustomerResponse =
+	CustomerResponse(
+		id = id.value,
+		name = name,
+		email = email,
+	)

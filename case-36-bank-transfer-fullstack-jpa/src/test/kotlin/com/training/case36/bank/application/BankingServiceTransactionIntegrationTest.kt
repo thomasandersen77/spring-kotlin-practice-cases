@@ -9,6 +9,7 @@ import com.training.case36.bank.domain.BankAccount
 import com.training.case36.bank.domain.InsufficientFundsException
 import com.training.case36.bank.domain.Money
 import com.training.case36.bank.support.TestDataFactory
+import java.math.BigDecimal
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
@@ -19,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.SpyBean
 import org.springframework.test.context.ActiveProfiles
-import java.math.BigDecimal
 
 /**
  * Verifies the ACTUAL transaction boundary in [BankingService] by reading accounts back from
@@ -28,109 +28,121 @@ import java.math.BigDecimal
  * balance, the transaction genuinely rolled back; if it were only checked in memory, a missing or
  * misplaced `@Transactional` could go unnoticed.
  *
- * This class is deliberately NOT `@Transactional` (neither on the class nor on any test method). If it
- * were, the test's own transaction could mask a missing `@Transactional` on [BankingService.transfer] -
- * everything would appear to roll back correctly even if the service itself never opened a transaction
- * at all.
+ * This class is deliberately NOT `@Transactional` (neither on the class nor on any test method). If
+ * it were, the test's own transaction could mask a missing `@Transactional` on
+ * [BankingService.transfer] - everything would appear to roll back correctly even if the service
+ * itself never opened a transaction at all.
  */
 @SpringBootTest
 @ActiveProfiles("test")
 class BankingServiceTransactionIntegrationTest {
 
- @Autowired
- lateinit var bankingService: BankingService
+	@Autowired lateinit var bankingService: BankingService
 
- @Autowired
- lateinit var accountRepository: AccountRepository
+	@Autowired lateinit var accountRepository: AccountRepository
 
- @SpyBean
- lateinit var transferRepository: TransferRepository
+	@SpyBean lateinit var transferRepository: TransferRepository
 
- private fun seed(account: BankAccount): AccountId {
- accountRepository.save(account)
- return account.id
- }
+	private fun seed(account: BankAccount): AccountId {
+		accountRepository.save(account)
+		return account.id
+	}
 
- private fun requireAccount(id: AccountId): BankAccount =
- accountRepository.findById(id) ?: error("expected account $id to exist")
+	private fun requireAccount(id: AccountId): BankAccount =
+		accountRepository.findById(id) ?: error("expected account $id to exist")
 
- @Test
- fun `vellykket overforing debiterer avsender, krediterer mottaker og lagrer en overforingsrad`() {
- val fromId = seed(TestDataFactory.activeAccount(balanceKroner = "1000.00"))
- val toId = seed(TestDataFactory.activeAccount(balanceKroner = "0.00"))
- val transfersBefore = transferRepository.count()
+	@Test
+	fun `vellykket overforing debiterer avsender, krediterer mottaker og lagrer en overforingsrad`() {
+		val fromId = seed(TestDataFactory.activeAccount(balanceKroner = "1000.00"))
+		val toId = seed(TestDataFactory.activeAccount(balanceKroner = "0.00"))
+		val transfersBefore = transferRepository.count()
 
- bankingService.transfer(TransferMoneyCommand(fromId, toId, Money.ofKroner(BigDecimal("250.00"))))
+		bankingService.transfer(
+			TransferMoneyCommand(fromId, toId, Money.ofKroner(BigDecimal("250.00")))
+		)
 
- assertThat(requireAccount(fromId).balance.toKroner()).isEqualByComparingTo("750.00")
- assertThat(requireAccount(toId).balance.toKroner()).isEqualByComparingTo("250.00")
- assertThat(transferRepository.count()).isEqualTo(transfersBefore + 1)
- }
+		assertThat(requireAccount(fromId).balance.toKroner()).isEqualByComparingTo("750.00")
+		assertThat(requireAccount(toId).balance.toKroner()).isEqualByComparingTo("250.00")
+		assertThat(transferRepository.count()).isEqualTo(transfersBefore + 1)
+	}
 
- @Test
- fun `utilstrekkelig dekning endrer ingen saldo og lagrer ingen overforingsrad`() {
- val fromId = seed(TestDataFactory.activeAccount(balanceKroner = "100.00"))
- val toId = seed(TestDataFactory.activeAccount(balanceKroner = "0.00"))
- val transfersBefore = transferRepository.count()
+	@Test
+	fun `utilstrekkelig dekning endrer ingen saldo og lagrer ingen overforingsrad`() {
+		val fromId = seed(TestDataFactory.activeAccount(balanceKroner = "100.00"))
+		val toId = seed(TestDataFactory.activeAccount(balanceKroner = "0.00"))
+		val transfersBefore = transferRepository.count()
 
- assertThatThrownBy {
- bankingService.transfer(TransferMoneyCommand(fromId, toId, Money.ofKroner(BigDecimal("150.00"))))
- }.isInstanceOf(InsufficientFundsException::class.java)
+		assertThatThrownBy {
+				bankingService.transfer(
+					TransferMoneyCommand(fromId, toId, Money.ofKroner(BigDecimal("150.00")))
+				)
+			}
+			.isInstanceOf(InsufficientFundsException::class.java)
 
- assertThat(requireAccount(fromId).balance.toKroner()).isEqualByComparingTo("100.00")
- assertThat(requireAccount(toId).balance.toKroner()).isEqualByComparingTo("0.00")
- assertThat(transferRepository.count()).isEqualTo(transfersBefore)
- }
+		assertThat(requireAccount(fromId).balance.toKroner()).isEqualByComparingTo("100.00")
+		assertThat(requireAccount(toId).balance.toKroner()).isEqualByComparingTo("0.00")
+		assertThat(transferRepository.count()).isEqualTo(transfersBefore)
+	}
 
- @Test
- fun `ukjent mottaker endrer ikke avsenders saldo`() {
- val fromId = seed(TestDataFactory.activeAccount(balanceKroner = "500.00"))
- val unknownToId = AccountId.new()
- val transfersBefore = transferRepository.count()
+	@Test
+	fun `ukjent mottaker endrer ikke avsenders saldo`() {
+		val fromId = seed(TestDataFactory.activeAccount(balanceKroner = "500.00"))
+		val unknownToId = AccountId.new()
+		val transfersBefore = transferRepository.count()
 
- assertThatThrownBy {
- bankingService.transfer(TransferMoneyCommand(fromId, unknownToId, Money.ofKroner(BigDecimal("50.00"))))
- }.isInstanceOf(AccountNotFoundException::class.java)
+		assertThatThrownBy {
+				bankingService.transfer(
+					TransferMoneyCommand(fromId, unknownToId, Money.ofKroner(BigDecimal("50.00")))
+				)
+			}
+			.isInstanceOf(AccountNotFoundException::class.java)
 
- assertThat(requireAccount(fromId).balance.toKroner()).isEqualByComparingTo("500.00")
- assertThat(transferRepository.count()).isEqualTo(transfersBefore)
- }
+		assertThat(requireAccount(fromId).balance.toKroner()).isEqualByComparingTo("500.00")
+		assertThat(transferRepository.count()).isEqualTo(transfersBefore)
+	}
 
- @Test
- fun `blokkert avsender gir rollback`() {
- val fromId = seed(TestDataFactory.blockedAccount(balanceKroner = "500.00"))
- val toId = seed(TestDataFactory.activeAccount(balanceKroner = "0.00"))
- val transfersBefore = transferRepository.count()
+	@Test
+	fun `blokkert avsender gir rollback`() {
+		val fromId = seed(TestDataFactory.blockedAccount(balanceKroner = "500.00"))
+		val toId = seed(TestDataFactory.activeAccount(balanceKroner = "0.00"))
+		val transfersBefore = transferRepository.count()
 
- assertThatThrownBy {
- bankingService.transfer(TransferMoneyCommand(fromId, toId, Money.ofKroner(BigDecimal("50.00"))))
- }.isInstanceOf(AccountBlockedException::class.java)
+		assertThatThrownBy {
+				bankingService.transfer(
+					TransferMoneyCommand(fromId, toId, Money.ofKroner(BigDecimal("50.00")))
+				)
+			}
+			.isInstanceOf(AccountBlockedException::class.java)
 
- assertThat(requireAccount(fromId).balance.toKroner()).isEqualByComparingTo("500.00")
- assertThat(requireAccount(toId).balance.toKroner()).isEqualByComparingTo("0.00")
- assertThat(transferRepository.count()).isEqualTo(transfersBefore)
- }
+		assertThat(requireAccount(fromId).balance.toKroner()).isEqualByComparingTo("500.00")
+		assertThat(requireAccount(toId).balance.toKroner()).isEqualByComparingTo("0.00")
+		assertThat(transferRepository.count()).isEqualTo(transfersBefore)
+	}
 
- @Test
- fun `simulert feil ved lagring av transfer etter kontoendringer gir rollback av begge saldoer`() {
- val fromId = seed(TestDataFactory.activeAccount(balanceKroner = "1000.00"))
- val toId = seed(TestDataFactory.activeAccount(balanceKroner = "0.00"))
+	@Test
+	fun `simulert feil ved lagring av transfer etter kontoendringer gir rollback av begge saldoer`() {
+		val fromId = seed(TestDataFactory.activeAccount(balanceKroner = "1000.00"))
+		val toId = seed(TestDataFactory.activeAccount(balanceKroner = "0.00"))
 
- doThrow(RuntimeException("Simulert lagringsfeil for transfer"))
- .`when`(transferRepository).save(any())
+		doThrow(RuntimeException("Simulert lagringsfeil for transfer"))
+			.`when`(transferRepository)
+			.save(any())
 
- try {
- assertThatThrownBy {
- bankingService.transfer(TransferMoneyCommand(fromId, toId, Money.ofKroner(BigDecimal("250.00"))))
- }.isInstanceOf(RuntimeException::class.java)
+		try {
+			assertThatThrownBy {
+					bankingService.transfer(
+						TransferMoneyCommand(fromId, toId, Money.ofKroner(BigDecimal("250.00")))
+					)
+				}
+				.isInstanceOf(RuntimeException::class.java)
 
- assertThat(requireAccount(fromId).balance.toKroner()).isEqualByComparingTo("1000.00")
- assertThat(requireAccount(toId).balance.toKroner()).isEqualByComparingTo("0.00")
- } finally {
- // Nullstill spyen sa stubbingen ikke lekker til andre tester som deler samme (cachede)
- // Spring-kontekst. @DirtiesContext er bevisst IKKE brukt her - det er reservert for den
- // dedikerte schema-lifecycle-testen (HibernateSchemaLifecycleIntegrationTest).
- Mockito.reset(transferRepository)
- }
- }
+			assertThat(requireAccount(fromId).balance.toKroner()).isEqualByComparingTo("1000.00")
+			assertThat(requireAccount(toId).balance.toKroner()).isEqualByComparingTo("0.00")
+		} finally {
+			// Nullstill spyen sa stubbingen ikke lekker til andre tester som deler samme (cachede)
+			// Spring-kontekst. @DirtiesContext er bevisst IKKE brukt her - det er reservert for den
+			// dedikerte schema-lifecycle-testen (HibernateSchemaLifecycleIntegrationTest).
+			Mockito.reset(transferRepository)
+		}
+	}
 }

@@ -4,26 +4,28 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 
 enum class VehicleType {
- CAR,
- MOTORCYCLE,
- EV
+	CAR,
+	MOTORCYCLE,
+	EV,
 }
 
 data class Money(val amount: BigDecimal)
 
 data class ParkingSession(
- val vehicleType: VehicleType,
- val startsAt: LocalDateTime,
- val endsAt: LocalDateTime
+	val vehicleType: VehicleType,
+	val startsAt: LocalDateTime,
+	val endsAt: LocalDateTime,
 )
 
 data class ParkingTariff(
- val hourlyRate: Money,
- val nightMax: Money
+	val hourlyRate: Money,
+	val nightMax: Money,
 )
 
 class ParkingPriceCalculator {
- fun calculate(session: ParkingSession, tariff: ParkingTariff): Money {
- TODO("Implement pricing flow with duration rules, vehicle modifiers, max-price behavior, and rounding contract")
- }
+	fun calculate(session: ParkingSession, tariff: ParkingTariff): Money {
+		TODO(
+			"Implement pricing flow with duration rules, vehicle modifiers, max-price behavior, and rounding contract"
+		)
+	}
 }

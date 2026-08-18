@@ -9,36 +9,36 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 class RegistrationServiceTest(
- @Autowired private val service: RegistrationService,
- @Autowired private val events: EventRepository,
- @Autowired private val registrations: RegistrationRepository
+	@Autowired private val service: RegistrationService,
+	@Autowired private val events: EventRepository,
+	@Autowired private val registrations: RegistrationRepository,
 ) {
- @BeforeEach
- fun clean() {
- registrations.deleteAll()
- events.deleteAll()
- }
+	@BeforeEach
+	fun clean() {
+		registrations.deleteAll()
+		events.deleteAll()
+	}
 
- @Test
- fun `paamelding reduserer kapasitet og lagrer registrering atomisk`() {
- val event = events.save(EventEntity(name = "Kotlin-dag", availableSeats = 2))
+	@Test
+	fun `paamelding reduserer kapasitet og lagrer registrering atomisk`() {
+		val event = events.save(EventEntity(name = "Kotlin-dag", availableSeats = 2))
 
- val receipt = service.register(event.id!!, "dev@example.no")
+		val receipt = service.register(event.id!!, "dev@example.no")
 
- assertThat(receipt.remainingSeats).isEqualTo(1)
- assertThat(events.findById(event.id!!).orElseThrow().availableSeats).isEqualTo(1)
- assertThat(registrations.count()).isEqualTo(1)
- }
+		assertThat(receipt.remainingSeats).isEqualTo(1)
+		assertThat(events.findById(event.id!!).orElseThrow().availableSeats).isEqualTo(1)
+		assertThat(registrations.count()).isEqualTo(1)
+	}
 
- @Test
- fun `feil etterlater ikke delvis kapasitetsendring`() {
- val event = events.save(EventEntity(name = "Kotlin-dag", availableSeats = 1))
- service.register(event.id!!, "same@example.no")
+	@Test
+	fun `feil etterlater ikke delvis kapasitetsendring`() {
+		val event = events.save(EventEntity(name = "Kotlin-dag", availableSeats = 1))
+		service.register(event.id!!, "same@example.no")
 
- assertThatThrownBy { service.register(event.id!!, "same@example.no") }
- .isInstanceOf(AlreadyRegistered::class.java)
+		assertThatThrownBy { service.register(event.id!!, "same@example.no") }
+			.isInstanceOf(AlreadyRegistered::class.java)
 
- assertThat(events.findById(event.id!!).orElseThrow().availableSeats).isZero()
- assertThat(registrations.count()).isEqualTo(1)
- }
+		assertThat(events.findById(event.id!!).orElseThrow().availableSeats).isZero()
+		assertThat(registrations.count()).isEqualTo(1)
+	}
 }

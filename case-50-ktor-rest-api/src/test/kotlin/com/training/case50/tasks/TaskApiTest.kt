@@ -12,30 +12,32 @@ import org.junit.jupiter.api.Test
 
 class TaskApiTest {
 
- private val service = object : TaskService {
- override suspend fun get(id: Long): TaskResponse? =
- if (id == 7L) TaskResponse(7, "Lær Ktor") else null
+	private val service =
+		object : TaskService {
+			override suspend fun get(id: Long): TaskResponse? =
+				if (id == 7L) TaskResponse(7, "Lær Ktor") else null
 
- override suspend fun create(request: CreateTaskRequest) = TaskResponse(8, request.title)
- }
+			override suspend fun create(request: CreateTaskRequest) = TaskResponse(8, request.title)
+		}
 
- @Test
- fun `GET returnerer oppgave eller 404`() = testApplication {
- application { taskApi(service) }
+	@Test
+	fun `GET returnerer oppgave eller 404`() = testApplication {
+		application { taskApi(service) }
 
- assertThat(client.get("/tasks/7").status).isEqualTo(HttpStatusCode.OK)
- assertThat(client.get("/tasks/99").status).isEqualTo(HttpStatusCode.NotFound)
- }
+		assertThat(client.get("/tasks/7").status).isEqualTo(HttpStatusCode.OK)
+		assertThat(client.get("/tasks/99").status).isEqualTo(HttpStatusCode.NotFound)
+	}
 
- @Test
- fun `POST deserialiserer request og returnerer 201`() = testApplication {
- application { taskApi(service) }
+	@Test
+	fun `POST deserialiserer request og returnerer 201`() = testApplication {
+		application { taskApi(service) }
 
- val response = client.post("/tasks") {
- contentType(ContentType.Application.Json)
- setBody("""{"title":"Lær Ktor"}""")
- }
+		val response =
+			client.post("/tasks") {
+				contentType(ContentType.Application.Json)
+				setBody("""{"title":"Lær Ktor"}""")
+			}
 
- assertThat(response.status).isEqualTo(HttpStatusCode.Created)
- }
+		assertThat(response.status).isEqualTo(HttpStatusCode.Created)
+	}
 }

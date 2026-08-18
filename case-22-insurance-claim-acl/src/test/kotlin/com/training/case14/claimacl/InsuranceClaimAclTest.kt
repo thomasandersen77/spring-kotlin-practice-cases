@@ -4,20 +4,21 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class InsuranceClaimAclTest {
- private val translator = ClaimTranslator()
+	private val translator = ClaimTranslator()
 
- @Test
- fun `valid dto should map to success`() {
- val dto = ExternalClaimDto(
- claimTypeCode = "CAR",
- amount = "1000.00",
- currency = "NOK",
- customerId = "CUST-1",
- incidentDate = "2026-01-01"
- )
+	@Test
+	fun `valid dto should map to success`() {
+		val dto =
+			ExternalClaimDto(
+				claimTypeCode = "CAR",
+				amount = "1000.00",
+				currency = "NOK",
+				customerId = "CUST-1",
+				incidentDate = "2026-01-01",
+			)
 
- val result = translator.translate(dto)
+		val result = translator.translate(dto)
 
- assertThat(result).isInstanceOf(MappingResult.Success::class.java)
- }
+		assertThat(result).isInstanceOf(MappingResult.Success::class.java)
+	}
 }

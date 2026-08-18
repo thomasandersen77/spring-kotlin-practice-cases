@@ -3,10 +3,8 @@ package com.training.case52.reservations
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
-@SpringBootApplication
-class ReservationApplication
+@SpringBootApplication class ReservationApplication
 
 fun main(args: Array<String>) {
- runApplication<ReservationApplication>(*args)
+	runApplication<ReservationApplication>(*args)
 }
-

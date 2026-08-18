@@ -15,24 +15,26 @@ import org.springframework.test.web.servlet.get
 @AutoConfigureMockMvc
 class JwtSecurityApiTest(@Autowired private val mvc: MockMvc) {
 
- @MockBean private lateinit var jwtDecoder: JwtDecoder
+	@MockBean private lateinit var jwtDecoder: JwtDecoder
 
- @Test
- fun `manglende token gir 401`() {
- mvc.get("/api/invoices").andExpect { status { isUnauthorized() } }
- }
+	@Test
+	fun `manglende token gir 401`() {
+		mvc.get("/api/invoices").andExpect { status { isUnauthorized() } }
+	}
 
- @Test
- fun `token uten lesetilgang gir 403`() {
- mvc.get("/api/invoices") {
- with(jwt())
- }.andExpect { status { isForbidden() } }
- }
+	@Test
+	fun `token uten lesetilgang gir 403`() {
+		mvc.get("/api/invoices") {
+				with(jwt())
+			}
+			.andExpect { status { isForbidden() } }
+	}
 
- @Test
- fun `read scope gir 200`() {
- mvc.get("/api/invoices") {
- with(jwt().authorities(SimpleGrantedAuthority("SCOPE_invoices:read")))
- }.andExpect { status { isOk() } }
- }
+	@Test
+	fun `read scope gir 200`() {
+		mvc.get("/api/invoices") {
+				with(jwt().authorities(SimpleGrantedAuthority("SCOPE_invoices:read")))
+			}
+			.andExpect { status { isOk() } }
+	}
 }

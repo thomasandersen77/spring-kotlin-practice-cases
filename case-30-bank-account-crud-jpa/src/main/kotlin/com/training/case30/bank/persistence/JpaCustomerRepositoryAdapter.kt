@@ -7,27 +7,27 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class JpaCustomerRepositoryAdapter(
- private val springDataCustomerRepository: SpringDataCustomerRepository
+	private val springDataCustomerRepository: SpringDataCustomerRepository
 ) : CustomerRepository {
 
- override fun save(customer: Customer): Customer {
- val saved = springDataCustomerRepository.save(customer.toEntity())
- return saved.toDomain()
- }
+	override fun save(customer: Customer): Customer {
+		val saved = springDataCustomerRepository.save(customer.toEntity())
+		return saved.toDomain()
+	}
 
- override fun findById(id: CustomerId): Customer? =
- springDataCustomerRepository.findById(id.value).orElse(null)?.toDomain()
+	override fun findById(id: CustomerId): Customer? =
+		springDataCustomerRepository.findById(id.value).orElse(null)?.toDomain()
 
- override fun findAll(): List<Customer> =
- springDataCustomerRepository.findAll().map { it.toDomain() }
+	override fun findAll(): List<Customer> =
+		springDataCustomerRepository.findAll().map { it.toDomain() }
 
- override fun existsByEmail(email: String): Boolean =
- springDataCustomerRepository.existsByEmail(email)
+	override fun existsByEmail(email: String): Boolean =
+		springDataCustomerRepository.existsByEmail(email)
 
- override fun existsByEmailExcludingId(email: String, excludedId: CustomerId): Boolean =
- springDataCustomerRepository.existsByEmailAndIdNot(email, excludedId.value)
+	override fun existsByEmailExcludingId(email: String, excludedId: CustomerId): Boolean =
+		springDataCustomerRepository.existsByEmailAndIdNot(email, excludedId.value)
 
- override fun deleteById(id: CustomerId) {
- springDataCustomerRepository.deleteById(id.value)
- }
+	override fun deleteById(id: CustomerId) {
+		springDataCustomerRepository.deleteById(id.value)
+	}
 }

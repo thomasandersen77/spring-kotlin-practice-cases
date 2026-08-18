@@ -16,24 +16,12 @@ import java.util.UUID
 @Entity
 @Table(name = "bank_accounts")
 class BankAccountEntity(
- @Id
- @Column(nullable = false, updatable = false)
- var id: UUID,
-
- @Column(nullable = false, unique = true, updatable = false)
- var accountNumber: String,
-
- @Column(nullable = false)
- var displayName: String,
-
- @Column(nullable = false, precision = 19, scale = 2)
- var balance: BigDecimal,
-
- @Enumerated(EnumType.STRING)
- @Column(nullable = false)
- var status: AccountStatus,
-
- @ManyToOne(fetch = FetchType.LAZY, optional = false)
- @JoinColumn(name = "customer_id", nullable = false)
- var customer: CustomerEntity
+	@Id @Column(nullable = false, updatable = false) var id: UUID,
+	@Column(nullable = false, unique = true, updatable = false) var accountNumber: String,
+	@Column(nullable = false) var displayName: String,
+	@Column(nullable = false, precision = 19, scale = 2) var balance: BigDecimal,
+	@Enumerated(EnumType.STRING) @Column(nullable = false) var status: AccountStatus,
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "customer_id", nullable = false)
+	var customer: CustomerEntity,
 )

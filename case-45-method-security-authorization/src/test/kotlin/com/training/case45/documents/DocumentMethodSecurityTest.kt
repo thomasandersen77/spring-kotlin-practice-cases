@@ -13,21 +13,21 @@ import org.springframework.security.test.context.support.WithMockUser
 @SpringBootTest
 class DocumentMethodSecurityTest(@Autowired private val service: DocumentService) {
 
- @MockBean private lateinit var repository: DocumentRepository
+	@MockBean private lateinit var repository: DocumentRepository
 
- @Test
- @WithMockUser(username = "owner", roles = ["USER"])
- fun `tillatt bruker passerer method security`() {
- `when`(repository.findById(1)).thenReturn(Document(1, "owner", Classification.INTERNAL))
+	@Test
+	@WithMockUser(username = "owner", roles = ["USER"])
+	fun `tillatt bruker passerer method security`() {
+		`when`(repository.findById(1)).thenReturn(Document(1, "owner", Classification.INTERNAL))
 
- assertThat(service.get(1).owner).isEqualTo("owner")
- }
+		assertThat(service.get(1).owner).isEqualTo("owner")
+	}
 
- @Test
- @WithMockUser(username = "stranger", roles = ["USER"])
- fun `avvist bruker stoppes av method security`() {
- `when`(repository.findById(1)).thenReturn(Document(1, "owner", Classification.INTERNAL))
+	@Test
+	@WithMockUser(username = "stranger", roles = ["USER"])
+	fun `avvist bruker stoppes av method security`() {
+		`when`(repository.findById(1)).thenReturn(Document(1, "owner", Classification.INTERNAL))
 
- assertThatThrownBy { service.get(1) }.isInstanceOf(AccessDeniedException::class.java)
- }
+		assertThatThrownBy { service.get(1) }.isInstanceOf(AccessDeniedException::class.java)
+	}
 }

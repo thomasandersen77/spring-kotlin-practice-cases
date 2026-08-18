@@ -16,18 +16,18 @@ data class ReviewContractHttpRequest(@field:NotBlank val clauseText: String)
 @RestController
 @RequestMapping("/api/legal-reviews")
 class LegalReviewController(private val service: LegalReviewService) {
- @PostMapping
- fun review(@Valid @RequestBody request: ReviewContractHttpRequest): ContractReview =
- service.review(request.clauseText)
+	@PostMapping
+	fun review(@Valid @RequestBody request: ReviewContractHttpRequest): ContractReview =
+		service.review(request.clauseText)
 }
 
 @RestControllerAdvice
 class LegalReviewErrorHandler {
- @ExceptionHandler(OpenAiUnavailable::class)
- @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
- fun unavailable(ex: OpenAiUnavailable) = mapOf("error" to ex.message)
+	@ExceptionHandler(OpenAiUnavailable::class)
+	@ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+	fun unavailable(ex: OpenAiUnavailable) = mapOf("error" to ex.message)
 
- @ExceptionHandler(InvalidModelResponse::class, ModelRefused::class)
- @ResponseStatus(HttpStatus.BAD_GATEWAY)
- fun invalid(ex: RuntimeException) = mapOf("error" to ex.message)
+	@ExceptionHandler(InvalidModelResponse::class, ModelRefused::class)
+	@ResponseStatus(HttpStatus.BAD_GATEWAY)
+	fun invalid(ex: RuntimeException) = mapOf("error" to ex.message)
 }

@@ -3,46 +3,49 @@ import org.junit.jupiter.api.Test
 
 class InvoiceScoringTest {
 
- private val scoring = InvoiceScoring()
+	private val scoring = InvoiceScoring()
 
- @Test
- fun `should calculate subtotal without discounts`() {
- val request = InvoiceRequest(
- lines = listOf(
- InvoiceLine(unitPrice = 100, quantity = 2),
- InvoiceLine(unitPrice = 50, quantity = 1)
- ),
- vipCustomer = false,
- discountCode = null
- )
+	@Test
+	fun `should calculate subtotal without discounts`() {
+		val request =
+			InvoiceRequest(
+				lines =
+					listOf(
+						InvoiceLine(unitPrice = 100, quantity = 2),
+						InvoiceLine(unitPrice = 50, quantity = 1),
+					),
+				vipCustomer = false,
+				discountCode = null,
+			)
 
- val result = scoring.score(request)
+		val result = scoring.score(request)
 
- assertThat(result.subtotal).isEqualTo(250)
- assertThat(result.discount).isEqualTo(0)
- assertThat(result.total).isEqualTo(250)
- }
+		assertThat(result.subtotal).isEqualTo(250)
+		assertThat(result.discount).isEqualTo(0)
+		assertThat(result.total).isEqualTo(250)
+	}
 
- @Test
- fun `should combine vip and code discount`() {
- val request = InvoiceRequest(
- lines = listOf(InvoiceLine(unitPrice = 300, quantity = 1)),
- vipCustomer = true,
- discountCode = "SAVE50"
- )
+	@Test
+	fun `should combine vip and code discount`() {
+		val request =
+			InvoiceRequest(
+				lines = listOf(InvoiceLine(unitPrice = 300, quantity = 1)),
+				vipCustomer = true,
+				discountCode = "SAVE50",
+			)
 
- val result = scoring.score(request)
+		val result = scoring.score(request)
 
- assertThat(result.subtotal).isEqualTo(300)
- assertThat(result.discount).isEqualTo(80)
- assertThat(result.total).isEqualTo(220)
- }
+		assertThat(result.subtotal).isEqualTo(300)
+		assertThat(result.discount).isEqualTo(80)
+		assertThat(result.total).isEqualTo(220)
+	}
 
- @Test
- fun `exercise clarify stacking rules for future discount codes`() {
- // Dokumenter ønsket regelrekkefølge med tester før implementasjon:
- // - skal VIP kombineres med kode?
- // - hvis ja: i hvilken rekkefølge?
- // - hvis nei: hvilken regel vinner?
- }
+	@Test
+	fun `exercise clarify stacking rules for future discount codes`() {
+		// Dokumenter ønsket regelrekkefølge med tester før implementasjon:
+		// - skal VIP kombineres med kode?
+		// - hvis ja: i hvilken rekkefølge?
+		// - hvis nei: hvilken regel vinner?
+	}
 }

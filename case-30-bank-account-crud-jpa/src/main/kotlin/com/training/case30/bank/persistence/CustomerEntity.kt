@@ -9,13 +9,7 @@ import java.util.UUID
 @Entity
 @Table(name = "customers")
 class CustomerEntity(
- @Id
- @Column(nullable = false, updatable = false)
- var id: UUID,
-
- @Column(nullable = false)
- var name: String,
-
- @Column(nullable = false, unique = true)
- var email: String
+	@Id @Column(nullable = false, updatable = false) var id: UUID,
+	@Column(nullable = false) var name: String,
+	@Column(nullable = false, unique = true) var email: String,
 )

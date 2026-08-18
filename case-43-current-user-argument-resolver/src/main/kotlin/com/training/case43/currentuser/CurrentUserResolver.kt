@@ -14,11 +14,10 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
-@SpringBootApplication
-class CurrentUserApplication
+@SpringBootApplication class CurrentUserApplication
 
 fun main(args: Array<String>) {
- runApplication<CurrentUserApplication>(*args)
+	runApplication<CurrentUserApplication>(*args)
 }
 
 @Target(AnnotationTarget.VALUE_PARAMETER)
@@ -29,32 +28,31 @@ data class AuthenticatedUser(val subject: String, val tenantId: String, val role
 
 @Component
 class CurrentUserArgumentResolver : HandlerMethodArgumentResolver {
- // TODO 1: Støtt bare parametre annotert med @CurrentUser og med riktig type.
- override fun supportsParameter(parameter: MethodParameter): Boolean =
- TODO("Gjenkjenn @CurrentUser AuthenticatedUser")
+	// TODO 1: Støtt bare parametre annotert med @CurrentUser og med riktig type.
+	override fun supportsParameter(parameter: MethodParameter): Boolean =
+		TODO("Gjenkjenn @CurrentUser AuthenticatedUser")
 
- // TODO 2: Hent JwtAuthenticationToken, valider claims og map til intern modell.
- override fun resolveArgument(
- parameter: MethodParameter,
- mavContainer: ModelAndViewContainer?,
- webRequest: NativeWebRequest,
- binderFactory: WebDataBinderFactory?
- ): Any = TODO("Map principal og claims til AuthenticatedUser")
+	// TODO 2: Hent JwtAuthenticationToken, valider claims og map til intern modell.
+	override fun resolveArgument(
+		parameter: MethodParameter,
+		mavContainer: ModelAndViewContainer?,
+		webRequest: NativeWebRequest,
+		binderFactory: WebDataBinderFactory?,
+	): Any = TODO("Map principal og claims til AuthenticatedUser")
 }
 
 @Component
 class CurrentUserWebConfig(private val resolver: CurrentUserArgumentResolver) : WebMvcConfigurer {
- override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
- resolvers += resolver
- }
+	override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
+		resolvers += resolver
+	}
 }
 
 @RestController
 @RequestMapping("/api/profile")
 class ProfileController {
- @GetMapping
- fun profile(@CurrentUser user: AuthenticatedUser): AuthenticatedUser = user
+	@GetMapping fun profile(@CurrentUser user: AuthenticatedUser): AuthenticatedUser = user
 }
 
 internal fun NativeWebRequest.jwtAuthentication(): JwtAuthenticationToken? =
- userPrincipal as? JwtAuthenticationToken
+	userPrincipal as? JwtAuthenticationToken

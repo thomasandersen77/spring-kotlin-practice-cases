@@ -8,7 +8,7 @@ import java.util.UUID
  */
 @JvmInline
 value class AccountId(val value: UUID) {
- companion object {
- fun new(): AccountId = AccountId(UUID.randomUUID())
- }
+	companion object {
+		fun new(): AccountId = AccountId(UUID.randomUUID())
+	}
 }

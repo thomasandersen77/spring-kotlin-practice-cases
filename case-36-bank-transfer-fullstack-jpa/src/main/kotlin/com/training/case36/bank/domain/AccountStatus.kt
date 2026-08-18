@@ -5,6 +5,6 @@ package com.training.case36.bank.domain
  * debited or credited - see [BankAccount.debit] and [BankAccount.credit].
  */
 enum class AccountStatus {
- ACTIVE,
- BLOCKED
+	ACTIVE,
+	BLOCKED,
 }
