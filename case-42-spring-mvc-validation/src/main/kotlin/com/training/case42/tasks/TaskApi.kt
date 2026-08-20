@@ -26,9 +26,11 @@ enum class TaskPriority {
     HIGH,
 }
 
+const val TITLE_MAX_LENGTH_ERROR_MESSAGE = "title kan ikke være lengre enn 80 tegn"
+
 data class CreateTaskRequest(
     @field:NotBlank(message = "title kan ikke være blank")
-    @field:Size(max = 80, message = "title kan ikke være lengre enn 80 tegn")
+    @field:Size(max = 80, message = TITLE_MAX_LENGTH_ERROR_MESSAGE)
     val title: String,
     val priority: TaskPriority = TaskPriority.NORMAL,
 )
@@ -38,13 +40,22 @@ data class TaskResponse(val id: Long, val title: String, val priority: TaskPrior
 @Service
 class TaskService {
     // TODO 1: Normaliser input, opprett oppgaven og returner response-DTO.
-    fun create(request: CreateTaskRequest): TaskResponse =
-        TaskResponse(
-            id = 1L,
-            title = request.title.trim(),
-            priority = TaskPriority.HIGH
-        )
+    fun create(request: CreateTaskRequest): TaskResponse {
+        val trimmedTitle = normalizeTitle(request)
 
+        return TaskResponse(
+            id = 1L,
+            title = trimmedTitle,
+            priority = request.priority
+        )
+    }
+
+    internal fun normalizeTitle(request: CreateTaskRequest): String {
+        val trimmedTitle = request.title.trim()
+        if (trimmedTitle.length > 80)
+            throw IllegalArgumentException(TITLE_MAX_LENGTH_ERROR_MESSAGE)
+        return trimmedTitle
+    }
 }
 
 @RestController
