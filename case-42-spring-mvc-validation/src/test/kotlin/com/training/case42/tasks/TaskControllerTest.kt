@@ -2,7 +2,6 @@ package com.training.case42.tasks
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -19,7 +18,7 @@ class TaskControllerTest(
     @MockBean
     private lateinit var service: TaskService
 
-    var mapper = ObjectMapper().writerWithDefaultPrettyPrinter()
+    val mapper = ObjectMapper().writerWithDefaultPrettyPrinter()
 
     @Test
     fun `gyldig request gir 201 og response dto`() {
@@ -69,9 +68,6 @@ class TaskControllerTest(
     @Test
     fun `too long title gives bad request`() {
 
-        `when`(service.create(CreateTaskRequest("a".repeat(81), TaskPriority.HIGH)))
-            .thenReturn(TaskResponse(7, "Forbered trening", TaskPriority.HIGH))
-
         val request = CreateTaskRequest(
             title = "a".repeat(81),
             priority = TaskPriority.HIGH
@@ -86,7 +82,35 @@ class TaskControllerTest(
                 status { isBadRequest() }
             }
 
-        verify(service, times(0)).create(request)
+        verifyNoInteractions(service)
+    }
+
+    @Test
+    fun `80 chars title gives 201 created`() {
+        val request = CreateTaskRequest(
+            title = "a".repeat(80),
+            priority = TaskPriority.HIGH
+        )
+
+        `when`(service.create(
+            request = request
+        )).thenReturn(TaskResponse(
+            1L,
+            title = "a".repeat(80),
+            priority = TaskPriority.HIGH
+        ))
+
+
+        val req = mapper.writeValueAsString(request)
+        mvc.post("/api/tasks") {
+            contentType = MediaType.APPLICATION_JSON
+            content = req
+        }
+            .andExpect {
+                status { isCreated() }
+            }
+
+        verify(service, times(1)).create(request)
     }
 
 }
