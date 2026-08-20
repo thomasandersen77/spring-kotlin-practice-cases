@@ -45,6 +45,8 @@ class TaskControllerTest(
             .andExpect {
                 status { isBadRequest() }
             }
+
+        verifyNoInteractions(service)
     }
 
     @Test
