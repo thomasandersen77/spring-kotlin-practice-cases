@@ -26,11 +26,9 @@ enum class TaskPriority {
     HIGH,
 }
 
-const val TITLE_MAX_LENGTH_ERROR_MESSAGE = "title kan ikke være lengre enn 80 tegn"
-
 data class CreateTaskRequest(
     @field:NotBlank(message = "title kan ikke være blank")
-    @field:Size(max = 80, message = TITLE_MAX_LENGTH_ERROR_MESSAGE)
+    @field:Size(max = 80, message = "title kan ikke være lengre enn 80 tegn")
     val title: String,
     val priority: TaskPriority = TaskPriority.NORMAL,
 )
