@@ -41,20 +41,12 @@ data class TaskResponse(val id: Long, val title: String, val priority: TaskPrior
 class TaskService {
     // TODO 1: Normaliser input, opprett oppgaven og returner response-DTO.
     fun create(request: CreateTaskRequest): TaskResponse {
-        val trimmedTitle = normalizeTitle(request)
 
         return TaskResponse(
             id = 1L,
-            title = trimmedTitle,
+            title = request.title.trim(),
             priority = request.priority
         )
-    }
-
-    internal fun normalizeTitle(request: CreateTaskRequest): String {
-        val trimmedTitle = request.title.trim()
-        if (trimmedTitle.length > 80)
-            throw IllegalArgumentException(TITLE_MAX_LENGTH_ERROR_MESSAGE)
-        return trimmedTitle
     }
 }
 
