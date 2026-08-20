@@ -110,7 +110,7 @@ class TaskControllerTest(
                 status { isCreated() }
             }
 
-        verify(service, times(1)).create(request)
+        verify(service).create(request)
     }
 
 }
