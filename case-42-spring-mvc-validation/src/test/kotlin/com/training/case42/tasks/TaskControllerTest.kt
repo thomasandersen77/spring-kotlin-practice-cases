@@ -31,8 +31,8 @@ class TaskControllerTest(
         }
             .andExpect {
                 status { isCreated() }
-                jsonPath("$.id") { value(7) }
-                jsonPath("$.priority") { value("HIGH") }
+                jsonPath("$[0].field") { value("title") }
+                jsonPath("$[0].message") { value("title kan ikke være blank") }
             }
     }
 
@@ -44,6 +44,7 @@ class TaskControllerTest(
         }
             .andExpect {
                 status { isBadRequest() }
+                jsonPath("$.message") { value("ugyldig verdi") }
             }
 
         verifyNoInteractions(service)
